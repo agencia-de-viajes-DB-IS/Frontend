@@ -1,39 +1,36 @@
-import FormProps  from "../../files/interfaces"
 import { useState } from "react";
+import { myuseFetch } from "../../helper/server";
+import { tpUser } from "../../files/types";
 
-const api_login:string = '/api/login'
 
-function RegisterForm({toggle}:FormProps) {
-    const [username, setUsername] = useState("");
-    const [password, setPassword] = useState("");
-    const [email, setEmail] = useState("");
-    const [name, setName] = useState("");
+function RegisterForm() {
 
+    // Datos del registro del usuario
+    const [user, setUser] = useState<tpUser>({
+        firstName: "",
+        lastName: "",
+        email: "",
+        password: ""
+    })
+
+    // Administrar las propiedades de un usuario al escribirlas
+    const onInputChange = (e:HTMLInputElement) => {
+        
+    }
+    
+    // Manejar el enviar los datos de registro del usuario
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-    
-        const response = await fetch(api_login, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({
-                username: username,
-                password: password,
-                email: email,
-                name: name
-            })
-        });
-    
-        if (!response.ok) {
-            // Handle error
-            console.error('Error:', response);
-        } else {
-            // Handle success
-            const data = await response.json();
-            console.log('Success:', data);
+
+        const data = {
+            firstName: "Alfredo1",
+            lastName: "Somoza1",
+            email: "somoza1@gamil.com",
+            password: "somozaza"
         }
-    };
+
+        myuseFetch("auth/register", data, "POST")
+    }
 
     return (
         <>
@@ -54,30 +51,30 @@ function RegisterForm({toggle}:FormProps) {
                                     <input 
                                         type="text" 
                                         className="form-control mb-3" 
-                                        placeholder="Nombre y Apellidos"
-                                        name="Name"
-                                        value={name}
-                                        onChange={({target}) => setName(target.value)}
+                                        placeholder="Nombre"
+                                        name="fistName"
+                                        value={user.firstName}
+                                        onChange={({target}) => onInputChange(target)}
                                     />
                                 </div>
                                 <div className="input-group form-group">
                                     <input 
                                         type="text" 
                                         className="form-control mb-3" 
-                                        placeholder="Correo electónico"
-                                        name="Email"
-                                        value={email}
-                                        onChange={({target}) => setEmail(target.value)}
+                                        placeholder="Apellidos"
+                                        name="lastName"
+                                        value={user.lastName}
+                                        onChange={({target}) => onInputChange(target)}
                                     />
                                 </div>
                                 <div className="input-group form-group">
                                     <input
                                         type="text" 
                                         className="form-control mb-3" 
-                                        placeholder="Nombre de usuario"
-                                        name="Username"
-                                        value={username}
-                                        onChange={({target}) => setUsername(target.value)}
+                                        placeholder="Correo electrónico"
+                                        name="email"
+                                        value={user.email}
+                                        onChange={({target}) => onInputChange(target)}
                                     /> 
                                 </div>
                                 <div className="input-group form-group">
@@ -85,13 +82,13 @@ function RegisterForm({toggle}:FormProps) {
                                         type="password" 
                                         className="form-control mb-3" 
                                         placeholder="Contraseña"
-                                        name="Password"
-                                        value={password}
-                                        onChange={({target}) => setPassword(target.value)}
+                                        name="password"
+                                        value={user.password}
+                                        onChange={({target}) => onInputChange(target)}
                                     />
                                 </div>
                                 <div className="form-group d-flex justify-content-center">
-                                    <input type="submit" value="Registrarme" className="btn btn-dark login_btn" onClick={toggle}/>
+                                    <input type="submit" value="Registrarme" className="btn btn-dark login_btn"/>
                                 </div>
                             </form>
                         </div>

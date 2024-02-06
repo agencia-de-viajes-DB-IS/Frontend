@@ -1,17 +1,21 @@
-import Navbar from "../../components/Navbar/Navbar"
-import { Splide, SplideSlide } from '@splidejs/react-splide';
-import '@splidejs/splide/dist/css/themes/splide-default.min.css';
+import { DarkPicture } from "../../components/DarkPicture/Dark";
+import { Header } from "../../components/Header/Header";
+import { Navbar } from "../../components/Navbar/Navbar";
+import './styles.css'
 
 
-function Home() {
+export function Home() {
     return (
         <>
-            <Navbar/>
-            Estas en Home
+            <div className="main-section">
+                <DarkPicture/>
+                <Header/>
+                <Navbar/>
 
-
+                <div className="main-content2">
+                    <h1>Una experiencia inolvidable</h1>
+                </div>
+            </div>
         </>
     )
 }
-
-export default Home

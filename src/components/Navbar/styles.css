@@ -1,0 +1,23 @@
+.mainmenu {
+    margin: 0px 50px;
+    border-bottom: 1px solid white;
+    display: flex;
+    justify-content: center;
+    position: relative;
+    z-index: 10;
+}
+
+.mainmenu-items {
+    display: flex;
+    flex-direction: row;
+    width: 400px;
+    justify-content: space-between;
+    list-style: none;
+}
+
+.mainmenu-items li a {
+    color: white;
+    text-decoration: none;
+    font-size: 18px;
+    text-transform: uppercase;
+}
