@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { myuseFetch } from "../../helper/server";
+import { myFetchPost } from "../../helper/server";
 
 export function LoginForm() {
     const [email, setEmail] = useState("");
@@ -11,7 +11,7 @@ export function LoginForm() {
             password: password
         } 
 
-        myuseFetch("auth/login", data, "POST")
+        myFetchPost("auth/login", data)
     }
 
     return (

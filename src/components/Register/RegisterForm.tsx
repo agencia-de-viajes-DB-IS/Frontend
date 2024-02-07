@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { myuseFetch } from "../../helper/server";
+import { myFetchPost } from "../../helper/server";
 
 
 function RegisterForm() {
@@ -21,7 +21,7 @@ function RegisterForm() {
             password: "somozaza"
         }
 
-        myuseFetch("auth/register", data, "POST")
+        myFetchPost("auth/register", data)
     }
 
     return (
