@@ -17,7 +17,7 @@ function RegisterForm() {
         const data = {
             firstName: "Alfredo1",
             lastName: "Somoza1",
-            email: "somoza1@gamil.com",
+            email: "somoza1@gmail.com",
             password: "somozaza"
         }
 
