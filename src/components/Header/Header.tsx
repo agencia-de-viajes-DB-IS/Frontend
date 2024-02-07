@@ -1,4 +1,6 @@
 import logo from '../../images/skull2.avif'
+import LoginModal from '../Login/LoginModal'
+import RegisterModal from '../Register/RegisterModal'
 import './styles.css'
 
 export function Header() {
@@ -14,8 +16,8 @@ export function Header() {
             </div>
             
             <div className='user-section'>
-                <button type="button" id='btn-singIn'>Registrarse</button>
-                <button type="button" id='btn-login'>Iniciar Sesión</button>
+                <RegisterModal/>
+                <LoginModal/>
             </div>
         </div>
     )
