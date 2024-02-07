@@ -11,7 +11,7 @@ export function Excursions() {
 
     return (
         <>
-            <div className="main-section">
+            <div className="excursion-main">
                 <DarkPicture/>
                 <Header/>
                 <Navbar/>

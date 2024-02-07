@@ -1,3 +1,9 @@
+.excursions-main {
+    height: 100%;
+    background-color: beige;
+    position: relative;
+}
+
 .excursion-section {
     position: relative;
     z-index: 10;

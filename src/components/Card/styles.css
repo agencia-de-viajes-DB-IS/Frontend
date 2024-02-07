@@ -42,14 +42,14 @@
     border-top: 1px solid #809283;
 }
 
-.btn-reserv button {
+.unreserved{
     align-items: center;
-    background-color: #809283;
+    background-color: #13471b;
     border: 1px solid rgba(0, 0, 0, 0.1);
     border-radius: 5px;
     box-shadow: rgba(0, 0, 0, 0.02) 0 1px 3px 0;
     box-sizing: border-box;
-    color: rgba(0, 0, 0, 0.85);
+    color: #809283;
     cursor: pointer;
     display: inline-flex;
     font-family: system-ui,-apple-system,system-ui,"Helvetica Neue",Helvetica,Arial,sans-serif;
@@ -62,4 +62,26 @@
     touch-action: manipulation;
     vertical-align: baseline;
     padding: 5px 20px;
+}
+
+.reserved{
+  align-items: center;
+  background-color: #710e09;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  border-radius: 5px;
+  box-shadow: rgba(0, 0, 0, 0.02) 0 1px 3px 0;
+  box-sizing: border-box;
+  color: #809283;
+  cursor: pointer;
+  display: inline-flex;
+  font-family: system-ui,-apple-system,system-ui,"Helvetica Neue",Helvetica,Arial,sans-serif;
+  font-size: 16px;
+  font-weight: 600;
+  justify-content: center;
+  text-decoration: none;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+  vertical-align: baseline;
+  padding: 5px 20px;
 }
