@@ -3,7 +3,7 @@ import { Header } from "../../components/Header/Header";
 import { Navbar } from "../../components/Navbar/Navbar";
 import './styles.css'
 import { Card } from "../../components/Card/Card";
-import { Searchbar } from "../../components/Search/Searchbar";
+import { Filter } from "../../components/Search/FilterExcursions";
 
 
 export function Excursions() {
@@ -19,7 +19,7 @@ export function Excursions() {
 
                 <h1 id="excursion-title">Excursiones</h1>
 
-                <Searchbar/>
+                <Filter/>
             </div>
 
             <div className="excursion-section">

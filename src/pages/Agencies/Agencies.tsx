@@ -5,7 +5,7 @@ import { Header } from "../../components/Header/Header";
 import { Navbar } from "../../components/Navbar/Navbar";
 import './styles.css'
 import { Card } from "../../components/Card/Card";
-import { Searchbar } from "../../components/Search/Searchbar";
+import { Filter } from '../../components/Search/FilterAgencies';
 
 
 export function Agencies() {
@@ -21,7 +21,7 @@ export function Agencies() {
 
                 <h1 id="agency-title">Agencias</h1>
 
-                <Searchbar/>
+                <Filter/>
             </div>
 
             <div className="agency-section">
