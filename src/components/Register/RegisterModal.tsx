@@ -2,6 +2,7 @@ import { useState } from 'react';
 import Modal from 'react-bootstrap/Modal';
 import Button from 'react-bootstrap/Button';
 import RegisterForm from './RegisterForm';
+import './styles.css'
 
 function RegisterModal() {
     const [show, setShow] = useState(false);
@@ -11,7 +12,7 @@ function RegisterModal() {
 
     return (
         <>
-            <Button className="text-light" variant="" onClick={handleShow}>
+            <Button className="text-light btn-register" variant="" onClick={handleShow}>
                 Registrarse
             </Button>
             

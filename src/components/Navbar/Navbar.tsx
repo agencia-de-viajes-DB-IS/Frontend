@@ -6,7 +6,10 @@ export function Navbar() {
         <div className="mainmenu">
             <ul className='mainmenu-items'>
                 <li>
-                    <a href="/">Home</a>
+                    <a href="/">Inicio</a>
+                </li>
+                <li>
+                    <a href="/agencies">Agencias</a>
                 </li>
                 <li>
                     <a href="/excursions">Excursiones</a>

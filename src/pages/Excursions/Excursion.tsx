@@ -8,27 +8,29 @@ import { Searchbar } from "../../components/Search/Searchbar";
 
 export function Excursions() {
 
-    const cards = Array.from({ length:  40 }, () => null);
+    const cards = Array.from({ length:  15 }, () => null);
 
     return (
         <>
-            <div className="excursion-main">
+            <div className="excursions-main">
                 <DarkPicture/>
                 <Header/>
                 <Navbar/>
 
-                <div className="excursion-section">
-                    <Searchbar/>
+                <h1 id="excursion-title">Excursiones</h1>
 
-                    <div className="excursion-container">
-                        {cards.map((_, index) => (
-                            <div key={index} className="item">
-                                <Card/>
-                            </div>
-                        ))}
-                    </div>
-                    
+                <Searchbar/>
+            </div>
+
+            <div className="excursion-section">
+                <div className="excursion-container">
+                    {cards.map((_, index) => (
+                        <div key={index} className="item">
+                            <Card/>
+                        </div>
+                    ))}
                 </div>
+                
             </div>
         </>
     )

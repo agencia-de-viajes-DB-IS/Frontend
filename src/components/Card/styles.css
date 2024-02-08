@@ -1,77 +1,52 @@
 .card-client {
-    background: #0a140bc4;
-    width: 200px;
-    padding: 20px;
-    box-shadow: 0 0 5px rgba(207, 222, 210, 0.244);
-    border-radius: 10px;
-    text-align: center;
-    color: #809283;
-    font-family: "Poppins", sans-serif;
-    transition: all 0.3s ease;
-    cursor: pointer;
+  background: white;
+  width: 400px;
+  box-shadow: 0 0 11px 0px rgb(97 108 107);
+  border-radius: 10px;
+  text-align: center;
+  color: black;
+  font-family: "Poppins", sans-serif;
+  transition: all 0.3s ease;
+  cursor: pointer;
+  padding: 2px;
 }
   
-  .card-client:hover {
-    transform: translateY(-10px);
-  }
-  
-  .user-picture {
-    overflow: hidden;
-    object-fit: cover;
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-  }
-  
-  .user-picture img {
-    width: 100%;
-    border-radius: 10px;
-  }
-  
-  .title-item {
-    margin: 0;
-    margin-top: 10px;
-    font-weight: 600;
-    font-size: 18px;
-  }
+.card-client:hover {
+  transform: translateY(-10px);
+}
+
+.user-picture {
+  overflow: hidden;
+  object-fit: cover;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.user-picture img {
+  width: 100%;
+  border-radius: 10px;
+}
+
+.title-item {
+  margin: 0;
+  margin-top: 10px;
+  font-weight: 600;
+  font-size: 18px;
+}
 
 .btn-reserv {
     margin-top: 20px;
-    padding-top: 10px;
-    border-top: 1px solid #809283;
+    padding: 10px;
 }
 
-.unreserved{
-    align-items: center;
-    background-color: #13471b;
-    border: 1px solid rgba(0, 0, 0, 0.1);
-    border-radius: 5px;
-    box-shadow: rgba(0, 0, 0, 0.02) 0 1px 3px 0;
-    box-sizing: border-box;
-    color: #809283;
-    cursor: pointer;
-    display: inline-flex;
-    font-family: system-ui,-apple-system,system-ui,"Helvetica Neue",Helvetica,Arial,sans-serif;
-    font-size: 16px;
-    font-weight: 600;
-    justify-content: center;
-    text-decoration: none;
-    user-select: none;
-    -webkit-user-select: none;
-    touch-action: manipulation;
-    vertical-align: baseline;
-    padding: 5px 20px;
-}
-
-.reserved{
-  align-items: center;
-  background-color: #710e09;
+.btn-reserv button {
   border: 1px solid rgba(0, 0, 0, 0.1);
   border-radius: 5px;
   box-shadow: rgba(0, 0, 0, 0.02) 0 1px 3px 0;
   box-sizing: border-box;
-  color: #809283;
+  color: white;
   cursor: pointer;
   display: inline-flex;
   font-family: system-ui,-apple-system,system-ui,"Helvetica Neue",Helvetica,Arial,sans-serif;
@@ -83,5 +58,14 @@
   -webkit-user-select: none;
   touch-action: manipulation;
   vertical-align: baseline;
-  padding: 5px 20px;
+  padding: 5px 30px;
+  align-items: center;
+}
+
+.unreserved{
+    background-color: #13471b;
+}
+
+.reserved{
+  background-color: #710e09;
 }

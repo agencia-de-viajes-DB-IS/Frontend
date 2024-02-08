@@ -1,5 +1,5 @@
 import './styles.css'
-import img from '../../images/roca.jpg'
+import img from '../../images/office.jpg'
 import { useState } from 'react'
 
 export function Card() {
@@ -19,7 +19,7 @@ export function Card() {
             <div className="user-picture">
                 <img src={img} alt="foto"/>
             </div>
-            <p className="title-item"> Agárrate a la roca</p>
+            <p className="title-item">Lorem ipsun bla bla bla</p>
             <div className="btn-reserv">
                 <button className={btnclass} onClick={changeBtn}>{btntext}</button>
             </div>

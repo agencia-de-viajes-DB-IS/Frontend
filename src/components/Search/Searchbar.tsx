@@ -36,41 +36,43 @@ export function Searchbar() {
     };
 
     return (
-        <div className="search-section">
-            <div className="search-from">
-                <label htmlFor="">Agencia</label>
-                <select id="agencia" value={selectedAgency} onChange={handleAgencyChange}>
-                    {agencies.map((agency, index) => (
-                        <option key={index} value={agency}>{agency}</option>
-                    ))}
-                </select>
-            </div>
-            <div className="search-from">
-                <label htmlFor="">Propiedad2</label>
-                <select id="propiedad2" value={selectedPropiedad2} onChange={handlePropiedad2Change}>
-                    {propiedades2.map((propiedad2, index) => (
-                        <option key={index} value={propiedad2}>{propiedad2}</option>
-                    ))}
-                </select>
-            </div>
-            <div className="search-from">
-                <label htmlFor="">Propiedad3</label>
-                <select id="propiedad3" value={selectedPropiedad3} onChange={handlePropiedad3Change}>
-                    {propiedades3.map((propiedad3, index) => (
-                        <option key={index} value={propiedad3}>{propiedad3}</option>
-                    ))}
-                </select>
-            </div>
-            <div className="search-from">
-                <label htmlFor="">Propiedad4</label>
-                <select id="propiedad4" value={selectedPropiedad4} onChange={handlePropiedad4Change}>
-                    {propiedades4.map((propiedad4, index) => (
-                        <option key={index} value={propiedad4}>{propiedad4}</option>
-                    ))}
-                </select>
-            </div>
-            <div className="search-btn">
-                <button type="button" onClick={alert}>Buscar</button>
+        <div className='search-container'>
+            <div className="search-section">
+                <div className="search-from">
+                    <label htmlFor="">Agencia</label>
+                    <select id="agencia" value={selectedAgency} onChange={handleAgencyChange}>
+                        {agencies.map((agency, index) => (
+                            <option key={index} value={agency}>{agency}</option>
+                        ))}
+                    </select>
+                </div>
+                <div className="search-from">
+                    <label htmlFor="">Propiedad2</label>
+                    <select id="propiedad2" value={selectedPropiedad2} onChange={handlePropiedad2Change}>
+                        {propiedades2.map((propiedad2, index) => (
+                            <option key={index} value={propiedad2}>{propiedad2}</option>
+                        ))}
+                    </select>
+                </div>
+                <div className="search-from">
+                    <label htmlFor="">Propiedad3</label>
+                    <select id="propiedad3" value={selectedPropiedad3} onChange={handlePropiedad3Change}>
+                        {propiedades3.map((propiedad3, index) => (
+                            <option key={index} value={propiedad3}>{propiedad3}</option>
+                        ))}
+                    </select>
+                </div>
+                <div className="search-from">
+                    <label htmlFor="">Propiedad4</label>
+                    <select id="propiedad4" value={selectedPropiedad4} onChange={handlePropiedad4Change}>
+                        {propiedades4.map((propiedad4, index) => (
+                            <option key={index} value={propiedad4}>{propiedad4}</option>
+                        ))}
+                    </select>
+                </div>
+                <div className="search-btn">
+                    <button type="button" onClick={alert}>Buscar</button>
+                </div>
             </div>
         </div>
     )

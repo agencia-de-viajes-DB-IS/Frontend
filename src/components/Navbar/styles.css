@@ -5,18 +5,18 @@
     justify-content: center;
     position: relative;
     z-index: 10;
+    width: 90%;
 }
 
 .mainmenu-items {
     display: flex;
     flex-direction: row;
-    width: 400px;
-    justify-content: space-between;
     list-style: none;
 }
 
 .mainmenu-items li a {
     color: white;
+    padding: 0px 20px;
     text-decoration: none;
     font-size: 18px;
     text-transform: uppercase;

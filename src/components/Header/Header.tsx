@@ -1,4 +1,4 @@
-import logo from '../../images/skull2.avif'
+import logo from '../../images/skull.png'
 import LoginModal from '../Login/LoginModal'
 import RegisterModal from '../Register/RegisterModal'
 import './styles.css'
