@@ -1,5 +1,8 @@
 import { useState } from "react";
-import { myFetchPost } from "../../helper/server";
+import { url } from "../../helper/server";
+import axios from "axios";
+import { Register } from "../../files/types";
+import { useNavigate } from "react-router-dom";
 
 
 function RegisterForm() {
@@ -9,6 +12,7 @@ function RegisterForm() {
     const [lastName, setLastName] = useState("");
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
+    const navigate = useNavigate()
     
     // Manejar el enviar los datos de registro del usuario
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -20,8 +24,14 @@ function RegisterForm() {
             email: "somoza1@gmail.com",
             password: "somozaza"
         }
-
-        myFetchPost("auth/register", data)
+        const user = await axios.post<Register>(`${url}/auth/register`, data);
+        console.log(user)
+        if(user.status == 200) {
+            setFirstName("")
+            setEmail("")
+            setLastName("")
+            setPassword("")
+        }
     }
 
     return (

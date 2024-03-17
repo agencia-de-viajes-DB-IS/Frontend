@@ -1,17 +1,22 @@
 import { useState } from "react";
-import { myFetchPost } from "../../helper/server";
+import { url } from "../../helper/server";
+import { useNavigate } from "react-router-dom";
+import axios from "axios";
+import { Login } from "../../files/types";
 
 export function LoginForm() {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
-
-    const handleSubmit = () => {
+    const navigate = useNavigate()
+    const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+        e.preventDefault()
         const data = {
-            emai: email,
+            email: email,
             password: password
         } 
 
-        myFetchPost("auth/login", data)
+        const user = await axios.post<Login>(`${url}/auth/login`, data);
+        console.log(user)
     }
 
     return (

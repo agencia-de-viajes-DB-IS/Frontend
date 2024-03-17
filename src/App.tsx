@@ -3,6 +3,7 @@ import { Home } from "./pages/Home/Home"
 import "./App.css"
 import { Excursions } from "./pages/Excursions/Excursion";
 import { Agencies } from "./pages/Agencies/Agencies";
+import { Admin } from "./pages/Admin/Admin";
 
 function App() {
   return (
@@ -10,6 +11,7 @@ function App() {
       <Route path="/" element={<Home/>}/>
       <Route path="/excursions" element={<Excursions/>}/>
       <Route path="/agencies" element={<Agencies/>}/>
+      <Route path="/admin" element={<Admin/>}/>
     </Routes>
   )
 }

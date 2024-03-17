@@ -1,24 +1,67 @@
-const urlBase = ""
+export const url = "https://afd9-40-83-58-143.ngrok-free.app"
 
-export const myFetchPost = (endpoint: string, data: object) => {
-    return fetch(`${urlBase}/${endpoint}`, {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
+export const fetchDefault = (endpoint: string, init: any, method: string, resolve = (_d: any) => {}, reject = (_d:any)=> {}) => {
+    fetch(`${url}/api/v1${endpoint}`, {
+        'method': method,
+        'headers': {
+            'Content-Type': 'application/json',
         },
-        body: JSON.stringify(data),
+        body: JSON.stringify(init),
     })
-    .then(response => {
-        if (!response.ok) {
-            throw new Error('Network response was not ok');
-        }
-        return response.json();
+    .then(async (res) => {
+        return res.json();
     })
     .then(data => {
-        console.log(data);
-        return data;
+        resolve(data);
     })
-    .catch(error => {
-        console.error('There has been a problem with your fetch operation:', error);
+    .catch(err => { 
+        reject(err);
+    });
+}
+export const fetchForm = (endpoint: string, init: FormData, method: string, resolve = (_d: any) => {}, reject = (_d:any)=> {}) => {
+    fetch(`${url}/api/v1${endpoint}`, {
+        'method': method, 
+        body: init,
     })
-};
+    .then(async (res) => {
+        return res.json();
+    })
+    .then(data => {
+        resolve(data);
+    })
+    .catch(err => { 
+        reject(err);
+    });
+}
+export const fetchGet = (endpoint: string, resolve = (_d: any) => {}, reject = (_d: any)=> {}) => {
+    fetch(`${url}/api/v1${endpoint}`, {
+        'method': "GET",
+        'headers': {
+            'Content-Type': 'application/json',
+        }
+    })
+    .then(async (res) => {
+        return res.json();
+    })
+    .then(data => {
+        resolve(data);
+    })
+    .catch(err => { 
+        reject(err);
+    });
+}
+
+export const fetchDelete = (endpoint: string, resolve = (_d: any) => {}, reject = (_d: any)=> {}) => {
+    fetch(`${url}/api/v1${endpoint}`, {
+        'method': "DELETE",
+    })
+    .then(async (res) => {
+        return res.json();
+    })
+    .then(data => {
+        resolve(data);
+    })
+    .catch(err => { 
+        reject(err);
+    });
+}
