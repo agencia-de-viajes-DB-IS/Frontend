@@ -5,16 +5,18 @@ import axios from 'axios';
 
 interface FilterProps {
     setExcursions: React.Dispatch<React.SetStateAction<tpExcursion[]>>;
+    initialAgency?:string;
 }
 
-export function Filter({setExcursions}:FilterProps) {
+export function Filter({setExcursions, initialAgency}: FilterProps) {
 
     // Array con las agencias filtradas
-    const [filteredExcursions,setFilteredExcursions] = useState<tpExcursion[]>([])
+    const [filteredExcursions, setFilteredExcursions] = useState<tpExcursion[]>([]);
 
     // Todas las agencias y la agencia seleccionada
-    const [agencies, setAgencies] = useState<string[]>([])
-    const [selectedAgency, setSelectedAgency] = useState<string>('Todos');
+    const [agencies, setAgencies] = useState<string[]>([]);
+    // Usar initialAgency para establecer el valor inicial de selectedAgency
+    const [selectedAgency, setSelectedAgency] = useState<string>(initialAgency ?? 'Todos');
    // Seleccionar una agencia
     const handleAgencyChange: React.ChangeEventHandler<HTMLSelectElement> = (event) => {
         setSelectedAgency(event.target.value);
@@ -70,7 +72,7 @@ export function Filter({setExcursions}:FilterProps) {
     useEffect(() => {
         const fetchPropiedades = async () => {
             try {
-                const response = await axios.get<tpExcursion[]>('http://localhost:5000/excursions');
+                const response = await axios.get<tpExcursion[]>('https://0b00-37-19-200-18.ngrok-free.app/excursions');
                 
                 // Llenar el array de agencias filtradas
                 setFilteredExcursions(response.data.$values);
