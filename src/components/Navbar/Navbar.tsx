@@ -15,7 +15,10 @@ export function Navbar() {
                     <a href="/excursions">Excursiones</a>
                 </li>
                 <li>
-                    <a href="#">Paquetes</a>
+                    <a href="/hoteldeals">Ofertas de Hotel</a>
+                </li>
+                <li>
+                    <a href="/packages">Paquetes</a>
                 </li>
             </ul>
         </div>

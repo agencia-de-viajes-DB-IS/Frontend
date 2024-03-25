@@ -1,16 +1,31 @@
 import './styles.css'
-
 import { DarkPicture } from "../../components/DarkPicture/Dark";
 import { Header } from "../../components/Header/Header";
 import { Navbar } from "../../components/Navbar/Navbar";
-import './styles.css'
-import { Card } from "../../components/Card/Card";
+import AgencyCard from "../../components/Agencies/AgencyCard";
 import { Filter } from '../../components/Search/FilterAgencies';
+import axios from 'axios';
+import { useState, useEffect } from 'react';
+import { tpAgency } from '../../types/types';
 
 
 export function Agencies() {
 
-    const cards = Array.from({ length:  15 }, () => null);
+    const [agencies,setAgencies] = useState<tpAgency[]>([]);
+
+    useEffect(() => {
+        // Recibir las agencias del servidor
+        const fetchAgencies = async () => {
+            try {
+                const response = await axios.get<tpAgency[]>('http://localhost:5000/agencies');
+                setAgencies(response.data);
+            } catch (error) {
+                console.error('Error fetching agencies:', error);
+            }
+        };
+
+        fetchAgencies();
+    }, []);
 
     return (
         <>
@@ -18,17 +33,17 @@ export function Agencies() {
                 <DarkPicture/>
                 <Header/>
                 <Navbar/>
-
+                
                 <h1 id="agency-title">Agencias</h1>
 
-                <Filter/>
+                <Filter setAgencies={setAgencies}/>
             </div>
 
             <div className="agency-section">
                 <div className="agency-container">
-                    {cards.map((_, index) => (
+                    {agencies.map((agency, index) => (
                         <div key={index} className="item">
-                            <Card/>
+                            <AgencyCard {...agency}/>
                         </div>
                     ))}
                 </div>

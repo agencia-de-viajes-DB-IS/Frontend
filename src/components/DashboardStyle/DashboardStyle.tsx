@@ -1,8 +1,8 @@
 import { Link } from 'react-router-dom'
-import { DashboardProps } from '../../files/types'
+import { DashboardProps } from '../../types/typesComponents'
 import './styles.css'
 
-export const DashboardStyle: React.FC<DashboardProps> = ({children}) => {
+export const DashboardStyle: React.FC<DashboardProps> = ({ children, selected }) => {
     return (
         <>
         <header className="navbar navbar-dark sticky-top bg-dark flex-md-nowrap p-0 shadow">
@@ -23,10 +23,16 @@ export const DashboardStyle: React.FC<DashboardProps> = ({children}) => {
                     <nav id="sidebarMenu" className="col-md-3 col-lg-2 d-md-block bg-light sidebar collapse">
                         <div className="position-sticky pt-3">
                             <ul className="nav flex-column">
-                                <li className="nav-item">
+                                <li className="nav-item" onClick={() => selected(1)}>
                                     <a className="nav-link active" aria-current="page" href="#">
                                         <span data-feather="home"></span>
                                         Usuarios
+                                    </a>
+                                </li>
+                                <li className="nav-item" onClick={() => selected(2)}>
+                                    <a className="nav-link active" aria-current="page" href="#">
+                                        <span data-feather="home"></span>
+                                        Agencias
                                     </a>
                                 </li>
                                 <li className="nav-item">

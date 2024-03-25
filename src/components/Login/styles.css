@@ -1,6 +1,10 @@
-.btn-login {
+#btn-login {
+    background-color: transparent;
+    color: white;
     border: 1px solid white;
+    text-align: center;
     border-radius: 10px;
-    margin-left: 15px;
-    font-size: 20px;
+    width: 130px;
+    height: 40px;
+    border: 1px solid white;
 }

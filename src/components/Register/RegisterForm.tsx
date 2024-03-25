@@ -1,11 +1,13 @@
 import { useState } from "react";
 import { url } from "../../helper/server";
 import axios from "axios";
-import { Register } from "../../files/types";
+import { Register } from "../../types/types";
 import { useNavigate } from "react-router-dom";
+import { ModalShowProps } from "../../types/typesComponents";
 
 
-function RegisterForm() {
+
+function RegisterForm({ onClose }: ModalShowProps) {
 
     // Datos del registro del usuario
     const [firstName, setFirstName] = useState("");
@@ -19,18 +21,16 @@ function RegisterForm() {
         e.preventDefault();
 
         const data = {
-            firstName: "Alfredo1",
-            lastName: "Somoza1",
-            email: "somoza1@gmail.com",
-            password: "somozaza"
+            firstName: firstName,
+            lastName: lastName,
+            email: email,
+            password: password
         }
         const user = await axios.post<Register>(`${url}/auth/register`, data);
-        console.log(user)
         if(user.status == 200) {
-            setFirstName("")
-            setEmail("")
-            setLastName("")
-            setPassword("")
+            navigate("/");
+            onClose();
+            alert(`Hola ${firstName}, usted ha sido registrado`);
         }
     }
 
@@ -62,7 +62,7 @@ function RegisterForm() {
                         type="text" 
                         className="form-control mb-3 border border-secondary" 
                         placeholder="Email"
-                        name="Email"
+                        name="email"
                         value={email}
                         onChange={({target}) => setEmail(target.value)}
                     /> 
@@ -72,7 +72,7 @@ function RegisterForm() {
                         type="password" 
                         className="form-control mb-3 border border-secondary" 
                         placeholder="Password"
-                        name="Password"
+                        name="password"
                         value={password}
                         onChange={({target}) => setPassword(target.value)}
                     />

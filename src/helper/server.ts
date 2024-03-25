@@ -1,7 +1,7 @@
-export const url = "https://afd9-40-83-58-143.ngrok-free.app"
+export const url = "http://localhost:5000"
 
 export const fetchDefault = (endpoint: string, init: any, method: string, resolve = (_d: any) => {}, reject = (_d:any)=> {}) => {
-    fetch(`${url}/api/v1${endpoint}`, {
+    fetch(`${url}${endpoint}`, {
         'method': method,
         'headers': {
             'Content-Type': 'application/json',
@@ -19,7 +19,7 @@ export const fetchDefault = (endpoint: string, init: any, method: string, resolv
     });
 }
 export const fetchForm = (endpoint: string, init: FormData, method: string, resolve = (_d: any) => {}, reject = (_d:any)=> {}) => {
-    fetch(`${url}/api/v1${endpoint}`, {
+    fetch(`${url}${endpoint}`, {
         'method': method, 
         body: init,
     })
@@ -34,7 +34,7 @@ export const fetchForm = (endpoint: string, init: FormData, method: string, reso
     });
 }
 export const fetchGet = (endpoint: string, resolve = (_d: any) => {}, reject = (_d: any)=> {}) => {
-    fetch(`${url}/api/v1${endpoint}`, {
+    fetch(`${url}${endpoint}`, {
         'method': "GET",
         'headers': {
             'Content-Type': 'application/json',
@@ -52,7 +52,7 @@ export const fetchGet = (endpoint: string, resolve = (_d: any) => {}, reject = (
 }
 
 export const fetchDelete = (endpoint: string, resolve = (_d: any) => {}, reject = (_d: any)=> {}) => {
-    fetch(`${url}/api/v1${endpoint}`, {
+    fetch(`${url}${endpoint}`, {
         'method': "DELETE",
     })
     .then(async (res) => {

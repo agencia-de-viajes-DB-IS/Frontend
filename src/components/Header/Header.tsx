@@ -6,7 +6,7 @@ import './styles.css'
 export function Header() {
     return (
         <div className="header-container">
-            <div>
+            <div id='logo'>
                 <img src={logo} alt="logo" width="100px"/>
             </div>
 

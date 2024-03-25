@@ -12,7 +12,7 @@ function LoginModal() {
 
     return (
         <>
-            <Button className="text-light btn-login" variant="" onClick={handleShow}>
+            <Button id='btn-login' className="text-light" variant="" onClick={handleShow}>
                 Iniciar Sesión
             </Button>
             
@@ -23,7 +23,7 @@ function LoginModal() {
                     </Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
-                    <LoginForm/>
+                    <LoginForm onClose={handleClose}/>
                 </Modal.Body>
             </Modal>
         </>

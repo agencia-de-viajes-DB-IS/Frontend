@@ -1,4 +1,4 @@
-import { UsersProps } from '../../files/types'
+import { UsersProps } from '../../types/typesComponents'
 import './styles.css'
 
 export const Users: React.FC<UsersProps> = ({data}) => {

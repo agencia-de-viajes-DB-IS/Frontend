@@ -23,7 +23,7 @@ function RegisterModal() {
                     </Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
-                    <RegisterForm/>
+                    <RegisterForm onClose={handleClose}/>
                 </Modal.Body>
             </Modal>
         </>

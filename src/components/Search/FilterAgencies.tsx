@@ -1,61 +1,127 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import './styles.css'
+import { tpAgency } from '../../types/types';
+import axios from 'axios';
 
-export function Filter() {
+interface FilterProps {
+    setAgencies: React.Dispatch<React.SetStateAction<tpAgency[]>>;
+}
 
-    // Todas las propiedad2 y la propiedad2 seleccionada
-    const [propiedades2, setPropiedades2] = useState(['Opcion1', 'Opcion2', 'Opcion3', 'Opcion4', 'Opcion5'])
-    const [selectedPropiedad2, setSelectedPropiedad2] = useState('');
-   // Seleccionar una propiedad2
-    const handlePropiedad2Change: React.ChangeEventHandler<HTMLSelectElement> = (event) => {
-        setSelectedPropiedad2(event.target.value);
+export function Filter({ setAgencies }: FilterProps) {
+
+    // Array con las agencias filtradas
+    const [filteredAgencies,setFilteredAgencies] = useState<tpAgency[]>([])
+
+    // Todos los emails y el address seleccionado
+    const [emails, setEmails] = useState<string[]>(['Todos'])
+    const [selectedEmail, setSelectedEmail] = useState('Todos');
+   // Seleccionar un address
+    const handleEmailChange: React.ChangeEventHandler<HTMLSelectElement> = (event) => {
+        setSelectedEmail(event.target.value);
     };
 
-    // Todas las propiedad3 y la propiedad3 seleccionada
-    const [propiedades3, setPropiedades3] = useState(['Opcion1', 'Opcion2', 'Opcion3', 'Opcion4', 'Opcion5'])
-    const [selectedPropiedad3, setSelectedPropiedad3] = useState('');
-   // Seleccionar una propiedad3
-    const handlePropiedad3Change: React.ChangeEventHandler<HTMLSelectElement> = (event) => {
-        setSelectedPropiedad3(event.target.value);
+    // Todos los addresses y el address seleccionado
+    const [addresses, setAddresses] = useState<string[]>(['Todos'])
+    const [selectedAddress, setSelectedAddress] = useState('Todos');
+   // Seleccionar un Address
+    const handleAddressChange: React.ChangeEventHandler<HTMLSelectElement> = (event) => {
+        setSelectedAddress(event.target.value);
     };
 
-    // Todas las propiedad4 y la propiedad4 seleccionada
-    const [propiedades4, setPropiedades4] = useState(['Opcion1', 'Opcion2', 'Opcion3', 'Opcion4', 'Opcion5'])
-    const [selectedPropiedad4, setSelectedPropiedad4] = useState('');
-   // Seleccionar una propiedad4
-    const handlePropiedad4Change: React.ChangeEventHandler<HTMLSelectElement> = (event) => {
-        setSelectedPropiedad4(event.target.value);
+    // Todos los FaxNumbers y el FaxNumber seleccionado
+    const [faxNumbers, setFaxNumbers] = useState<string[]>(['Todos'])
+    const [selectedFaxNumber, setSelectedFaxNumber] = useState('Todos');
+   // Seleccionar un FaxNumber
+    const handleFaxNumberChange: React.ChangeEventHandler<HTMLSelectElement> = (event) => {
+        setSelectedFaxNumber(event.target.value);
     };
+
+
+    const handleFilter = () => {
+        let tempAgencies:tpAgency[] = [...filteredAgencies];
+        
+        console.log(tempAgencies)
+        // Revisar si hay filtro por correo
+        if(selectedEmail != 'Todos') {
+            tempAgencies = tempAgencies.filter(agency => agency.email == selectedEmail);
+        }
+        // Revisar si hay filtro por direccion
+        if(selectedAddress != 'Todos') {
+            tempAgencies = tempAgencies.filter(agency => agency.address == selectedAddress);
+        }
+        // Revisar si hay filtro por numero de fax
+        if(selectedFaxNumber != 'Todos') {
+            tempAgencies = tempAgencies.filter(agency => agency.faxNumber == selectedFaxNumber);
+        }
+
+        setAgencies(tempAgencies)
+    }
+
+    useEffect(() => {
+        const fetchPropiedades = async () => {
+            try {
+                const response = await axios.get<tpAgency[]>('http://localhost:5000/agencies');
+
+                // Llenar el array de agencias filtradas
+                setFilteredAgencies(response.data)
+
+                // Array con los valores de las propiedades repetidas
+                const agencyEmails = response.data.map(agency => agency.email);
+                const agencyAddresses = response.data.map(agency => agency.address);
+                const agencyFaxNumbers = response.data.map(agency => agency.faxNumber);
+
+                // Array con los valores de las propiedades sin repetir
+                const emailsSet = [...new Set(agencyEmails)];
+                const addressesSet = [...new Set(agencyAddresses)];
+                const faxNumbersSet = [...new Set(agencyFaxNumbers)];
+
+                // Agregarle propiedad Ninguno a todos
+                emailsSet.unshift('Todos');
+                addressesSet.unshift('Todos');
+                faxNumbersSet.unshift('Todos');
+
+                // Agregar los valores
+                setEmails(emailsSet);
+                setAddresses(addressesSet);
+                setFaxNumbers(faxNumbersSet);
+                
+            } catch (error) {
+                console.error('Error fetching agencies:', error);
+            }
+        };
+
+        fetchPropiedades();
+    }, []);
 
     return (
         <div className='search-container'>
             <div className="search-section">
                 <div className="search-from">
-                    <label htmlFor="" className='agency-label'>Propiedad2</label>
-                    <select id="propiedad2" value={selectedPropiedad2} onChange={handlePropiedad2Change}>
-                        {propiedades2.map((propiedad2, index) => (
-                            <option key={index} value={propiedad2}>{propiedad2}</option>
+                    <label htmlFor="" className='agency-label'>Correo Electrónico</label>
+                    <select id="address" value={selectedEmail} onChange={handleEmailChange}>
+                        {emails.map((address, index) => (
+                            <option key={index} value={address}>{address}</option>
                         ))}
                     </select>
                 </div>
                 <div className="search-from">
-                    <label htmlFor="" className='agency-label'>Propiedad3</label>
-                    <select id="propiedad3" value={selectedPropiedad3} onChange={handlePropiedad3Change}>
-                        {propiedades3.map((propiedad3, index) => (
-                            <option key={index} value={propiedad3}>{propiedad3}</option>
+                    <label htmlFor="" className='agency-label'>Dirección</label>
+                    <select id="address" value={selectedAddress} onChange={handleAddressChange}>
+                        {addresses.map((address, index) => (
+                            <option key={index} value={address}>{address}</option>
                         ))}
                     </select>
                 </div>
                 <div className="search-from">
-                    <label htmlFor="" className='agency-label'>Propiedad4</label>
-                    <select id="propiedad4" value={selectedPropiedad4} onChange={handlePropiedad4Change}>
-                        {propiedades4.map((propiedad4, index) => (
-                            <option key={index} value={propiedad4}>{propiedad4}</option>
+                    <label htmlFor="" className='agency-label'>Número de Fax</label>
+                    <select id="propiedad4" value={selectedFaxNumber} onChange={handleFaxNumberChange}>
+                        {faxNumbers.map((numeroFax, index) => (
+                            <option key={index} value={numeroFax}>{numeroFax}</option>
                         ))}
                     </select>
                 </div>
                 <div className="search-btn agency-btn">
-                    <button type="button" onClick={alert}>Buscar</button>
+                    <button type="button" onClick={handleFilter}>Buscar</button>
                 </div>
             </div>
         </div>
