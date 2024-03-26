@@ -91,7 +91,7 @@ export function Filter({ excursions, setExcursions, agency }: FilterProps) {
         const locationsSet = [... new Set(excursionLocations)];
         const arrivalDatesSet = [... new Set(excursionArrivalDates)];
         const pricessSet = [... new Set(excursionPrices)];
-
+        console.log(agenciesSet)
         agenciesSet.sort();
         locationsSet.sort();
         arrivalDatesSet.sort();
@@ -115,7 +115,7 @@ export function Filter({ excursions, setExcursions, agency }: FilterProps) {
 
     },[]);
 
-
+    console.log(excursions)
     return (
         <div className='search-container'>
             <div className="search-section">

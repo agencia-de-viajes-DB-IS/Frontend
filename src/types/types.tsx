@@ -26,8 +26,16 @@ export interface UsersGet {
     firstName: string,
     lastName: string,
     email: string,
+    id: number
 }
 
+export interface AgencyGet {
+    id: number,
+    name: string,
+    address: string,
+    faxNumber: string,
+    email: string
+}
 // cositas locas del backend
 export interface RecivedExcursions {
     $id:string,

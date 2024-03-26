@@ -1,16 +1,13 @@
 import { ReactNode } from "react"
-import { tpAgency, tpUser } from "./types"
+import { UsersGet, tpAgency } from "./types"
 
 export interface UsersProps {
-    data: Array<tpUser>
+    data: Array<UsersGet>
 }
 export interface DashboardProps {
     children: ReactNode,
     selected: (op: number) => void
-}
-export interface UsersProps {
-    data: Array<tpUser>
-}
+} 
 export interface AgenciesProps {
     data: Array<tpAgency>
 }
