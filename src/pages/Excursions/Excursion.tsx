@@ -11,6 +11,7 @@ import axios from 'axios';
 
 export function Excursions() {
 
+
     const [excursions,setExcursions] = useState<tpExcursion[]>([]);
 
     useEffect(() => {

@@ -72,7 +72,7 @@ export function Filter({setExcursions, initialAgency}: FilterProps) {
     useEffect(() => {
         const fetchPropiedades = async () => {
             try {
-                const response = await axios.get<tpExcursion[]>('https://0b00-37-19-200-18.ngrok-free.app/excursions');
+                const response = await axios.get<tpExcursion[]>('http://localhost:5000/excursions');
                 
                 // Llenar el array de agencias filtradas
                 setFilteredExcursions(response.data.$values);
