@@ -10,7 +10,7 @@ function AgencyModalContent(agency:tpAgency) {
     const navigate = useNavigate();
 
     const handleExcursions = () => {
-        navigate("/excursions")
+        navigate(`/excursions/${agency.name}`)
     }
 
     return (

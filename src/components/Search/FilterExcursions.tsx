@@ -4,19 +4,21 @@ import { tpAgency, tpExcursion } from '../../types/types';
 import axios from 'axios';
 
 interface FilterProps {
-    setExcursions: React.Dispatch<React.SetStateAction<tpExcursion[]>>;
-    initialAgency?:string;
+    excursions:tpExcursion[];
+    setExcursions:React.Dispatch<React.SetStateAction<tpExcursion[]>>;
+    agency?:string;
 }
 
-export function Filter({setExcursions, initialAgency}: FilterProps) {
+export function Filter({ excursions, setExcursions, agency }: FilterProps) {
 
     // Array con las agencias filtradas
     const [filteredExcursions, setFilteredExcursions] = useState<tpExcursion[]>([]);
 
+    
     // Todas las agencias y la agencia seleccionada
     const [agencies, setAgencies] = useState<string[]>([]);
     // Usar initialAgency para establecer el valor inicial de selectedAgency
-    const [selectedAgency, setSelectedAgency] = useState<string>(initialAgency ?? 'Todos');
+    const [selectedAgency, setSelectedAgency] = useState<string>(agency ?? 'Todos');
    // Seleccionar una agencia
     const handleAgencyChange: React.ChangeEventHandler<HTMLSelectElement> = (event) => {
         setSelectedAgency(event.target.value);
@@ -48,7 +50,7 @@ export function Filter({setExcursions, initialAgency}: FilterProps) {
 
     const handleFilter = () => {
         let tempExcursions:tpExcursion[] = [...filteredExcursions];
-        
+
         // Revisar si hay filtro por agencia
         if(selectedAgency != 'Todos') {
             tempExcursions = tempExcursions.filter(excursion => excursion.agency.name == selectedAgency);
@@ -70,51 +72,49 @@ export function Filter({setExcursions, initialAgency}: FilterProps) {
     }
 
     useEffect(() => {
-        const fetchPropiedades = async () => {
-            try {
-                const response = await axios.get<tpExcursion[]>('https://0b00-37-19-200-18.ngrok-free.app/excursions');
-                
-                // Llenar el array de agencias filtradas
-                setFilteredExcursions(response.data.$values);
 
-                // Array con los valores de las propiedades
-                const excursionAgencies = response.data.$values.map(excursion => excursion.agency.name);
-                const excursionLocations = response.data.$values.map(excursion => excursion.location);
-                const excursionArrivalDates = response.data.$values.map(excursion => excursion.arrivalDate);
-                const excursionPrices = response.data.$values.map(excursion => excursion.price);
-                
-                // Array con los valores de las propiedades sin repetir
-                const agenciesSet = [... new Set(excursionAgencies)];
-                const locationsSet = [... new Set(excursionLocations)];
-                const arrivalDatesSet = [... new Set(excursionArrivalDates)];
-                const pricessSet = [... new Set(excursionPrices)];
+        setFilteredExcursions([...excursions])
 
-                agenciesSet.sort();
-                locationsSet.sort();
-                arrivalDatesSet.sort();
-                pricessSet.sort();
+        // Llenar el array de agencias filtradas
+        if (agency) {
+            handleFilter();
+        }
 
-                const pricessSet1 = pricessSet.map(price => price.toString());
+        // Array con los valores de las propiedades
+        const excursionAgencies = excursions.map(excursion => excursion.agency.name);
+        const excursionLocations = excursions.map(excursion => excursion.location);
+        const excursionArrivalDates = excursions.map(excursion => excursion.arrivalDate);
+        const excursionPrices = excursions.map(excursion => excursion.price);
+        
+        // Array con los valores de las propiedades sin repetir
+        const agenciesSet = [... new Set(excursionAgencies)];
+        const locationsSet = [... new Set(excursionLocations)];
+        const arrivalDatesSet = [... new Set(excursionArrivalDates)];
+        const pricessSet = [... new Set(excursionPrices)];
 
-                // Agregarle propiedad Ninguno a todos
-                agenciesSet.unshift('Todos');
-                locationsSet.unshift('Todos');
-                arrivalDatesSet.unshift('Todos');
-                pricessSet1.unshift('Todos');
-                
-                // Agregar los valores
-                setAgencies(agenciesSet);
-                setLocations(locationsSet);
-                setArrivalDates(arrivalDatesSet);
-                setPrices(pricessSet1);
+        agenciesSet.sort();
+        locationsSet.sort();
+        arrivalDatesSet.sort();
+        pricessSet.sort();
 
-            } catch (error) {
-                console.error('Error fetching agencies:', error);
-            }
-        };
+        const pricessSet1 = pricessSet.map(price => price.toString());
 
-        fetchPropiedades();
+        // Agregarle propiedad Ninguno a todos
+        agenciesSet.unshift('Todos');
+        locationsSet.unshift('Todos');
+        arrivalDatesSet.unshift('Todos');
+        pricessSet1.unshift('Todos');
+        
+        // Agregar los valores
+        setAgencies(agenciesSet);
+        setLocations(locationsSet);
+        setArrivalDates(arrivalDatesSet);
+        setPrices(pricessSet1);
+
+    
+
     },[]);
+
 
     return (
         <div className='search-container'>

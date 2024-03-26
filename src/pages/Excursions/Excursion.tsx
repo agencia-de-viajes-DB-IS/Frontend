@@ -7,10 +7,12 @@ import './styles.css';
 import { Filter } from "../../components/Search/FilterExcursions";
 import ExcursionCard from "../../components/Excursions/ExcursionCard";
 import axios from 'axios';
+import { useParams } from 'react-router-dom';
 
 
 export function Excursions() {
 
+    const { agencyName } = useParams<{ agencyName: string }>();
     const [excursions,setExcursions] = useState<tpExcursion[]>([]);
 
     useEffect(() => {
@@ -29,6 +31,8 @@ export function Excursions() {
         fetchExcursions();
     }, []);
 
+    
+
     return (
         <>
             <div className="excursions-main">
@@ -36,7 +40,7 @@ export function Excursions() {
                 <Header/>
                 <Navbar/>
                 <h1 id="excursion-title">Excursiones</h1>
-                <Filter setExcursions={setExcursions}/>
+                {agencyName ? <Filter excursions={excursions} setExcursions={setExcursions}  agency={agencyName}/> : <Filter excursions={excursions} setExcursions={setExcursions} />}
             </div>
 
             <div className="excursion-section">
