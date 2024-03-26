@@ -4,21 +4,19 @@ import { tpAgency, tpExcursion } from '../../types/types';
 import axios from 'axios';
 
 interface FilterProps {
-    excursions:tpExcursion[];
-    setExcursions:React.Dispatch<React.SetStateAction<tpExcursion[]>>;
-    agency?:string;
+    setExcursions: React.Dispatch<React.SetStateAction<tpExcursion[]>>;
+    initialAgency?:string;
 }
 
-export function Filter({ excursions, setExcursions, agency }: FilterProps) {
+export function Filter({setExcursions, initialAgency}: FilterProps) {
 
     // Array con las agencias filtradas
     const [filteredExcursions, setFilteredExcursions] = useState<tpExcursion[]>([]);
 
-    
     // Todas las agencias y la agencia seleccionada
     const [agencies, setAgencies] = useState<string[]>([]);
     // Usar initialAgency para establecer el valor inicial de selectedAgency
-    const [selectedAgency, setSelectedAgency] = useState<string>(agency ?? 'Todos');
+    const [selectedAgency, setSelectedAgency] = useState<string>(initialAgency ?? 'Todos');
    // Seleccionar una agencia
     const handleAgencyChange: React.ChangeEventHandler<HTMLSelectElement> = (event) => {
         setSelectedAgency(event.target.value);
@@ -50,7 +48,7 @@ export function Filter({ excursions, setExcursions, agency }: FilterProps) {
 
     const handleFilter = () => {
         let tempExcursions:tpExcursion[] = [...filteredExcursions];
-
+        
         // Revisar si hay filtro por agencia
         if(selectedAgency != 'Todos') {
             tempExcursions = tempExcursions.filter(excursion => excursion.agency.name == selectedAgency);
@@ -72,49 +70,51 @@ export function Filter({ excursions, setExcursions, agency }: FilterProps) {
     }
 
     useEffect(() => {
+        const fetchPropiedades = async () => {
+            try {
+                const response = await axios.get<tpExcursion[]>('http://localhost:5000/excursions');
+                
+                // Llenar el array de agencias filtradas
+                setFilteredExcursions(response.data.$values);
 
-        setFilteredExcursions([...excursions])
+                // Array con los valores de las propiedades
+                const excursionAgencies = response.data.$values.map(excursion => excursion.agency.name);
+                const excursionLocations = response.data.$values.map(excursion => excursion.location);
+                const excursionArrivalDates = response.data.$values.map(excursion => excursion.arrivalDate);
+                const excursionPrices = response.data.$values.map(excursion => excursion.price);
+                
+                // Array con los valores de las propiedades sin repetir
+                const agenciesSet = [... new Set(excursionAgencies)];
+                const locationsSet = [... new Set(excursionLocations)];
+                const arrivalDatesSet = [... new Set(excursionArrivalDates)];
+                const pricessSet = [... new Set(excursionPrices)];
 
-        // Llenar el array de agencias filtradas
-        if (agency) {
-            handleFilter();
-        }
+                agenciesSet.sort();
+                locationsSet.sort();
+                arrivalDatesSet.sort();
+                pricessSet.sort();
 
-        // Array con los valores de las propiedades
-        const excursionAgencies = excursions.map(excursion => excursion.agency.name);
-        const excursionLocations = excursions.map(excursion => excursion.location);
-        const excursionArrivalDates = excursions.map(excursion => excursion.arrivalDate);
-        const excursionPrices = excursions.map(excursion => excursion.price);
-        
-        // Array con los valores de las propiedades sin repetir
-        const agenciesSet = [... new Set(excursionAgencies)];
-        const locationsSet = [... new Set(excursionLocations)];
-        const arrivalDatesSet = [... new Set(excursionArrivalDates)];
-        const pricessSet = [... new Set(excursionPrices)];
+                const pricessSet1 = pricessSet.map(price => price.toString());
 
-        agenciesSet.sort();
-        locationsSet.sort();
-        arrivalDatesSet.sort();
-        pricessSet.sort();
+                // Agregarle propiedad Ninguno a todos
+                agenciesSet.unshift('Todos');
+                locationsSet.unshift('Todos');
+                arrivalDatesSet.unshift('Todos');
+                pricessSet1.unshift('Todos');
+                
+                // Agregar los valores
+                setAgencies(agenciesSet);
+                setLocations(locationsSet);
+                setArrivalDates(arrivalDatesSet);
+                setPrices(pricessSet1);
 
-        const pricessSet1 = pricessSet.map(price => price.toString());
+            } catch (error) {
+                console.error('Error fetching agencies:', error);
+            }
+        };
 
-        // Agregarle propiedad Ninguno a todos
-        agenciesSet.unshift('Todos');
-        locationsSet.unshift('Todos');
-        arrivalDatesSet.unshift('Todos');
-        pricessSet1.unshift('Todos');
-        
-        // Agregar los valores
-        setAgencies(agenciesSet);
-        setLocations(locationsSet);
-        setArrivalDates(arrivalDatesSet);
-        setPrices(pricessSet1);
-
-    
-
+        fetchPropiedades();
     },[]);
-
 
     return (
         <div className='search-container'>

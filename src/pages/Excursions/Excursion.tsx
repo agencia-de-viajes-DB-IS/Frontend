@@ -31,8 +31,6 @@ export function Excursions() {
         fetchExcursions();
     }, []);
 
-    
-
     return (
         <>
             <div className="excursions-main">
