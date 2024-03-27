@@ -5,12 +5,14 @@ import { Excursions } from "./pages/Excursions/Excursion";
 import { Agencies } from "./pages/Agencies/Agencies";
 import { Admin } from "./pages/Admin/Admin";
 import { Packages } from "./pages/Packages/Packages";
+import { HotelDeals } from "./pages/HotelDeals/HotelDeals";
 
 function App() {
   return (
     <Routes>
       <Route path="/" element={<Home/>}/>
       <Route path="/packages" element={<Packages/>}/>
+      <Route path="/hotelDeals" element={<HotelDeals/>}/>
       <Route path="/excursions" element={<Excursions/>}/>
       <Route path="/excursions/:agencyName" element={<Excursions/>}/>
       <Route path="/agencies" element={<Agencies/>}/>

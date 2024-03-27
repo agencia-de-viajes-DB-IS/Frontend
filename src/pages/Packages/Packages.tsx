@@ -1,7 +1,7 @@
 import { DarkPicture } from "../../components/DarkPicture/Dark";
 import { Header } from "../../components/Header/Header";
 import { Navbar } from "../../components/Navbar/Navbar";
-import { RecivedPackages, tpPackage } from "../../types/types";
+import { tpPackage } from "../../types/types";
 import { useEffect, useState } from "react";
 import './styles.css';
 import { Filter } from "../../components/Search/FilterPackages";
@@ -17,9 +17,9 @@ export function Packages() {
         // Recibir las excursiones del servidor
         const fetchPackages = async () => {
             try {
-                const response = await axios.get<RecivedPackages[]>('http://localhost:5000/packages');
+                const response = await axios.get<tpPackage[]>('http://localhost:5000/packages');
 
-                setPackages(response.data.$values)
+                setPackages(response.data)
                 
             } catch (error) {
                 console.error('Error fetching packages:', error);

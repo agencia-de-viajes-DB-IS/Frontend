@@ -14,7 +14,7 @@ function PackageModalContent(package1:tpPackage) {
 
     const agency:tpAgency = {
         id: 90,
-        name: "string",
+        name: "Cuba Verde",
         address: "string",
         faxNumber: "string",
         email: "string"
