@@ -6,7 +6,6 @@ export interface UsersProps {
 }
 export interface DashboardProps {
     children: ReactNode,
-    selected: (op: number) => void
 } 
 export interface AgenciesProps {
     data: Array<tpAgency>

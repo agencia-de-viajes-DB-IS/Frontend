@@ -48,7 +48,7 @@ export const Agencies: React.FC<AgenciesProps> = ({data}) => {
         }
         api();
     }, []);
-
+    console.log(agencies)
     return (
         <>
             <div className="container mt-5">

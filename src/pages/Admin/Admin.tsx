@@ -38,9 +38,8 @@ export const Admin = () => {
 
     return (
         <>
-            <DashboardStyle selected={(op) => setOption(op)}>
-                { option == 1 ?<Users data={users}/> : <></>}
-                { option == 2 ?<Agencies data={[]}/> : <></>}
+            <DashboardStyle>
+                <Users data={users}/> 
             </DashboardStyle>
         </>
     )

@@ -2,6 +2,7 @@ import { UsersProps } from '../../types/typesComponents'
 import './styles.css'
 
 export const Users: React.FC<UsersProps> = ({data}) => {
+    console.log(data)
     return (
         <>
             <div className="container mt-5">
@@ -9,7 +10,7 @@ export const Users: React.FC<UsersProps> = ({data}) => {
                     <h3>Usuarios</h3>
                 </div>
                 <ul className="list-group">
-                    {data.map((user, index) => (
+                    {data && data.map((user, index) => (
                         <li key={index} className="list-group-item d-flex justify-content-between align-items-center">
                             <div>
                                 <h5 className="mb-1">{user.firstName}</h5>
