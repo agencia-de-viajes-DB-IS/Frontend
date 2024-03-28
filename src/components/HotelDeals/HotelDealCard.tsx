@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import Modal from 'react-bootstrap/Modal';
-import img from '../../images/anders.jpg'
+import img from '../../images/hotel.jpg'
 import './styles.css'
 import { tpHotelDeals } from '../../types/types';
 import { MDBModalContent } from 'mdb-react-ui-kit';
@@ -28,4 +28,4 @@ function HotelDealCard(hotelDeal:tpHotelDeals) {
     );
 }
 
-export default HotelDealsCard;
+export default HotelDealCard;

@@ -1,33 +1,23 @@
 import React, { useEffect, useState } from 'react';
 import './styles.css'
-import { tpAgency, tpExcursion } from '../../types/types';
+import { tpHotelDeals } from '../../types/types';
 import axios from 'axios';
 
 interface FilterProps {
-    setExcursions: React.Dispatch<React.SetStateAction<tpExcursion[]>>;
-    initialAgency?:string;
+    setHotelDeals: React.Dispatch<React.SetStateAction<tpHotelDeals[]>>;
 }
 
-export function Filter({setExcursions, initialAgency}: FilterProps) {
+export function Filter({setHotelDeals}:FilterProps) {
 
     // Array con las agencias filtradas
-    const [filteredExcursions, setFilteredExcursions] = useState<tpExcursion[]>([]);
+    const [filteredHotelDeals,setFilteredHotelDeals] = useState<tpHotelDeals[]>([])
 
     // Todas las agencias y la agencia seleccionada
-    const [agencies, setAgencies] = useState<string[]>([]);
-    // Usar initialAgency para establecer el valor inicial de selectedAgency
-    const [selectedAgency, setSelectedAgency] = useState<string>(initialAgency ?? 'Todos');
+    const [agencies, setAgencies] = useState<string[]>([])
+    const [selectedAgency, setSelectedAgency] = useState<string>('Todos');
    // Seleccionar una agencia
     const handleAgencyChange: React.ChangeEventHandler<HTMLSelectElement> = (event) => {
         setSelectedAgency(event.target.value);
-    };
-
-    // Todas las localizaciones y la localizacion seleccionada
-    const [locations, setLocations] = useState<string[]>([])
-    const [selectedLocation, setSelectedLocation] = useState('Todos');
-   // Seleccionar una localizacion
-    const handleLocationChange: React.ChangeEventHandler<HTMLSelectElement> = (event) => {
-        setSelectedLocation(event.target.value);
     };
 
     // Todas las fechas de salida y la fecha de salida seleccionada
@@ -38,6 +28,14 @@ export function Filter({setExcursions, initialAgency}: FilterProps) {
         setSelectedArrivalDate(event.target.value);
     };
 
+    // Todas las fechas de salida y la fecha de salida seleccionada
+    const [departureDates, setDepartureDates] = useState<string[]>([])
+    const [selectedDepartureDate, setSelectedDepartureDate] = useState('Todos');
+   // Seleccionar una fecha de salida
+    const handleDepartureDateChange: React.ChangeEventHandler<HTMLSelectElement> = (event) => {
+        setSelectedDepartureDate(event.target.value);
+    };
+
     // Todos los precios y el precio seleccionado
     const [prices, setPrices] = useState<string[]>([])
     const [selectedPrice, setSelectedPrice] = useState('Todos');
@@ -46,65 +44,57 @@ export function Filter({setExcursions, initialAgency}: FilterProps) {
         setSelectedPrice(event.target.value);
     };
 
+
     const handleFilter = () => {
-        let tempExcursions:tpExcursion[] = [...filteredExcursions];
+        let tempHotelDeals:tpHotelDeals[] = [...filteredHotelDeals];
         
-        // Revisar si hay filtro por agencia
-        if(selectedAgency != 'Todos') {
-            tempExcursions = tempExcursions.filter(excursion => excursion.agency.name == selectedAgency);
-        }
-        // Revisar si hay filtro por localizacion
-        if(selectedLocation != 'Todos') {
-            tempExcursions = tempExcursions.filter(excursion => excursion.location == selectedLocation);
-        }
         // Revisar si hay filtro por fecha de llegada
+        if(selectedDepartureDate != 'Todos') {
+            tempHotelDeals = tempHotelDeals.filter(hotelDeal => hotelDeal.departureDate == selectedDepartureDate);
+        }
+        // Revisar si hay filtro por fecha de salida
         if(selectedArrivalDate != 'Todos') {
-            tempExcursions = tempExcursions.filter(excursion => excursion.arrivalDate == selectedArrivalDate);
+            tempHotelDeals = tempHotelDeals.filter(hotelDeal => hotelDeal.arrivalDate == selectedArrivalDate);
         }
         // Revisar si hay filtro por precio
         if(selectedPrice != 'Todos') {
-            tempExcursions = tempExcursions.filter(excursion => excursion.price.toString() == selectedPrice);
+            tempHotelDeals = tempHotelDeals.filter(hotelDeal => hotelDeal.price.toString() == selectedPrice);
         }
 
-        setExcursions(tempExcursions)
+        setHotelDeals(tempHotelDeals)
     }
 
     useEffect(() => {
         const fetchPropiedades = async () => {
             try {
-                const response = await axios.get<tpExcursion[]>('http://localhost:5000/excursions');
+                const response = await axios.get<tpHotelDeals[]>('http://localhost:5000/hotelsDeals');
                 
                 // Llenar el array de agencias filtradas
-                setFilteredExcursions(response.data.$values);
+                setFilteredHotelDeals(response.data.$values);
 
                 // Array con los valores de las propiedades
-                const excursionAgencies = response.data.$values.map(excursion => excursion.agency.name);
-                const excursionLocations = response.data.$values.map(excursion => excursion.location);
-                const excursionArrivalDates = response.data.$values.map(excursion => excursion.arrivalDate);
-                const excursionPrices = response.data.$values.map(excursion => excursion.price);
-                
-                // Array con los valores de las propiedades sin repetir
-                const agenciesSet = [... new Set(excursionAgencies)];
-                const locationsSet = [... new Set(excursionLocations)];
-                const arrivalDatesSet = [... new Set(excursionArrivalDates)];
-                const pricessSet = [... new Set(excursionPrices)];
+                const hotelDealsDepartureDates = response.data.$values.map(hotelDeal => hotelDeal.departureDate);
+                const hotelDealsArrivalDates = response.data.$values.map(hotelDeal => hotelDeal.arrivalDate);
+                const hotelDealsPrices = response.data.$values.map(hotelDeal => hotelDeal.price);
 
-                agenciesSet.sort();
-                locationsSet.sort();
+                // Array con los valores de las propiedades sin repetir
+                const departureDatesSet = [... new Set(hotelDealsDepartureDates)];
+                const arrivalDatesSet = [... new Set(hotelDealsArrivalDates)];
+                const pricessSet = [... new Set(hotelDealsPrices)];
+
+                departureDatesSet.sort();
                 arrivalDatesSet.sort();
                 pricessSet.sort();
 
                 const pricessSet1 = pricessSet.map(price => price.toString());
 
                 // Agregarle propiedad Ninguno a todos
-                agenciesSet.unshift('Todos');
-                locationsSet.unshift('Todos');
+                departureDatesSet.unshift('Todos');
                 arrivalDatesSet.unshift('Todos');
                 pricessSet1.unshift('Todos');
                 
                 // Agregar los valores
-                setAgencies(agenciesSet);
-                setLocations(locationsSet);
+                setDepartureDates(departureDatesSet);
                 setArrivalDates(arrivalDatesSet);
                 setPrices(pricessSet1);
 
@@ -120,23 +110,15 @@ export function Filter({setExcursions, initialAgency}: FilterProps) {
         <div className='search-container'>
             <div className="search-section">
                 <div className="search-from">
-                    <label htmlFor="" className='excursion-label'>Agencia</label>
-                    <select id="agencia" value={selectedAgency} onChange={handleAgencyChange}>
-                        {agencies.map((agency, index) => (
-                            <option key={index} value={agency}>{agency}</option>
-                        ))}
-                    </select>
-                </div>
-                <div className="search-from">
-                    <label htmlFor="" className='excursion-label'>Localización</label>
-                    <select id="location" value={selectedLocation} onChange={handleLocationChange}>
-                        {locations.map((location, index) => (
-                            <option key={index} value={location}>{location}</option>
-                        ))}
-                    </select>
-                </div>
-                <div className="search-from">
                     <label htmlFor="" className='excursion-label'>Fecha De Salida</label>
+                    <select id="arrivalDate" value={selectedArrivalDate} onChange={handleArrivalDateChange}>
+                        {arrivalDates.map((arrivalDate, index) => (
+                            <option key={index} value={arrivalDate}>{arrivalDate}</option>
+                        ))}
+                    </select>
+                </div>
+                <div className="search-from">
+                    <label htmlFor="" className='excursion-label'>Fecha De Llegada</label>
                     <select id="arrivalDate" value={selectedArrivalDate} onChange={handleArrivalDateChange}>
                         {arrivalDates.map((arrivalDate, index) => (
                             <option key={index} value={arrivalDate}>{arrivalDate}</option>

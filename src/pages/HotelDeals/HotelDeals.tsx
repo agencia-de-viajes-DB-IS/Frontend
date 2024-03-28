@@ -36,14 +36,14 @@ export function HotelDeals() {
                 <Header/>
                 <Navbar/>
                 <h1 id="hotelDeal-title">Ofertas de Hotel</h1>
-                {/* <Filter setHotelDeals={setHotelDeals}/> */}
+                <Filter setHotelDeals={setHotelDeals}/>
             </div>
 
             <div className="hotelDeal-section">
                 <div className="hotelDeal-container">
                     {hotelDeals.map((hotelDeal, index) => (
                         <div key={index} className="item">
-                            {/* <HotelDealCard {...hotelDeal}/> */}
+                            <HotelDealCard {...hotelDeal}/>
                         </div>
                     ))}
                 </div>
