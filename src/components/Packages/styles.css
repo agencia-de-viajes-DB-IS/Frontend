@@ -38,12 +38,12 @@
     font-size: 18px;
   }
   
-  .btn-reserv {
+  .btn-card {
     margin-top: 20px;
     padding: 10px;
   }
   
-  .btn-reserv button {
+  .btn-card button {
     border: 1px solid rgba(0, 0, 0, 0.1);
     border-radius: 5px;
     box-shadow: rgba(0, 0, 0, 0.02) 0 1px 3px 0;
@@ -64,12 +64,8 @@
     align-items: center;
   }
   
-  .unreserved {
+  .btn-reserv {
     background-color: #13471b;
-  }
-  
-  .reserved {
-    background-color: #710e09;
   }
   
   
@@ -86,7 +82,7 @@
         padding-top: 20px;
   }
   
-  .package-info span {
+  .package-item span {
     font-weight: 700;
   }
   

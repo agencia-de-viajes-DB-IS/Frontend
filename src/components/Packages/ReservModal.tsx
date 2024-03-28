@@ -4,8 +4,7 @@ import img from '../../images/roca.jpg'
 import './styles.css'
 import { tpPackage } from '../../types/types';
 import { MDBModalContent } from 'mdb-react-ui-kit';
-import AgencyModalContent from './InfoModalContent';
-import PackageModalContent from './InfoModalContent';
+import PackageReservModalContent from './PackageReservModalContent';
 
 interface PackageModalProp {
     package1:tpPackage,
@@ -13,7 +12,7 @@ interface PackageModalProp {
     handleClose:() => void
 }
 
-function PackageModal({ package1, show, handleClose }:PackageModalProp) {
+function PackageReservModal({ package1, show, handleClose }:PackageModalProp) {
     return (
         <>
             <Modal show={show} onHide={handleClose}>
@@ -23,11 +22,11 @@ function PackageModal({ package1, show, handleClose }:PackageModalProp) {
                     </Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
-                    <PackageModalContent {...package1}/>
+                    <PackageReservModalContent {...package1}/>
                 </Modal.Body>
             </Modal>
         </>
     );
 }
 
-export default PackageModal;
+export default PackageReservModal;

@@ -136,9 +136,9 @@ export function Filter({setPackages}:FilterProps) {
                 </div>
                 <div className="search-from">
                     <label htmlFor="" className='excursion-label'>Fecha De Llegada</label>
-                    <select id="arrivalDate" value={selectedArrivalDate} onChange={handleArrivalDateChange}>
-                        {arrivalDates.map((arrivalDate, index) => (
-                            <option key={index} value={arrivalDate}>{arrivalDate}</option>
+                    <select id="arrivalDate" value={selectedDepartureDate} onChange={handleDepartureDateChange}>
+                        {departureDates.map((departureDate, index) => (
+                            <option key={index} value={departureDate}>{departureDate}</option>
                         ))}
                     </select>
                 </div>

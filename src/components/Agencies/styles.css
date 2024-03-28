@@ -49,12 +49,12 @@ POSITION RELATIVE */
     font-size: 18px;
   }
   
-  .btn-reserv {
-      margin-top: 20px;
-      padding: 10px;
+  .btn-card {
+    margin-top: 20px;
+    padding: 10px;
   }
   
-  .btn-reserv button {
+  .btn-card button {
     border: 1px solid rgba(0, 0, 0, 0.1);
     border-radius: 5px;
     box-shadow: rgba(0, 0, 0, 0.02) 0 1px 3px 0;
@@ -62,7 +62,7 @@ POSITION RELATIVE */
     color: white;
     cursor: pointer;
     display: inline-flex;
-    font-family: system-ui,-apple-system,system-ui,"Helvetica Neue",Helvetica,Arial,sans-serif;
+    font-family: system-ui, -apple-system, system-ui, "Helvetica Neue", Helvetica, Arial, sans-serif;
     font-size: 16px;
     font-weight: 600;
     justify-content: center;
@@ -75,12 +75,8 @@ POSITION RELATIVE */
     align-items: center;
   }
   
-  .unreserved{
-      background-color: #13471b;
-  }
-  
-  .reserved{
-    background-color: #710e09;
+  .btn-reserv {
+    background-color: #13471b;
   }
 
 /* ====================== MODAL CONTENT ========================= */
