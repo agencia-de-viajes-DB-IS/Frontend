@@ -90,3 +90,12 @@
     display: flex;
     justify-content: space-evenly;
   }
+
+/* RESERV FORM */
+
+.label-tourist {
+  font-weight: 700;
+  text-align: center;
+  width: 100%;
+  font-size: larger;
+}

@@ -8,20 +8,24 @@ import ModalContent from './InfoModalContent';
 import AgencyModalContent from './InfoModalContent';
 import PackageModalContent from './InfoModalContent';
 import PackageModal from './PackageModal';
-import { Button } from 'react-bootstrap';
 import PackageReservModal from './ReservModal';
 
 function PackageCard(package1:tpPackage) {
 
-    // Para manejar el Modal
+    // Para manejar el Modal de informacion
     const [show, setShow] = useState(false);
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
 
+    // Para manejar el Modal de la reservacion
+    const [showR, setShowR] = useState(false);
+    const handleCloseR = () => setShowR(false);
+    const handleShowR = () => setShowR(true);
+
     const usuarioLogeado = true;
 
     const handleReserv = () => {
-
+        handleShowR();
     }
 
     return (
@@ -46,7 +50,7 @@ function PackageCard(package1:tpPackage) {
                 
             </div>
 
-            <PackageReservModal package1={package1} show={show} handleClose={handleClose}/>
+            <PackageReservModal package1={package1} show={showR} handleClose={handleCloseR}/>
             
             <PackageModal package1={package1} show={show} handleClose={handleClose}/>
         </>

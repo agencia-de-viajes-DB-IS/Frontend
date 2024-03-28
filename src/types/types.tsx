@@ -75,3 +75,12 @@ export interface tpHotelDeals {
     arrivalDate: string,
     departureDate: string
 }
+
+// ================ TURISTAS ==================
+
+export interface tpTourist {
+    firstname: string,
+    lastname: string,
+    nacionality: string,
+    ci: string
+}

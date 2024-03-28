@@ -18,7 +18,7 @@ function PackageReservModal({ package1, show, handleClose }:PackageModalProp) {
             <Modal show={show} onHide={handleClose}>
                 <Modal.Header closeButton>
                     <Modal.Title>
-                        {package1.departureDate}
+                        Reservar Paquete {package1.departureDate}
                     </Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
