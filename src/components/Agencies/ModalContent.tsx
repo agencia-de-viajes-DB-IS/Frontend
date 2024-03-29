@@ -9,8 +9,16 @@ function AgencyModalContent(agency:tpAgency) {
 
     const navigate = useNavigate();
 
-    const handleExcursions = () => {
+    const handleShowExcursions = () => {
         navigate(`/excursions/${agency.name}`)
+    }
+
+    const handleShowHotelDeals = () => {
+        navigate(`/hotelDeals`)
+    }
+
+    const handleShowPackages = () => {
+        navigate(`/packages`)
     }
 
     return (
@@ -35,9 +43,9 @@ function AgencyModalContent(agency:tpAgency) {
                 </div>   
             </div>      
             <div className='agency-seemore'>
-                <button className='btn-excursions btn btn-primary' onClick={handleExcursions}>Ver excursiones</button>
-                <button className='btn-hotelDeals btn btn-danger'>Ver Ofertas de Hotel</button>
-                <button className='btn-packages btn btn-success'>Ver Paquetes</button>
+                <button className='btn-excursions btn btn-primary' onClick={handleShowExcursions}>Ver excursiones</button>
+                <button className='btn-hotelDeals btn btn-danger' onClick={handleShowHotelDeals}>Ver Ofertas de Hotel</button>
+                <button className='btn-packages btn btn-success' onClick={handleShowPackages}>Ver Paquetes</button>
             </div>
         </>
     );

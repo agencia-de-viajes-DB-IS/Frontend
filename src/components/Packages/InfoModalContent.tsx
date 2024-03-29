@@ -4,6 +4,7 @@ import img from '../../images/anders.jpg'
 import './styles.css'
 import { tpAgency, tpPackage } from '../../types/types';
 import AgencyModal from '../Agencies/AgencyModal';
+import { useNavigate } from "react-router-dom";
 
 function PackageModalContent(package1:tpPackage) {
 
@@ -19,6 +20,13 @@ function PackageModalContent(package1:tpPackage) {
         faxNumber: "string",
         email: "string"
     };
+
+    const navigate = useNavigate();
+
+    // Funcion para mostrar las excursiones que contiene el paquete
+    const handleShowExcursions = () => {
+        navigate('/excursions');
+    }
 
     return (
         <>
@@ -47,11 +55,28 @@ function PackageModalContent(package1:tpPackage) {
                 <div className='package-item'>
                     <span>Descripción</span>
                     <p>{package1.description}</p>  
+                </div>
+                <div className='facilities-section'>
+                    <h3 className='w-100 text-center'>Facilidades</h3>
+                    <div className='facilities-content'>
+                        <div className='facility-item'>
+                            <span>Facilidad 1</span>
+                            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusantium dolores maxime, reiciendis neque quaerat porro quasi quam voluptates iure possimus, corporis officiis. Esse eveniet autem quibusdam fugit, quasi blanditiis? Minima.</p>
+                        </div>
+                        <div className='facility-item'>
+                            <span>Facilidad 2</span>
+                            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusantium dolores maxime, reiciendis neque quaerat porro quasi quam voluptates iure possimus, corporis officiis. Esse eveniet autem quibusdam fugit, quasi blanditiis? Minima.</p>
+                        </div>
+                        <div className='facility-item'>
+                            <span>Facilidad 3</span>
+                            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusantium dolores maxime, reiciendis neque quaerat porro quasi quam voluptates iure possimus, corporis officiis. Esse eveniet autem quibusdam fugit, quasi blanditiis? Minima.</p>
+                        </div>
+                    </div>    
                 </div>   
             </div>      
             <div className='package-seemore'>
                 <button className='btn-packages btn btn-danger' onClick={handleShow}>Ver Agencia</button>
-                <button className='btn-packages btn btn-primary'>Ver Excursiones</button>
+                <button className='btn-packages btn btn-primary' onClick={handleShowExcursions}>Ver Excursiones</button>
             </div>
 
             <AgencyModal agency={agency} show={show} handleClose={handleClose}/>

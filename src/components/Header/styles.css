@@ -30,3 +30,14 @@
     align-items: center;
     justify-content: end;
 }
+
+#btn-closeSesion {
+    background-color: transparent;
+    color: white;
+    border: 1px solid white;
+    text-align: center;
+    border-radius: 10px;
+    width: 130px;
+    height: 40px;
+    border: 1px solid white;
+}
