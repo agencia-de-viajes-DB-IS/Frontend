@@ -14,6 +14,7 @@ interface data {
 
 export const Admin = () => {
     const [ option, setOption ] = useState(1)
+    // const [users, setUsers] = useState<UsersGet[]>([])
     const users: tpUser[] = [
         { firstName: "John", lastName: "Doe", email: "john.doe@example.com", password: "password1" },
         { firstName: "Jane", lastName: "Doe", email: "jane.doe@example.com", password: "password2" },
@@ -22,24 +23,23 @@ export const Admin = () => {
         { firstName: "Charlie", lastName: "Brown", email: "charlie.brown@example.com", password: "password5" },
     ];
 
-    useEffect(() => {
-        const api = async () => {
-            // const user = await axios.get<UsersGet>(`${url}/auth/register`);
-            // console.log(user)
-            const s = await fetch(`${url}/users`, {
-                method: "GET"
-            })
-            const a = await s.json()
-            console.log(a)
-        }
-        api();
-    }, []);
+    // useEffect(() => {
+    //     const api = async () => {
+    //         const user = await axios.get<UsersGet>(`${url}/users`);
+    //         setUsers(user.data.$values)
+    //         const s = await fetch(`${url}/users`, {
+    //             method: "GET"
+    //         })
+    //         const a = await s.json()
+    //         console.log(a)
+    //     }
+    //     api();
+    // }, []);
 
     return (
         <>
-            <DashboardStyle selected={(op) => setOption(op)}>
-                { option == 1 ?<Users data={users}/> : <></>}
-                { option == 2 ?<Agencies data={[]}/> : <></>}
+            <DashboardStyle>
+                <Users data={users}/> 
             </DashboardStyle>
         </>
     )

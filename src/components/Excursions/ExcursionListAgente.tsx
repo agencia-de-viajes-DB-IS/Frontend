@@ -4,12 +4,11 @@ import './styles.css'
 import { AgencyGet } from '../../types/types';
 import axios from 'axios';
 import { url } from '../../helper/server';
-import AgencyModalAdmin from './AgencyModalAdmin';
 import { Modal } from 'react-bootstrap';
-import AgencyFormUpdate from './AgencyFormUpdate';
+import ExcursionFormAgenteUpdate from './ExcursionFormAgenteUpdate';
 
-export const Agencies: React.FC<AgenciesProps> = ({data}) => {
-    const [agencies, setAgencies] = useState<AgencyGet[]>([])
+export const ExcursionListAgente: React.FC<AgenciesProps> = ({data}) => {
+    const [excursion, setExcursion] = useState<AgencyGet[]>([])
     const [update, setUpdate] = useState<AgencyGet>()
 
     // Función para enviar los datos al servidor
@@ -28,7 +27,7 @@ export const Agencies: React.FC<AgenciesProps> = ({data}) => {
         if (!response.ok) {
             throw new Error('Error al enviar los datos');
         }
-        setAgencies(agencies.filter(agency => agency.id !== id));
+        // setAgencies(agencies.filter(agency => agency.id !== id));
         console.log('Datos enviados con éxito');
         } catch (error) {
         console.error('Error:', error);
@@ -42,33 +41,31 @@ export const Agencies: React.FC<AgenciesProps> = ({data}) => {
 
     useEffect(() => {
         const api = async () => {
-            const agencies = await axios.get<AgencyGet>(`${url}/agencies`);
-            setAgencies(agencies.data)
+            const agencies = await axios.get<AgencyGet>(`${url}/excursion`);
+            // setAgencies(agencies.data)
             console.log(agencies)
         }
         api();
     }, []);
-    console.log(agencies)
     return (
         <>
             <div className="container mt-5">
                 <div className="d-flex justify-content-around align-items-center mb-3">
-                    <h1>Agencias</h1>
+                    <h3>Excursiones</h3>
                 </div>
-                <AgencyModalAdmin/>
-                <ul className="list-group mt-3">
-                    {agencies.map((ag, index) => (
+                <ul className="list-group">
+                    {excursion.map((ag, index) => (
                         <li key={index} className="list-group-item d-flex justify-content-between align-items-center">
                             <div>
                                 <h5 className="mb-1">{ag.name}</h5>
                                 <small>{ag.email}</small>
                             </div>
                             <div>
-                                <button type="button" className="btn btn-success me-2" onClick={() => {
+                                <button type="button" className="btn btn-primary me-2" onClick={() => {
                                     setUpdate(ag)
                                     handleShow()
                                 }}>Editar</button>
-                                <button type="button" className="btn btn-danger" onClick={() => del(ag.$id)}>Eliminar</button>
+                                <button type="button" className="btn btn-danger" onClick={() => del(ag.id)}>Eliminar</button>
                             </div>
                         </li>
                     ))}
@@ -81,7 +78,12 @@ export const Agencies: React.FC<AgenciesProps> = ({data}) => {
                         </Modal.Title>
                     </Modal.Header>
                     <Modal.Body>
-                        {update && <AgencyFormUpdate agency={update} />}
+                        <ExcursionFormAgenteUpdate initialData={{
+                            location: "initialData.location",
+                            price: 3,
+                            arrivalDate: "32"} }
+                            onSubmit={() => {}}
+                        />
                     </Modal.Body>
                 </Modal>
             </div>

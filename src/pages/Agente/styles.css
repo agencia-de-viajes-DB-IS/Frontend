@@ -1,0 +1,27 @@
+.main-section {
+    height: 100%;
+    background-image: url("../../images/cascade.jpg");
+    background-attachment: fixed;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    position: relative;
+}
+
+.main-content2 {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+    top: 0px;
+    bottom: 0px;
+    left: 0px;
+    right: 0px;
+    font-size: 30px;
+    z-index: 5;
+}
+.main-content2 h1 {
+    color: white;
+}
+

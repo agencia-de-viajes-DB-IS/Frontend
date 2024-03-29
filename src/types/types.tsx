@@ -26,8 +26,16 @@ export interface UsersGet {
     firstName: string,
     lastName: string,
     email: string,
+    id: number
 }
 
+export interface AgencyGet {
+    id: number,
+    name: string,
+    address: string,
+    faxNumber: string,
+    email: string
+}
 // cositas locas del backend
 export interface RecivedExcursions {
     $id:string,
@@ -83,4 +91,52 @@ export interface tpTourist {
     lastname: string,
     nacionality: string,
     ci: string
+}
+
+
+export interface Main {
+    $id:     string;
+    $values: Value[];
+}
+
+export interface Value {
+    $id:         string;
+    location:    string;
+    price:       number;
+    arrivalDate: Date;
+    agency:      Agency;
+}
+
+export interface Agency {
+    $id:       string;
+    name:      Name;
+    address:   Address;
+    faxNumber: number;
+    email:     Email;
+}
+
+export enum Address {
+    BaracoaGuantánamo = "Baracoa, Guantánamo",
+    PlayaHabana = "Playa, Habana",
+    VaraderoMatanzas = "Varadero, Matanzas",
+    VedadoHabana = "Vedado, Habana",
+    ViñalesPinarDelRío = "Viñales, Pinar del Río",
+}
+
+export enum Email {
+    CaribeGmailCOM = "caribe@gmail.com",
+    CubaWildGmailCOM = "cubaWild@gmail.com",
+    EastHeightsGmailCOM = "eastHeights@gmail.com",
+    LlaveGmailCOM = "llave@gmail.com",
+    ParadiseGmailCOM = "paradise@gmail.com",
+    VerdeCubaGmailCOM = "verdeCuba@gmail.com",
+}
+
+export enum Name {
+    CaribeResorts = "Caribe Resorts",
+    CubaVerde = "Cuba Verde",
+    EastHeights = "East Heights",
+    GreenParadise = "Green Paradise",
+    LlaveDelGolfo = "Llave del Golfo",
+    WildCuba = "Wild Cuba",
 }
