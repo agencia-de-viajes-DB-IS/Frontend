@@ -4,8 +4,8 @@ import { DashboardAgente } from "./DashboardAgente";
 import axios from "axios";
 import { url } from "../../helper/server";
 import { Button, Modal } from "react-bootstrap";
-import ExcursionFormAgente from "../../components/Excursions/ExcursionFormAgente";
-import { ExcursionListAgente } from "../../components/Excursions/ExcursionListAgente";
+import ExcursionFormAgente from "../../components/Excursions/ExcursionFormAdd";
+// import { ExcursionListAgente } from "../../components/Excursions/ExcursionListAgente";
  
 export interface Main {
     $id:     string;
@@ -100,7 +100,7 @@ export const AgenteExcursion = () => {
             </Modal>
             </DashboardAgente>
 
-            <ExcursionListAgente data={[]}/>
+            {/* <ExcursionListAgente data={[]}/> */}
         </>
     )
 }

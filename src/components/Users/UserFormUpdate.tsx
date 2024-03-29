@@ -1,23 +1,22 @@
 import { useState } from 'react';
 import { url } from '../../helper/server';
-import { tpAgency } from '../../types/types';
+import { tpUser } from '../../types/types';
 
-interface AgencyFormProps {
-  agency: tpAgency;
-}
-
-const AgencyFormUpdate: React.FC<AgencyFormProps> = ({ agency }) => {
-  const [name, setName] = useState(agency.name);
-  const [address, setAddress] = useState(agency.address);
-  const [faxNumber, setFaxNumber] = useState(agency.faxNumber);
-  const [email, setEmail] = useState(agency.email);
-  const id = agency.$id;
+interface UserFormProps {
+  user: tpUser;
+ }
+const UserForm: React.FC<UserFormProps> = ({ user }) => {
+  const [firstName, setFirstName] = useState(user.firstName);
+  const [lastName, setLastName] = useState(user.lastName);
+  const [email, setEmail] = useState(user.email);
+  const [password, setPassword] = useState(user.password);
+  const id = user.id;
   
  // Función para enviar los datos al servidor
  const sendDataToServer = async () => {
-    const data = { name, address, faxNumber, email, id };
+    const data = { id:id, firstName:firstName, lastName:lastName, email:email, password:password };
     try {console.log(data)
-      const response = await fetch(`${url}/agencies`, {
+      const response = await fetch(`${url}/users`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
@@ -43,29 +42,19 @@ const AgencyFormUpdate: React.FC<AgencyFormProps> = ({ agency }) => {
               type="text" 
               className="form-control mb-3 border border-secondary" 
               placeholder="Nombre"
-              name="name"
-              value={name}
-              onChange={(e) => setName(e.target.value)}
+              name="firstName"
+              value={firstName}
+              onChange={({target}) => setFirstName(target.value)}
           /> 
       </div>
       <div className="input-group form-group">
           <input
               type="text" 
               className="form-control mb-3 border border-secondary" 
-              placeholder="Dirección"
-              name="address"
-              value={address}
-              onChange={(e) => setAddress(e.target.value)}
-          /> 
-      </div>
-      <div className="input-group form-group">
-          <input
-              type="text" 
-              className="form-control mb-3 border border-secondary" 
-              placeholder="Número de Fax"
-              name="faxNumber"
-              value={faxNumber}
-              onChange={(e) => setFaxNumber(e.target.value)}
+              placeholder="Apellidos"
+              name="lastName"
+              value={lastName}
+              onChange={({target}) => setLastName(target.value)}
           /> 
       </div>
       <div className="input-group form-group">
@@ -78,11 +67,21 @@ const AgencyFormUpdate: React.FC<AgencyFormProps> = ({ agency }) => {
               onChange={({target}) => setEmail(target.value)}
           /> 
       </div>
+      <div className="input-group form-group">
+          <input 
+              type="text" 
+              className="form-control mb-3 border border-secondary" 
+              placeholder="Password"
+              name="password"
+              value={password}
+              onChange={({target}) => setPassword(target.value)}
+          />
+      </div>
       <div className="form-group d-flex flex-column align-items-center">
-          <input type="submit" value="Editar" className="btn btn-dark"/>
+          <input type="submit" value="Registrar" className="btn btn-dark login_btn"/>
       </div>
     </form>
  );
 }
 
-export default AgencyFormUpdate;
+export default UserForm;

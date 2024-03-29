@@ -3,7 +3,7 @@ import Modal from 'react-bootstrap/Modal';
 import img from '../../images/anders.jpg'
 import './styles.css'
 import { tpExcursion } from '../../types/types';
-import AgencyModal from '../Agencies/AgencyModal';
+import AgencyModal from '../Agencies/AgencyModalShow';
 
 function ExcursionModalContent(excursion:tpExcursion) {
 

@@ -3,7 +3,7 @@ import Modal from 'react-bootstrap/Modal';
 import img from '../../images/anders.jpg'
 import './styles.css'
 import { tpAgency, tpPackage } from '../../types/types';
-import AgencyModal from '../Agencies/AgencyModal';
+import AgencyModal from '../Agencies/AgencyModalShow';
 import { useNavigate } from "react-router-dom";
 
 function PackageModalContent(package1:tpPackage) {

@@ -1,4 +1,7 @@
 import { UsersProps } from '../../types/typesComponents'
+import UserForm from './UserFormAdd'
+import UserModalAdd from './UserModalAdd'
+import UserModalUpdate from './UserModalUdpate'
 import './styles.css'
 
 export const Users: React.FC<UsersProps> = ({data}) => {
@@ -7,9 +10,10 @@ export const Users: React.FC<UsersProps> = ({data}) => {
         <>
             <div className="container mt-5">
                 <div className="d-flex justify-content-around align-items-center mb-3">
-                    <h3>Usuarios</h3>
+                    <h1>Usuarios</h1>
                 </div>
-                <ul className="list-group">
+                <UserModalAdd/>
+                <ul className="list-group mt-3">
                     {data && data.map((user, index) => (
                         <li key={index} className="list-group-item d-flex justify-content-between align-items-center">
                             <div>
@@ -17,7 +21,7 @@ export const Users: React.FC<UsersProps> = ({data}) => {
                                 <small>{user.email}</small>
                             </div>
                             <div>
-                                <button type="button" className="btn btn-primary me-2">Editar</button>
+                                <UserModalUpdate user={user}/>
                                 <button type="button" className="btn btn-danger">Eliminar</button>
                             </div>
                         </li>

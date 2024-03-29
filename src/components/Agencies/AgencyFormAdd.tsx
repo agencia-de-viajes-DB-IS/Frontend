@@ -1,24 +1,19 @@
 import { useState } from 'react';
 import { url } from '../../helper/server';
-import { tpAgency } from '../../types/types';
 
-interface AgencyFormProps {
-  agency: tpAgency;
-}
+function AgencyForm() {
+ // Definir el estado para cada campo del formulario
+ const [name, setName] = useState('');
+ const [address, setAddress] = useState('');
+ const [faxNumber, setFaxNumber] = useState('');
+ const [email, setEmail] = useState('');
 
-const AgencyFormUpdate: React.FC<AgencyFormProps> = ({ agency }) => {
-  const [name, setName] = useState(agency.name);
-  const [address, setAddress] = useState(agency.address);
-  const [faxNumber, setFaxNumber] = useState(agency.faxNumber);
-  const [email, setEmail] = useState(agency.email);
-  const id = agency.$id;
-  
  // Función para enviar los datos al servidor
  const sendDataToServer = async () => {
-    const data = { name, address, faxNumber, email, id };
-    try {console.log(data)
+    const data = { name, address, faxNumber, email };
+    try {
       const response = await fetch(`${url}/agencies`, {
-        method: 'PUT',
+        method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
@@ -79,10 +74,10 @@ const AgencyFormUpdate: React.FC<AgencyFormProps> = ({ agency }) => {
           /> 
       </div>
       <div className="form-group d-flex flex-column align-items-center">
-          <input type="submit" value="Editar" className="btn btn-dark"/>
+          <input type="submit" value="Agregar" className="btn btn-dark"/>
       </div>
     </form>
  );
 }
 
-export default AgencyFormUpdate;
+export default AgencyForm;

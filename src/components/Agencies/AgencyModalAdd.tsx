@@ -1,24 +1,13 @@
 import { useState } from 'react';
 import Modal from 'react-bootstrap/Modal';
-import './styles.css'
-import { tpAgency } from '../../types/types'; 
-import RegisterForm from '../Register/RegisterForm';
 import { Button } from 'react-bootstrap';
-import AgencyForm from './AgencyForm';
-
-interface AgencyModalProp {
-    agency:tpAgency,
-    show:boolean,
-    handleClose:() => void
-}
+import AgencyForm from './AgencyFormAdd';
 
 
-function AgencyModalAdmin() {
+function AgencyModal() {
     const [show, setShow] = useState(false);
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
-
-    
 
     return (
         <>
@@ -29,7 +18,7 @@ function AgencyModalAdmin() {
             <Modal show={show} onHide={handleClose}>
                 <Modal.Header closeButton>
                     <Modal.Title>
-                        
+                        Agregar una agencia
                     </Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
@@ -40,4 +29,4 @@ function AgencyModalAdmin() {
     );
 }
 
-export default AgencyModalAdmin;
+export default AgencyModal;
