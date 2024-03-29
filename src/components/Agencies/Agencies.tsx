@@ -53,10 +53,10 @@ export const Agencies: React.FC<AgenciesProps> = ({data}) => {
         <>
             <div className="container mt-5">
                 <div className="d-flex justify-content-around align-items-center mb-3">
-                    <h3>Agencias</h3>
+                    <h1>Agencias</h1>
                 </div>
                 <AgencyModalAdmin/>
-                <ul className="list-group">
+                <ul className="list-group mt-3">
                     {agencies.map((ag, index) => (
                         <li key={index} className="list-group-item d-flex justify-content-between align-items-center">
                             <div>
@@ -64,7 +64,7 @@ export const Agencies: React.FC<AgenciesProps> = ({data}) => {
                                 <small>{ag.email}</small>
                             </div>
                             <div>
-                                <button type="button" className="btn btn-primary me-2" onClick={() => {
+                                <button type="button" className="btn btn-success me-2" onClick={() => {
                                     setUpdate(ag)
                                     handleShow()
                                 }}>Editar</button>

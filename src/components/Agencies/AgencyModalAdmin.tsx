@@ -22,7 +22,7 @@ function AgencyModalAdmin() {
 
     return (
         <>
-            <Button className="text-black bg-red btn-register" variant="" onClick={handleShow}>
+            <Button className="btn btn-primary" variant="" onClick={handleShow}>
                 Agregar
             </Button>
             
