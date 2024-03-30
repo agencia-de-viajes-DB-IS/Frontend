@@ -19,9 +19,9 @@ export function Excursions() {
         // Recibir las excursiones del servidor
         const fetchExcursions = async () => {
             try {
-                const response = await axios.get<RecivedExcursions[]>('http://localhost:5000/excursions');
+                const response = await axios.get<tpExcursion[]>('http://localhost:5000/excursions');
 
-                setExcursions(response.data.$values)
+                setExcursions(response.data)
                 
             } catch (error) {
                 console.error('Error fetching excursions:', error);

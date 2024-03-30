@@ -37,10 +37,10 @@ export interface RecivedPackages {
 // ************ Entities *****************
 
 export interface tpAgency {
-    id: number,
+    id: string,
     name: string,
     address: string,
-    faxNumber: string,
+    faxNumber: number,
     email: string
 }
 export interface tpFacility {
@@ -58,6 +58,7 @@ export interface tpPackage {
 }
 export interface tpExcursion {
     id: string,
+    name: string,
     location: string,
     price: number,
     arrivalDate: string,

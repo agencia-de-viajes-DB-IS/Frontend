@@ -1,10 +1,14 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import Modal from 'react-bootstrap/Modal';
 import Button from 'react-bootstrap/Button';
 import { LoginForm } from "./LoginForm";
 import './styles.css'
 
-function LoginModal() {
+interface LoginModalProp {
+    setLoggedUser: (arg0:boolean) => void;
+}
+
+function LoginModal({setLoggedUser}:LoginModalProp) {
     const [show, setShow] = useState(false);
 
     const handleClose = () => setShow(false);
@@ -23,7 +27,7 @@ function LoginModal() {
                     </Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
-                    <LoginForm onClose={handleClose}/>
+                    <LoginForm onClose={handleClose} setLoggedUser={setLoggedUser}/>
                 </Modal.Body>
             </Modal>
         </>

@@ -1,16 +1,14 @@
 import { DashboardStyle } from "../../components/DashboardStyle/DashboardStyle"; 
 import './styles.css'
-import { Agencies } from "../../components/Agencies/AgenciesListAdmin";
- 
+import { HotelDeals } from "../../components/HotelDeals/HotelDealsListAdmin";
 
-export const AdminAgencies = () => {
+export const AdminExcursions = () => {
      
 
-     
     return (
         <>
             <DashboardStyle>
-                <Agencies/> 
+                <HotelDeals/> 
             </DashboardStyle>
         </>
     )

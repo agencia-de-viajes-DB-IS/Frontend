@@ -67,7 +67,7 @@ export function Filter({setHotelDeals}:FilterProps) {
     useEffect(() => {
         const fetchPropiedades = async () => {
             try {
-                const response = await axios.get<tpHotelDeals[]>('http://localhost:5000/hotelsDeals');
+                const response = await axios.get<tpHotelDeals[]>('http://localhost:5000/hotelDeals');
                 
                 // Llenar el array de agencias filtradas
                 setFilteredHotelDeals(response.data.$values);

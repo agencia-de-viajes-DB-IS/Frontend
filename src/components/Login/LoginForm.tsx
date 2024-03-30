@@ -5,7 +5,12 @@ import axios from "axios";
 import { Login } from "../../types/types";
 import { ModalShowProps } from "../../types/typesComponents";
 
-export function LoginForm({ onClose }:ModalShowProps) {
+interface LoginFormProp {
+    setLoggedUser: (arg0:boolean) => void;
+    onClose: () => void; // Esta función se utilizará para cerrar el modal
+}
+
+export function LoginForm({ onClose , setLoggedUser }:LoginFormProp) {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const navigate = useNavigate();
@@ -21,11 +26,12 @@ export function LoginForm({ onClose }:ModalShowProps) {
             const response = await axios.post<Login>(`${url}/auth/login`, data);
             console.log(response);
             if(response.status == 200) {
+
                 // Guarda el token en el localStorage
                 localStorage.setItem('userToken', response.data.token);
+                setLoggedUser(true);
                 navigate("/");
                 onClose();
-                alert(`Bienvenido`);
             }
         } catch (error) {
             console.error('Error al iniciar sesión:', error);

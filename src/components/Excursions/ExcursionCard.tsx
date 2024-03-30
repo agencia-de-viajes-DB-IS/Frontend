@@ -7,8 +7,8 @@ import { MDBModalContent } from 'mdb-react-ui-kit';
 import ModalContent from './ModalContent';
 import AgencyModalContent from './ModalContent';
 import ExcursionModalContent from './ModalContent';
-import ExcursionModal from './ExcursionModal';
 import ExcursionReservModal from './ReservModal';
+import { ExcursionModalShow } from './ExcursionModalShow';
 
 function ExcursionCard(excursion:tpExcursion) {
     
@@ -34,7 +34,7 @@ function ExcursionCard(excursion:tpExcursion) {
                 <div className="user-picture">
                     <img src={img} alt="foto"/>
                 </div>
-                <p className="title-item">{excursion.location}</p>
+                <p className="title-item">{excursion.name}</p>
             
             
                 <div className='d-flex justify-content-around'>
@@ -51,7 +51,7 @@ function ExcursionCard(excursion:tpExcursion) {
 
             <ExcursionReservModal excursion={excursion} show={showR} handleClose={handleCloseR}/>
             
-            <ExcursionModal excursion={excursion} show={show} handleClose={handleClose}/>
+            <ExcursionModalShow excursion={excursion} show={show} handleClose={handleClose}/>
         </>
     );
 }

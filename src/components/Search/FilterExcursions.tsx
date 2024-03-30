@@ -75,13 +75,13 @@ export function Filter({setExcursions, initialAgency}: FilterProps) {
                 const response = await axios.get<tpExcursion[]>('http://localhost:5000/excursions');
                 
                 // Llenar el array de agencias filtradas
-                setFilteredExcursions(response.data.$values);
+                setFilteredExcursions(response.data);
 
                 // Array con los valores de las propiedades
-                const excursionAgencies = response.data.$values.map(excursion => excursion.agency.name);
-                const excursionLocations = response.data.$values.map(excursion => excursion.location);
-                const excursionArrivalDates = response.data.$values.map(excursion => excursion.arrivalDate);
-                const excursionPrices = response.data.$values.map(excursion => excursion.price);
+                const excursionAgencies = response.data.map(excursion => excursion.agency.name);
+                const excursionLocations = response.data.map(excursion => excursion.location);
+                const excursionArrivalDates = response.data.map(excursion => excursion.arrivalDate);
+                const excursionPrices = response.data.map(excursion => excursion.price);
                 
                 // Array con los valores de las propiedades sin repetir
                 const agenciesSet = [... new Set(excursionAgencies)];

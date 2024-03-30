@@ -1,14 +1,18 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios';
-import { tpAgency } from '../../types/types';
+import { tpAgency, tpExcursion } from '../../types/types';
 
-function ExcursionForm() {
+interface ExcursionFormUpdateProp {
+  excursion: tpExcursion;
+}
+
+export function ExcursionForm({excursion}: ExcursionFormUpdateProp) {
 
   // Definir el estado para cada campo del formulario
-  const [name, setName] = useState('');
-  const [location, setLocation] = useState('');
-  const [price, setPrice] = useState('');
-  const [arrivalDate, setArrivalDate] = useState('');
+  const [name, setName] = useState(excursion.name);
+  const [location, setLocation] = useState(excursion.location);
+  const [price, setPrice] = useState<number>(excursion.price);
+  const [arrivalDate, setArrivalDate] = useState(excursion.arrivalDate);
 
   // Manejar las agencias
   const [agencies, setAgencies] = useState<tpAgency[]>([]);
@@ -18,7 +22,7 @@ function ExcursionForm() {
     // Recibir las agencias del servidor
     const fetchAgencies = async () => {
         try {
-            const response = await axios.get<tpAgency[]>('http://localhost:5000/agencies');
+            const response = await axios.get<tpAgency[]>('http://localhost:5000/agencies');            
             setAgencies(response.data);
         } catch (error) {
             console.error('Error fetching agencies:', error);
@@ -59,7 +63,7 @@ function ExcursionForm() {
           placeholder="Precio"
           name="price"
           value={price}
-          onChange={(e) => setPrice(e.target.value)}
+          onChange={(e) => setPrice(parseInt(e.target.value, 10))}
         />
       </div>
       <div className="input-group form-group">
@@ -93,4 +97,3 @@ function ExcursionForm() {
   );
 }
 
-export default ExcursionForm;

@@ -1,3 +1,4 @@
+import { useEffect, useState } from 'react';
 import logo from '../../images/skull.png'
 import LoginModal from '../Login/LoginModal'
 import RegisterModal from '../Register/RegisterModal'
@@ -6,7 +7,12 @@ import Button from 'react-bootstrap/Button';
 
 export function Header() {
 
-    const loggedUser = true;
+    const [loggedUser,setLoggedUser] = useState(false);
+
+    const closeSesion = () => {
+        localStorage.removeItem('userToken');
+        setLoggedUser(false);
+    }
 
     return (
         <div className="header-container">
@@ -21,13 +27,13 @@ export function Header() {
             
             {loggedUser ? 
             <div className='user-section'>
-                <Button id='btn-closeSesion' className="text-light" variant="">
+                <Button id='btn-closeSesion' className="text-light" variant="" onClick={closeSesion}>
                     Cerrar Sesión
                 </Button>
             </div>:
             <div className='user-section'>
                 <RegisterModal/>
-                <LoginModal/>
+                <LoginModal setLoggedUser={setLoggedUser}/>
             </div>}
             
         </div>

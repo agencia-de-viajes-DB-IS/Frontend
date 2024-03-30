@@ -11,6 +11,7 @@ import { Admin } from "./pages/Admin/AdminUsers";
 import { AgenteExcursion } from "./pages/Agente/AgenteExcursion";
 import { AgentePackage } from "./pages/Agente/AgentePackage";
 import { AdminExcursions } from "./pages/Admin/AdminExcursions";
+import { AdminHotelDeals } from "./pages/Admin/AdminHotelDeals";
 
 function App() {
   return (
@@ -22,8 +23,9 @@ function App() {
       <Route path="/excursions/:agencyName" element={<Excursions/>}/>
       <Route path="/agencies" element={<Agencies/>}/>
       <Route path="/admin" element={<Admin/>}/>
-      <Route path="/admin-agencias" element={<AdminAgencies/>}/>
+      <Route path="/admin-agencies" element={<AdminAgencies/>}/>
       <Route path="/admin-excursions" element={<AdminExcursions/>}/>
+      <Route path="/admin-hotelDeals" element={<AdminHotelDeals/>}/>
       <Route path="/agente" element={<Agente/>}/>
       <Route path="/agente-excursion" element={<AgenteExcursion/>}/>
       <Route path="/agente-paquete" element={<AgentePackage/>}/>

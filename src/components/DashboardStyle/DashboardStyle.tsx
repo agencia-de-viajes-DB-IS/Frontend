@@ -32,13 +32,12 @@ export const DashboardStyle: React.FC<DashboardProps> = ({ children }) => {
                                     </Link>
                                 </li>
                                 <li className="nav-item">
-                                    <Link to={"/admin-agencias"}>
+                                    <Link to={"/admin-agencies"}>
                                         <a className="nav-link active" aria-current="page" href="#">
                                             <span data-feather="home"></span>
                                             Agencias
                                         </a>
                                     </Link>
-                                    
                                 </li>
                                 <li className="nav-item">
                                     <Link to={"/admin-excursions"}>
@@ -47,7 +46,14 @@ export const DashboardStyle: React.FC<DashboardProps> = ({ children }) => {
                                             Excursiones
                                         </a>
                                     </Link>
-                                    
+                                </li>
+                                <li className="nav-item">
+                                    <Link to={"/admin-hotelDeals"}>
+                                        <a className="nav-link active" aria-current="page" href="#">
+                                            <span data-feather="home"></span>
+                                            Ofertas de Hotel
+                                        </a>
+                                    </Link>
                                 </li>
                                 <li className="nav-item">
                                     <a className="nav-link" href="#">

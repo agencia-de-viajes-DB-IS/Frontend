@@ -11,11 +11,11 @@ export function Home() {
     const [excursions, setExcursions] = useState<tpExcursion[]>([]);
 
     useEffect(() => {
-        axios.get<RecivedExcursions>('http://localhost:5000/excursions')
-            .then(response => {
-                setExcursions(response.data.$values);
-            })
-            .catch(error => console.error('Error fetching data: ', error));
+        // axios.get<RecivedExcursions>('http://localhost:5000/excursions')
+        //     .then(response => {
+        //         setExcursions(response.data.$values);
+        //     })
+        //     .catch(error => console.error('Error fetching data: ', error));
     }, []);
 
     return (

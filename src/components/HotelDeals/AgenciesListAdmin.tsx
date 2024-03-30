@@ -1,26 +1,26 @@
 import { useEffect, useState } from 'react';
 import './styles.css'
-import { tpAgency } from '../../types/types';
+import { tpHotelDeals } from '../../types/types';
 import axios from 'axios';
 import { url } from '../../helper/server';
-import AgencyModal from './AgencyModalAdd';
-import AgencyModalUpdate from './AgencyModalUpdate';
+import HotelDealsModal from './HotelDealsModalAdd';
+import HotelDealsModalUpdate from './HotelDealsModalUpdate';
 
-export const Agencies = () => {
+export const HotelDeals = () => {
     
-    const [agencies, setAgencies] = useState<tpAgency[]>([])
+    const [hotelDeals, setHotelDeals] = useState<tpHotelDeals[]>([])
 
-    const deleteAgency = async (id: string) => {
+    const deleteHotelDeals = async (id: string) => {
         try {
-            const response = await axios.delete(`${url}/agencies`, {
+            const response = await axios.delete(`${url}/hotelDeals`, {
                 data:{
                     id: id
                 }
             });
             if (response.status === 200) {
                 // Actualiza el estado para reflejar la eliminación de la agencia
-                setAgencies(agencies.filter(agency => agency.id !== id));
-                console.log('Agencia eliminada con éxito');
+                setHotelDeals(hotelDeals.filter(agency => agency.id !== id));
+                console.log('Oferta de Hotel eliminada con éxito');
             }else {
                 console.error('Error al eliminar la agencia');
             }
@@ -29,16 +29,16 @@ export const Agencies = () => {
         }
     };
 
-    const handleDeleteAgency = (agency:tpAgency) => {
+    const handleDeleteHotelDeals = (agency:tpHotelDeals) => {
         console.log('voy a borrar la agencia: ')
         console.log(agency)
-        deleteAgency(agency.id);
+        deleteHotelDeals(agency.id);
     }
 
     useEffect(() => {
         const api = async () => {
-            const agencies = await axios.get<tpAgency[]>(`${url}/agencies`);
-            setAgencies(agencies.data)
+            const hotelDeals = await axios.get<tpHotelDeals[]>(`${url}/hotelDeals`);
+            setHotelDeals(hotelDeals.data)
         }
         api();
     }, []);
@@ -49,7 +49,7 @@ export const Agencies = () => {
                 <div className="d-flex justify-content-around align-items-center mb-3">
                     <h1>Agencias</h1>
                 </div>
-                <AgencyModal/>
+                <HotelDealsModal/>
                 <ul className="list-group mt-3">
                     {agencies.map((ag, index) => (
                         <li key={index} className="list-group-item d-flex justify-content-between align-items-center">
@@ -58,7 +58,7 @@ export const Agencies = () => {
                                 <small>{ag.email}</small>
                             </div>
                             <div>
-                                <AgencyModalUpdate agency={ag}/>
+                                <HotelDealsModalUpdate agency={ag}/>
                                 <button type="button" className="btn btn-danger" onClick={() => handleDeleteAgency(ag)}>Eliminar</button>
                             </div>
                         </li>

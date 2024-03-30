@@ -8,7 +8,7 @@ export const AdminExcursions = () => {
     return (
         <>
             <DashboardStyle>
-                <Excursions data={[]}/> 
+                <Excursions/> 
             </DashboardStyle>
         </>
     )

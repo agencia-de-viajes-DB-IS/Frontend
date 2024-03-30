@@ -17,7 +17,7 @@ export function HotelDeals() {
         // Recibir las excursiones del servidor
         const fetchHotelDeals = async () => {
             try {
-                const response = await axios.get<tpHotelDeals[]>('http://localhost:5000/hotelsdeals');
+                const response = await axios.get<tpHotelDeals[]>('http://localhost:5000/hoteldeals');
 
                 setHotelDeals(response.data.$values)
                 

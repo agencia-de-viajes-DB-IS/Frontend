@@ -1,32 +1,32 @@
+import ExcursionForm from './ExcursionFormAdd';
 import { useState } from 'react';
 import Modal from 'react-bootstrap/Modal';
-import img from '../../images/anders.jpg'
-import './styles.css'
-import { tpExcursion } from '../../types/types';
-import { MDBModalContent } from 'mdb-react-ui-kit';
-import AgencyModalContent from './ModalContent';
+import { Button } from 'react-bootstrap';
 
-interface ExcursionModalProp {
-    excursion:tpExcursion,
-    show:boolean,
-    handleClose:() => void
-}
 
-function ExcursionModal({ excursion, show, handleClose }:ExcursionModalProp) {
+export function ExcursionModal() {
+
+    const [show, setShow] = useState(false);
+    const handleClose = () => setShow(false);
+    const handleShow = () => setShow(true);
+
     return (
         <>
+        
+            <Button className="btn btn-primary" variant="" onClick={handleShow}>
+                Agregar
+            </Button>
+
             <Modal show={show} onHide={handleClose}>
                 <Modal.Header closeButton>
                     <Modal.Title>
-                        {excursion.location}
+                        Crear una Excursión
                     </Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
-                    <ExcursionForm {...excursion}/>
+                    <ExcursionForm/>
                 </Modal.Body>
             </Modal>
         </>
     );
 }
-
-export default ExcursionModal;
