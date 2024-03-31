@@ -3,8 +3,8 @@ import './styles.css'
 import { tpHotelDeals } from '../../types/types';
 import axios from 'axios';
 import { url } from '../../helper/server';
-import HotelDealsModal from './HotelDealsModalAdd';
-import HotelDealsModalUpdate from './HotelDealsModalUpdate';
+import { HotelDealModal } from './ModalAdd';
+import { HotelDealModalUpdate } from './ModalUpdate';
 
 export const HotelDeals = () => {
     
@@ -19,7 +19,7 @@ export const HotelDeals = () => {
             });
             if (response.status === 200) {
                 // Actualiza el estado para reflejar la eliminación de la agencia
-                setHotelDeals(hotelDeals.filter(agency => agency.id !== id));
+                setHotelDeals(hotelDeals.filter(hotelDeal => hotelDeal.id !== id));
                 console.log('Oferta de Hotel eliminada con éxito');
             }else {
                 console.error('Error al eliminar la agencia');
@@ -29,10 +29,10 @@ export const HotelDeals = () => {
         }
     };
 
-    const handleDeleteHotelDeals = (agency:tpHotelDeals) => {
-        console.log('voy a borrar la agencia: ')
-        console.log(agency)
-        deleteHotelDeals(agency.id);
+    const handleDeleteHotelDeal = (hotelDeal:tpHotelDeals) => {
+        console.log('voy a borrar la oferta de hotel: ')
+        console.log(hotelDeal)
+        deleteHotelDeals(hotelDeal.id);
     }
 
     useEffect(() => {
@@ -47,19 +47,19 @@ export const HotelDeals = () => {
         <>
             <div className="container mt-5">
                 <div className="d-flex justify-content-around align-items-center mb-3">
-                    <h1>Agencias</h1>
+                    <h1>Administrar Ofertas de Hotel</h1>
                 </div>
-                <HotelDealsModal/>
+                <HotelDealModal/>
                 <ul className="list-group mt-3">
-                    {agencies.map((ag, index) => (
-                        <li key={index} className="list-group-item d-flex justify-content-between align-items-center">
+                    {hotelDeals.map((ofert, index) => (
+                        <li key={index} className="list-group-item list-group-element">
                             <div>
-                                <h5 className="mb-1">{ag.name}</h5>
-                                <small>{ag.email}</small>
+                                <h5 className="mb-1">{ofert.name}</h5>
+                                <small>{ofert.description}</small>
                             </div>
                             <div>
-                                <HotelDealsModalUpdate agency={ag}/>
-                                <button type="button" className="btn btn-danger" onClick={() => handleDeleteAgency(ag)}>Eliminar</button>
+                                <HotelDealModalUpdate hotelDeal={ofert}/>
+                                <button type="button" className="btn btn-danger" onClick={() => handleDeleteHotelDeal(ofert)}>Eliminar</button>
                             </div>
                         </li>
                     ))}

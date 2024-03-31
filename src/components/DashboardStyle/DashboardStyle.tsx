@@ -56,6 +56,14 @@ export const DashboardStyle: React.FC<DashboardProps> = ({ children }) => {
                                     </Link>
                                 </li>
                                 <li className="nav-item">
+                                    <Link to={"/admin-packages"}>
+                                        <a className="nav-link active" aria-current="page" href="#">
+                                            <span data-feather="home"></span>
+                                            Paquetes
+                                        </a>
+                                    </Link>
+                                </li>
+                                <li className="nav-item">
                                     <a className="nav-link" href="#">
                                         <span data-feather="file"></span>
                                         Peticiones

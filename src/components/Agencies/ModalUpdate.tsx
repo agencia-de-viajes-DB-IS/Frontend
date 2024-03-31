@@ -1,10 +1,15 @@
-import ExcursionForm from './ExcursionFormAdd';
-import { useState } from 'react';
 import Modal from 'react-bootstrap/Modal';
+import './styles.css'
+import { tpAgency } from '../../types/types';
 import { Button } from 'react-bootstrap';
+import AgencyFormUpdate from './FormUpdate';
+import { useState } from 'react';
 
+interface AgencyModalProp {
+    agency:tpAgency
+}
 
-export function ExcursionModal() {
+function AgencyModalUpdate({agency}:AgencyModalProp) {
 
     const [show, setShow] = useState(false);
     const handleClose = () => setShow(false);
@@ -12,21 +17,22 @@ export function ExcursionModal() {
 
     return (
         <>
-        
-            <Button className="btn btn-primary" variant="" onClick={handleShow}>
-                Agregar
+            <Button className="btn btn-success me-3" variant="" onClick={handleShow}>
+                Editar
             </Button>
 
             <Modal show={show} onHide={handleClose}>
                 <Modal.Header closeButton>
                     <Modal.Title>
-                        Crear una Excursión
+                        Editar Agencia
                     </Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
-                    <ExcursionForm/>
+                    <AgencyFormUpdate agency={agency}/>
                 </Modal.Body>
             </Modal>
         </>
     );
 }
+
+export default AgencyModalUpdate;

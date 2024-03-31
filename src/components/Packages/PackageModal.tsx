@@ -4,8 +4,8 @@ import img from '../../images/roca.jpg'
 import './styles.css'
 import { tpPackage } from '../../types/types';
 import { MDBModalContent } from 'mdb-react-ui-kit';
-import AgencyModalContent from './InfoModalContent';
-import PackageModalContent from './InfoModalContent';
+import AgencyModalContent from './ModalContent';
+import PackageModalContent from './ModalContent';
 
 interface PackageModalProp {
     package1:tpPackage,

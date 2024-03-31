@@ -3,8 +3,8 @@ import './styles.css'
 import { tpAgency } from '../../types/types';
 import axios from 'axios';
 import { url } from '../../helper/server';
-import AgencyModal from './AgencyModalAdd';
-import AgencyModalUpdate from './AgencyModalUpdate';
+import AgencyModal from './ModalAdd';
+import AgencyModalUpdate from './ModalUpdate';
 
 export const Agencies = () => {
     
@@ -35,27 +35,29 @@ export const Agencies = () => {
         deleteAgency(agency.id);
     }
 
+    const fetchAgencies = async () => {
+        const agencies = await axios.get<tpAgency[]>(`${url}/agencies`);
+        setAgencies(agencies.data)
+    }
+
     useEffect(() => {
-        const api = async () => {
-            const agencies = await axios.get<tpAgency[]>(`${url}/agencies`);
-            setAgencies(agencies.data)
-        }
-        api();
+        fetchAgencies();
     }, []);
+
     
     return (
         <>
             <div className="container mt-5">
                 <div className="d-flex justify-content-around align-items-center mb-3">
-                    <h1>Agencias</h1>
+                    <h1>Administrar Agencias</h1>
                 </div>
-                <AgencyModal/>
+                <AgencyModal fetchAgencies={fetchAgencies}/>
                 <ul className="list-group mt-3">
                     {agencies.map((ag, index) => (
                         <li key={index} className="list-group-item d-flex justify-content-between align-items-center">
                             <div>
                                 <h5 className="mb-1">{ag.name}</h5>
-                                <small>{ag.email}</small>
+                                <small>{ag.address}</small>
                             </div>
                             <div>
                                 <AgencyModalUpdate agency={ag}/>

@@ -9,18 +9,26 @@ interface AgencyFormProps {
 const AgencyFormUpdate: React.FC<AgencyFormProps> = ({ agency }) => {
   const [name, setName] = useState(agency.name);
   const [address, setAddress] = useState(agency.address);
-  const [faxNumber, setFaxNumber] = useState(agency.faxNumber);
+  const [faxNumberStr, setFaxNumberStr] = useState(agency.faxNumber.toString());
   const [email, setEmail] = useState(agency.email);
-  const id = agency.$id;
+  const id = agency.id;
   
  // Función para enviar los datos al servidor
  const sendDataToServer = async () => {
+
+    const faxNumber = parseInt(faxNumberStr, 10);
+
+    // Obtén el token de autenticación del almacenamiento local
+    const token = localStorage.getItem('userToken');
+
     const data = { name, address, faxNumber, email, id };
+
     try {console.log(data)
       const response = await fetch(`${url}/agencies`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`
         },
         body: JSON.stringify(data),
       });
@@ -32,6 +40,7 @@ const AgencyFormUpdate: React.FC<AgencyFormProps> = ({ agency }) => {
       console.error('Error:', error);
     }
  };
+ 
 
  return (
     <form onSubmit={(e) => {
@@ -63,9 +72,9 @@ const AgencyFormUpdate: React.FC<AgencyFormProps> = ({ agency }) => {
               type="text" 
               className="form-control mb-3 border border-secondary" 
               placeholder="Número de Fax"
-              name="faxNumber"
-              value={faxNumber}
-              onChange={(e) => setFaxNumber(e.target.value)}
+              name="faxNumberStr"
+              value={faxNumberStr}
+              onChange={(e) => setFaxNumberStr(e.target.value)}
           /> 
       </div>
       <div className="input-group form-group">

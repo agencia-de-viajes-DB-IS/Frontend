@@ -1,10 +1,14 @@
-import { UsersProps } from '../../types/typesComponents'
+import { tpUser} from '../../types/types'
 import UserForm from './UserFormAdd'
 import UserModalAdd from './UserModalAdd'
 import UserModalUpdate from './UserModalUdpate'
 import './styles.css'
 
-export const Users: React.FC<UsersProps> = ({data}) => {
+interface UserAdminProps {
+    data:tpUser[];
+}
+
+export function Users({ data }:UserAdminProps) {
     console.log(data)
     return (
         <>

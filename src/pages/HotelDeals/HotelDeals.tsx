@@ -5,7 +5,7 @@ import { tpHotelDeals } from "../../types/types";
 import { useEffect, useState } from "react";
 import './styles.css';
 import { Filter } from "../../components/Search/FilterHotelDeals";
-import HotelDealCard from "../../components/HotelDeals/HotelDealCard";
+import HotelDealCard from "../../components/HotelDeals/Card";
 import axios from 'axios';
 
 
@@ -19,7 +19,7 @@ export function HotelDeals() {
             try {
                 const response = await axios.get<tpHotelDeals[]>('http://localhost:5000/hoteldeals');
 
-                setHotelDeals(response.data.$values)
+                setHotelDeals(response.data)
                 
             } catch (error) {
                 console.error('Error fetching hotelDeals:', error);
@@ -34,7 +34,6 @@ export function HotelDeals() {
             <div className="hotelDeals-main">
                 <DarkPicture/>
                 <Header/>
-                <Navbar/>
                 <h1 id="hotelDeal-title">Ofertas de Hotel</h1>
                 <Filter setHotelDeals={setHotelDeals}/>
             </div>

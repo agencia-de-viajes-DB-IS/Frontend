@@ -4,7 +4,7 @@ import { DashboardAgente } from "./DashboardAgente";
 import axios from "axios";
 import { url } from "../../helper/server";
 import { Button, Modal } from "react-bootstrap";
-import ExcursionFormAgente from "../../components/Excursions/ExcursionFormAdd";
+import ExcursionFormAgente from "../../components/Excursions/FormAdd";
 // import { ExcursionListAgente } from "../../components/Excursions/ExcursionListAgente";
  
 export interface Main {

@@ -23,7 +23,6 @@ export function Home() {
             <div className="main-section">
                 <DarkPicture/>
                 <Header/>
-                <Navbar/>
 
                 <div className="main-content2">
                     <h1>Una experiencia inolvidable</h1>

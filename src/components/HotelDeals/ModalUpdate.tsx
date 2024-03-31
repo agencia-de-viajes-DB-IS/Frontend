@@ -1,14 +1,14 @@
-import { ExcursionForm} from './FormUpdate';
+import { HotelDealForm} from './FormUpdate';
 import { useState } from 'react';
 import Modal from 'react-bootstrap/Modal';
 import { Button } from 'react-bootstrap';
-import { tpExcursion } from '../../types/types';
+import { tpHotelDeals } from '../../types/types';
 
-interface ExcursionModalUpdateProp {
-    excursion: tpExcursion;
+interface HotelDealModalUpdateProp {
+    hotelDeal: tpHotelDeals;
 }
 
-export function ExcursionModalUpdate({excursion}:ExcursionModalUpdateProp) {
+export function HotelDealModalUpdate({hotelDeal}:HotelDealModalUpdateProp) {
 
     const [show, setShow] = useState(false);
     const handleClose = () => setShow(false);
@@ -24,11 +24,11 @@ export function ExcursionModalUpdate({excursion}:ExcursionModalUpdateProp) {
             <Modal show={show} onHide={handleClose}>
                 <Modal.Header closeButton>
                     <Modal.Title>
-                        Editar una Excursión
+                        Editar una Oferta de Hotel
                     </Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
-                    <ExcursionForm excursion={excursion}/>
+                    <HotelDealForm hotelDeal={hotelDeal}/>
                 </Modal.Body>
             </Modal>
         </>

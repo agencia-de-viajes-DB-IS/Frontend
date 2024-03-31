@@ -6,7 +6,7 @@ import { tpAgency } from '../../types/types';
 import { MDBModalContent } from 'mdb-react-ui-kit';
 import ModalContent from './ModalContent';
 import AgencyModalContent from './ModalContent';
-import AgencyModal from './AgencyModalShow';
+import AgencyModal from './ModalShow';
 
 function AgencyCard(agency:tpAgency) {
     const [show, setShow] = useState(false);

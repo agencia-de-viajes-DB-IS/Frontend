@@ -1,9 +1,9 @@
-import { ExcursionForm} from './ExcursionFormUpdate';
+import { ExcursionForm} from './FormUpdate';
 import { useState } from 'react';
 import Modal from 'react-bootstrap/Modal';
 import { Button } from 'react-bootstrap';
 import { tpExcursion } from '../../types/types';
-import ExcursionModalContent from './ModalContent';
+import ExcursionModalContent from './ModalContentShow';
 
 interface ExcursionModalShowProp {
     excursion: tpExcursion;

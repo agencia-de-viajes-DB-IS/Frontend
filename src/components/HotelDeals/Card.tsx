@@ -4,9 +4,9 @@ import img from '../../images/hotel.jpg'
 import './styles.css'
 import { tpHotelDeals } from '../../types/types';
 import { MDBModalContent } from 'mdb-react-ui-kit';
-import ModalContent from './ModalContent';
-import HotelDealModalContent from './ModalContent';
-import HotelDealModal from './HotelDealModal';
+import ModalContent from './ModalContentShow';
+import HotelDealModalContent from './ModalContentShow';
+import HotelDealModal from './ModalShow';
 import HotelDealReservModal from './ReservModal';
 
 function HotelDealCard(hotelDeal:tpHotelDeals) {
@@ -21,7 +21,7 @@ function HotelDealCard(hotelDeal:tpHotelDeals) {
     const handleCloseR = () => setShowR(false);
     const handleShowR = () => setShowR(true);
 
-    const usuarioLogeado = true;
+    const token = localStorage.getItem('userToken');
 
     const handleReserv = () => {
         handleShowR();
@@ -33,9 +33,9 @@ function HotelDealCard(hotelDeal:tpHotelDeals) {
                 <div className="user-picture">
                     <img src={img} alt="foto"/>
                 </div>
-                <p className="title-item">{hotelDeal.arrivalDate}</p>
+                <p className="title-item">{hotelDeal.name}</p>
                 <div className='d-flex justify-content-around'>
-                    {usuarioLogeado &&
+                    {token &&
                     <div className='btn-card'>
                         <button type="button" className='btn-reserv' onClick={handleReserv}>Reservar</button>
                     </div>

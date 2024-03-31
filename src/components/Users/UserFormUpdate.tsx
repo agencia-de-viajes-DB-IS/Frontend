@@ -5,12 +5,14 @@ import { tpUser } from '../../types/types';
 interface UserFormProps {
   user: tpUser;
  }
-const UserForm: React.FC<UserFormProps> = ({ user }) => {
+export function UserForm({ user }: UserFormProps) {
+
   const [firstName, setFirstName] = useState(user.firstName);
   const [lastName, setLastName] = useState(user.lastName);
   const [email, setEmail] = useState(user.email);
-  const [password, setPassword] = useState(user.password);
   const id = user.id;
+
+  console.log(user)
   
  // Función para enviar los datos al servidor
  const sendDataToServer = async () => {
@@ -67,16 +69,6 @@ const UserForm: React.FC<UserFormProps> = ({ user }) => {
               onChange={({target}) => setEmail(target.value)}
           /> 
       </div>
-      <div className="input-group form-group">
-          <input 
-              type="text" 
-              className="form-control mb-3 border border-secondary" 
-              placeholder="Password"
-              name="password"
-              value={password}
-              onChange={({target}) => setPassword(target.value)}
-          />
-      </div>
       <div className="form-group d-flex flex-column align-items-center">
           <input type="submit" value="Registrar" className="btn btn-dark login_btn"/>
       </div>
@@ -84,4 +76,3 @@ const UserForm: React.FC<UserFormProps> = ({ user }) => {
  );
 }
 
-export default UserForm;

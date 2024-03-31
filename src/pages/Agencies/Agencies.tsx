@@ -2,7 +2,7 @@ import './styles.css'
 import { DarkPicture } from "../../components/DarkPicture/Dark";
 import { Header } from "../../components/Header/Header";
 import { Navbar } from "../../components/Navbar/Navbar";
-import AgencyCard from "../../components/Agencies/AgencyCard";
+import AgencyCard from "../../components/Agencies/Card";
 import { Filter } from '../../components/Search/FilterAgencies';
 import axios from 'axios';
 import { useState, useEffect } from 'react';
@@ -32,7 +32,6 @@ export function Agencies() {
             <div className="agencies-main">
                 <DarkPicture/>
                 <Header/>
-                <Navbar/>
                 
                 <h1 id="agency-title">Agencias</h1>
 

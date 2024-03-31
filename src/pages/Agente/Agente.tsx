@@ -5,7 +5,7 @@ import './styles.css'
 import { url } from "../../helper/server";
 import axios from "axios";
 import { Users } from "../../components/Users/Users";
-import { Agencies } from "../../components/Agencies/AgenciesListAdmin";
+import { Agencies } from "../../components/Agencies/ListAdmin";
 import { DashboardAgente } from "./DashboardAgente";
 
 interface data {

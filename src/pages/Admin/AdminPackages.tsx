@@ -1,16 +1,13 @@
 import { DashboardStyle } from "../../components/DashboardStyle/DashboardStyle"; 
 import './styles.css'
-import { Agencies } from "../../components/Agencies/ListAdmin";
- 
+import { Packages } from "../../components/Packages/ListAdmin";
 
-export const AdminAgencies = () => {
-     
-
+export const AdminPackages = () => {
      
     return (
         <>
             <DashboardStyle>
-                <Agencies/> 
+                <Packages/>
             </DashboardStyle>
         </>
     )

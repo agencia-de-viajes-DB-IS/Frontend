@@ -4,9 +4,9 @@ import img from '../../images/anders.jpg'
 import './styles.css'
 import { tpExcursion } from '../../types/types';
 import { MDBModalContent } from 'mdb-react-ui-kit';
-import ModalContent from './ModalContent';
-import AgencyModalContent from './ModalContent';
-import ExcursionModalContent from './ModalContent';
+import ModalContent from './ModalContentShow';
+import AgencyModalContent from './ModalContentShow';
+import ExcursionModalContent from './ModalContentShow';
 import ExcursionReservModal from './ReservModal';
 import { ExcursionModalShow } from './ExcursionModalShow';
 

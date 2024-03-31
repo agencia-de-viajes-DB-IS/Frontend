@@ -5,38 +5,50 @@ import './styles.css'
 import { url } from "../../helper/server";
 import axios from "axios";
 import { Users } from "../../components/Users/Users";
-import { Agencies } from "../../components/Agencies/AgenciesListAdmin";
+import { tpToken } from "../../types/typesComponents";
+import { jwtDecode } from "jwt-decode";
 
 export const Admin = () => {
 
-    // const [users, setUsers] = useState<UsersGet[]>([])
+    const [users, setUsers] = useState<tpUser[]>([]);
+    const [decodeToken, setDecodeToken] = useState<tpToken | null>(null);
 
-    const users: tpUser[] = [
-        { firstName: "John", lastName: "Doe", email: "john.doe@example.com", password: "password1" },
-        { firstName: "Jane", lastName: "Doe", email: "jane.doe@example.com", password: "password2" },
-        { firstName: "Alice", lastName: "Smith", email: "alice.smith@example.com", password: "password3" },
-        { firstName: "Bob", lastName: "Johnson", email: "bob.johnson@example.com", password: "password4" },
-        { firstName: "Charlie", lastName: "Brown", email: "charlie.brown@example.com", password: "password5" },
-    ];
 
-    // useEffect(() => {
-    //     const api = async () => {
-    //         const user = await axios.get<UsersGet>(`${url}/users`);
-    //         setUsers(user.data.$values)
-    //         const s = await fetch(`${url}/users`, {
-    //             method: "GET"
-    //         })
-    //         const a = await s.json()
-    //         console.log(a)
-    //     }
-    //     api();
-    // }, []);
+    useEffect(() => {
+
+        const token = localStorage.getItem('userToken');
+        console.log(token);
+
+        const config = {
+            headers: {
+                Authorization: `Bearer ${token}`
+            }
+        };
+        
+        const fetchUsers = async () => {
+            const user = await axios.get<tpUser[]>(`${url}/users`, config);
+            setUsers(user.data)
+        }
+        
+        if (token) {
+            setDecodeToken(jwtDecode(token));
+        }
+        else {
+            setDecodeToken(null)
+        }
+        
+        fetchUsers();
+    }, []);
+
+    
 
     return (
         <>
-            <DashboardStyle>
-                <Users data={users}/> 
-            </DashboardStyle>
+            {decodeToken && decodeToken.role === 'Super Admin' &&
+                <DashboardStyle>
+                    <Users data={users}/> 
+                </DashboardStyle>
+            }
         </>
     )
 }

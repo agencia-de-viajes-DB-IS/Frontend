@@ -3,7 +3,7 @@ import Modal from 'react-bootstrap/Modal';
 import img from '../../images/anders.jpg'
 import './styles.css'
 import { tpAgency, tpPackage } from '../../types/types';
-import AgencyModal from '../Agencies/AgencyModalShow';
+import AgencyModal from '../Agencies/ModalShow';
 import { useNavigate } from "react-router-dom";
 
 function PackageModalContent(package1:tpPackage) {
@@ -14,10 +14,10 @@ function PackageModalContent(package1:tpPackage) {
     const handleShow = () => setShow(true);
 
     const agency:tpAgency = {
-        id: 90,
+        id: "90",
         name: "Cuba Verde",
         address: "string",
-        faxNumber: "string",
+        faxNumber: 4000,
         email: "string"
     };
 

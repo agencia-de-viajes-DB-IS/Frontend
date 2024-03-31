@@ -34,7 +34,6 @@ export function Packages() {
             <div className="packages-main">
                 <DarkPicture/>
                 <Header/>
-                <Navbar/>
                 <h1 id="package-title">Paquetes</h1>
                 <Filter setPackages={setPackages}/>
             </div>

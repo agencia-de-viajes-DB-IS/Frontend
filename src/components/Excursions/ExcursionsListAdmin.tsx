@@ -1,10 +1,9 @@
 import { useEffect, useState } from 'react';
-import { AgenciesProps } from '../../types/typesComponents'
 import './styles.css'
 import { tpExcursion } from '../../types/types';
 import axios from 'axios';
 import { url } from '../../helper/server';
-import { ExcursionModal } from './ExcursionModalAdd';
+import { ExcursionModal } from './ModalAdd';
 import { ExcursionModalUpdate} from './ExcursionModalUpdate';
 
 export const Excursions = () => {
@@ -33,12 +32,13 @@ export const Excursions = () => {
         deleteExcursion(excursion.id)
     }
 
+    const fetchExcursions = async () => {
+        const response = await axios.get<tpExcursion[]>(`${url}/excursions`);
+        setExcursions(response.data)
+    }
+
     useEffect(() => {
-        const api = async () => {
-            const response = await axios.get<tpExcursion[]>(`${url}/excursions`);
-            setExcursions(response.data)
-        }
-        api();
+        fetchExcursions();
     }, []);
     
     return (
@@ -47,7 +47,7 @@ export const Excursions = () => {
                 <div className="d-flex justify-content-around align-items-center mb-3">
                     <h1>Excursiones</h1>
                 </div>
-                <ExcursionModal/>
+                <ExcursionModal fetchExcursions={fetchExcursions}/>
                 <ul className="list-group mt-3">
                     {excursions.map((excursion, index) => (
                         <li key={index} className="list-group-item d-flex justify-content-between align-items-center">

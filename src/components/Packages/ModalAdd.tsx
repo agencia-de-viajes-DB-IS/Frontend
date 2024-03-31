@@ -1,15 +1,10 @@
-import Modal from 'react-bootstrap/Modal';
-import './styles.css'
-import { tpAgency } from '../../types/types';
-import { Button } from 'react-bootstrap';
-import AgencyFormUpdate from './AgencyFormUpdate';
+import { Form } from './FormAdd';
 import { useState } from 'react';
+import Modal from 'react-bootstrap/Modal';
+import { Button } from 'react-bootstrap';
 
-interface AgencyModalProp {
-    agency:tpAgency
-}
 
-function AgencyModalUpdate({agency}:AgencyModalProp) {
+export function ModalAdd() {
 
     const [show, setShow] = useState(false);
     const handleClose = () => setShow(false);
@@ -17,22 +12,21 @@ function AgencyModalUpdate({agency}:AgencyModalProp) {
 
     return (
         <>
-            <Button className="btn btn-success me-3" variant="" onClick={handleShow}>
-                Editar
+        
+            <Button className="btn btn-primary" variant="" onClick={handleShow}>
+                Agregar
             </Button>
 
             <Modal show={show} onHide={handleClose}>
                 <Modal.Header closeButton>
                     <Modal.Title>
-                        Editar Agencia
+                        Crear un Paquete
                     </Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
-                    <AgencyFormUpdate agency={agency}/>
+                    <Form onClose={handleClose}/>
                 </Modal.Body>
             </Modal>
         </>
     );
 }
-
-export default AgencyModalUpdate;

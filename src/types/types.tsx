@@ -10,7 +10,7 @@ export interface tpUser {
     lastName: string,
     email: string,
     password: string,
-    id?: string
+    id: string
 }
 export interface Login {
     $id: string,
@@ -49,7 +49,9 @@ export interface tpFacility {
     description: string
 }
 export interface tpPackage {
+    code:string,
     description: string
+    name:string,
     price: number,
     arrivalDate: string,
     departureDate: string,
@@ -59,18 +61,26 @@ export interface tpPackage {
 export interface tpExcursion {
     id: string,
     name: string,
+    description: string,
     location: string,
     price: number,
     arrivalDate: string,
     agency:tpAgency
 }
 export interface tpHotelDeals {
+    name:string,
     id: string,
     hotelId: string,
     description: string,
     price: number,
     arrivalDate: string,
     departureDate: string
+}
+export interface tpHotel {
+    id:string,
+    name:string,
+    address: string,
+    category: number
 }
 
 // ================ TURISTAS ==================

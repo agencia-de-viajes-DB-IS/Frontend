@@ -1,22 +1,27 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios';
-import { tpAgency, tpExcursion } from '../../types/types';
+import { tpAgency, tpHotel, tpHotelDeals } from '../../types/types';
 
-interface ExcursionFormUpdateProp {
-  excursion: tpExcursion;
+interface HotelDealFormUpdateProp {
+  hotelDeal: tpHotelDeals;
 }
 
-export function ExcursionForm({excursion}: ExcursionFormUpdateProp) {
+export function HotelDealForm({hotelDeal}: HotelDealFormUpdateProp) {
 
   // Definir el estado para cada campo del formulario
-  const [name, setName] = useState(excursion.name);
-  const [location, setLocation] = useState(excursion.location);
-  const [price, setPrice] = useState<number>(excursion.price);
-  const [arrivalDate, setArrivalDate] = useState(excursion.arrivalDate);
+  const [name, setName] = useState<string>('Nombre de la Oferta de Hotel');
+  const [price, setPrice] = useState<number>(hotelDeal.price);
+  const [arrivalDate, setArrivalDate] = useState<string>(hotelDeal.arrivalDate);
+  const [departureDate, setDepartureDate] = useState<string>(hotelDeal.departureDate);
+  const [description, setDescription] = useState<string>(hotelDeal.description);
 
   // Manejar las agencias
   const [agencies, setAgencies] = useState<tpAgency[]>([]);
   const [selectedAgencyName, setSelectedAgencyName] = useState<string>('');
+
+  // Manejar los hoteles
+  const [hotels, setHotels] = useState<tpHotel[]>([]);
+  const [selectedHotelName, setSelectedHotelName] = useState<string>('');
 
   useEffect(() => {
     // Recibir las agencias del servidor
@@ -29,7 +34,18 @@ export function ExcursionForm({excursion}: ExcursionFormUpdateProp) {
         }
     };
 
+    // Recibir los hoteles del servidor
+    const fetchHotels = async () => {
+      try {
+          const response = await axios.get<tpHotel[]>('http://localhost:5000/hotels');
+          setHotels(response.data);
+      } catch (error) {
+          console.error('Error fetching hotelDeals:', error);
+      }
+  };
+
     fetchAgencies();
+    fetchHotels();
 }, []);
 
   return (
@@ -44,16 +60,6 @@ export function ExcursionForm({excursion}: ExcursionFormUpdateProp) {
           name="name"
           value={name}
           onChange={(e) => setName(e.target.value)}
-        />
-      </div>
-      <div className="input-group form-group">
-        <input
-          type="text"
-          className="form-control mb-3 border border-secondary"
-          placeholder="Localización"
-          name="location"
-          value={location}
-          onChange={(e) => setLocation(e.target.value)}
         />
       </div>
       <div className="input-group form-group">
@@ -77,18 +83,37 @@ export function ExcursionForm({excursion}: ExcursionFormUpdateProp) {
         />
       </div>
       <div className="input-group form-group">
+        <input
+          type="text"
+          className="form-control mb-3 border border-secondary"
+          placeholder="Fecha de Llegada"
+          name="departureDate"
+          value={departureDate}
+          onChange={(e) => setDepartureDate(e.target.value)}
+        />
+      </div>
+      <div className="input-group form-group">
         <select
           className="form-control mb-3 border border-secondary custom-select"
-          placeholder="Aerolínea"
-          name="airline"
-          onChange={(e) => setSelectedAgencyName(e.target.value)}
+          placeholder="Hotel"
+          name="hotel"
+          onChange={(e) => setSelectedHotelName(e.target.value)}
         >
-          {agencies.map((agency, index) => (
-              <option key={index} value={agency.name}>
-                  {agency.name}
+          {hotels.map((hotel, index) => (
+              <option key={index} value={hotel.name}>
+                  {hotel.name}
               </option>
           ))}
         </select>
+      </div>
+      <div className="input-group form-group">
+        <textarea
+          className="form-control mb-3 border border-secondary"
+          placeholder="Descripción"
+          name="description"
+          value={description}
+          onChange={(e) => setDescription(e.target.value)}
+        />
       </div>
       <div className="form-group d-flex flex-column align-items-center">
         <input type="submit" value="Agregar" className="btn btn-dark" />

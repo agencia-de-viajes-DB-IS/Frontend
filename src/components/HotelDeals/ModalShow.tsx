@@ -4,7 +4,7 @@ import img from '../../images/anders.jpg'
 import './styles.css'
 import { tpHotelDeals } from '../../types/types';
 import { MDBModalContent } from 'mdb-react-ui-kit';
-import HotelDealModalContent from './ModalContent';
+import HotelDealModalContent from './ModalContentShow';
 
 interface HotelDealModalProp {
     hotelDeal:tpHotelDeals,

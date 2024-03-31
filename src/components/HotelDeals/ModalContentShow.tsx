@@ -3,7 +3,7 @@ import Modal from 'react-bootstrap/Modal';
 import img from '../../images/hotel.jpg'
 import './styles.css'
 import { tpHotelDeals } from '../../types/types';
-import AgencyModal from '../Agencies/AgencyModalShow';
+import AgencyModal from '../Agencies/ModalShow';
 
 function HotelDealModalContent(hotelDeal:tpHotelDeals) {
 

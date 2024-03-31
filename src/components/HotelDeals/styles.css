@@ -67,6 +67,11 @@
   .btn-reserv {
     background-color: #13471b;
   }
+
+  .list-group-element {
+    display: grid !important;
+    grid-template-columns: 1fr 200px;
+  }
   
   
   /* MODAL CONTENT */

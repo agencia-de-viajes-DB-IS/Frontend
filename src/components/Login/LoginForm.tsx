@@ -1,9 +1,7 @@
 import { useState } from "react";
 import { url } from "../../helper/server";
-import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { Login } from "../../types/types";
-import { ModalShowProps } from "../../types/typesComponents";
 
 interface LoginFormProp {
     setLoggedUser: (arg0:boolean) => void;
@@ -11,10 +9,10 @@ interface LoginFormProp {
 }
 
 export function LoginForm({ onClose , setLoggedUser }:LoginFormProp) {
+    
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
-    const navigate = useNavigate();
-
+    
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         const data = {
@@ -24,13 +22,13 @@ export function LoginForm({ onClose , setLoggedUser }:LoginFormProp) {
 
         try {
             const response = await axios.post<Login>(`${url}/auth/login`, data);
-            console.log(response);
+            
             if(response.status == 200) {
-
+                
                 // Guarda el token en el localStorage
                 localStorage.setItem('userToken', response.data.token);
+                console.log(localStorage.getItem('userToken'));
                 setLoggedUser(true);
-                navigate("/");
                 onClose();
             }
         } catch (error) {

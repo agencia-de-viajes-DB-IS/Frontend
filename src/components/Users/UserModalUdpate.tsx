@@ -2,7 +2,7 @@ import { useState } from 'react';
 import Modal from 'react-bootstrap/Modal';
 import './styles.css'
 import { Button } from 'react-bootstrap';
-import UserForm from './UserFormUpdate';
+import { UserForm } from './UserFormUpdate';
 import { tpUser } from '../../types/types';
 
 interface UserModalProp {
@@ -10,11 +10,10 @@ interface UserModalProp {
 }
 
 function UserModalUpdate({user}:UserModalProp) {
+
     const [show, setShow] = useState(false);
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
-
-    
 
     return (
         <>

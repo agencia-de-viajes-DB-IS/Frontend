@@ -36,7 +36,6 @@ export function Excursions() {
             <div className="excursions-main">
                 <DarkPicture/>
                 <Header/>
-                <Navbar/>
                 <h1 id="excursion-title">Excursiones</h1>
                 {agencyName ? <Filter setExcursions={setExcursions}  initialAgency={agencyName}/> : <Filter setExcursions={setExcursions} />}
             </div>
