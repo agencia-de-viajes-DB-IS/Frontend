@@ -24,7 +24,7 @@ export function HotelDealModal() {
                     </Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
-                    <HotelDealForm/>
+                    <HotelDealForm onClose={handleClose}/>
                 </Modal.Body>
             </Modal>
         </>

@@ -4,7 +4,7 @@ import { tpExcursion } from '../../types/types';
 import axios from 'axios';
 import { url } from '../../helper/server';
 import { ExcursionModal } from './ModalAdd';
-import { ExcursionModalUpdate} from './ExcursionModalUpdate';
+import { ExcursionModalUpdate} from './ModalUpdate';
 
 export const Excursions = () => {
     
@@ -45,7 +45,7 @@ export const Excursions = () => {
         <>
             <div className="container mt-5">
                 <div className="d-flex justify-content-around align-items-center mb-3">
-                    <h1>Excursiones</h1>
+                    <h1>Administrar Excursiones</h1>
                 </div>
                 <ExcursionModal fetchExcursions={fetchExcursions}/>
                 <ul className="list-group mt-3">

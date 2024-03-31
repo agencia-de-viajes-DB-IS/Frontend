@@ -1,14 +1,14 @@
-import { HotelDealForm} from './FormUpdate';
+import { PackageForm} from './FormUpdate';
 import { useState } from 'react';
 import Modal from 'react-bootstrap/Modal';
 import { Button } from 'react-bootstrap';
-import { tpHotelDeals } from '../../types/types';
+import { tpPackage } from '../../types/types';
 
-interface HotelDealModalUpdateProp {
-    hotelDeal: tpHotelDeals;
+interface ModalUpdateProp {
+    package1: tpPackage;
 }
 
-export function HotelDealModalUpdate({hotelDeal}:HotelDealModalUpdateProp) {
+export function ModalUpdate({package1}:ModalUpdateProp) {
 
     const [show, setShow] = useState(false);
     const handleClose = () => setShow(false);
@@ -24,11 +24,11 @@ export function HotelDealModalUpdate({hotelDeal}:HotelDealModalUpdateProp) {
             <Modal show={show} onHide={handleClose}>
                 <Modal.Header closeButton>
                     <Modal.Title>
-                        Editar una Oferta de Hotel
+                        Editar un Paquete
                     </Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
-                    <HotelDealForm hotelDeal={hotelDeal} onClose={handleClose}/>
+                    <PackageForm package1={package1} onClose={handleClose}/>
                 </Modal.Body>
             </Modal>
         </>

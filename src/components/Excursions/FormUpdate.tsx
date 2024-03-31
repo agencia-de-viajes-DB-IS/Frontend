@@ -109,7 +109,7 @@ export function ExcursionForm({excursion}: ExcursionFormUpdateProp) {
         />
       </div>
       <div className="form-group d-flex flex-column align-items-center">
-        <input type="submit" value="Agregar" className="btn btn-dark" />
+        <input type="submit" value="Editar" className="btn btn-dark" />
       </div>
     </form>
   );

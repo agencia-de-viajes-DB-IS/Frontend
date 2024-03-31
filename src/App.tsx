@@ -13,6 +13,7 @@ import { AgentePackage } from "./pages/Agente/AgentePackage";
 import { AdminExcursions } from "./pages/Admin/AdminExcursions";
 import { AdminHotelDeals } from "./pages/Admin/AdminHotelDeals";
 import { AdminPackages } from "./pages/Admin/AdminPackages";
+import { TouristsList } from "./pages/Tourists/TouristsList";
 
 function App() {
   return (
@@ -22,6 +23,7 @@ function App() {
       <Route path="/hotelDeals" element={<HotelDeals/>}/>
       <Route path="/excursions" element={<Excursions/>}/>
       <Route path="/excursions/:agencyName" element={<Excursions/>}/>
+      <Route path="/my-tourist" element={<TouristsList/>}/>
       <Route path="/agencies" element={<Agencies/>}/>
       <Route path="/admin" element={<Admin/>}/>
       <Route path="/admin-agencies" element={<AdminAgencies/>}/>

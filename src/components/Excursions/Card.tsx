@@ -1,17 +1,17 @@
 import { useState } from 'react';
 import Modal from 'react-bootstrap/Modal';
-import img from '../../images/roca.jpg'
+import img from '../../images/anders.jpg'
 import './styles.css'
-import { tpPackage } from '../../types/types';
+import { tpExcursion } from '../../types/types';
 import { MDBModalContent } from 'mdb-react-ui-kit';
-import ModalContent from './ModalContent';
-import AgencyModalContent from './ModalContent';
-import PackageModalContent from './ModalContent';
-import PackageModal from './PackageModal';
-import PackageReservModal from './ReservModal';
+import ModalContent from './ModalContentShow';
+import AgencyModalContent from './ModalContentShow';
+import ExcursionModalContent from './ModalContentShow';
+import ExcursionReservModal from './ReservModal';
+import { ExcursionModalShow } from './ModalShow';
 
-function PackageCard(package1:tpPackage) {
-
+function ExcursionCard(excursion:tpExcursion) {
+    
     // Para manejar el Modal de informacion
     const [show, setShow] = useState(false);
     const handleClose = () => setShow(false);
@@ -34,9 +34,9 @@ function PackageCard(package1:tpPackage) {
                 <div className="user-picture">
                     <img src={img} alt="foto"/>
                 </div>
-                <p className="title-item">{package1.departureDate}</p>
-
-                
+                <p className="title-item">{excursion.name}</p>
+            
+            
                 <div className='d-flex justify-content-around'>
                     {usuarioLogeado &&
                     <div className='btn-card'>
@@ -47,14 +47,13 @@ function PackageCard(package1:tpPackage) {
                         <button type="button" className='btn btn-secondary' onClick={handleShow}>Info</button>
                     </div>
                 </div>
-                
             </div>
 
-            <PackageReservModal package1={package1} show={showR} handleClose={handleCloseR}/>
+            <ExcursionReservModal excursion={excursion} show={showR} handleClose={handleCloseR}/>
             
-            <PackageModal package1={package1} show={show} handleClose={handleClose}/>
+            <ExcursionModalShow excursion={excursion} show={show} handleClose={handleClose}/>
         </>
     );
 }
 
-export default PackageCard;
+export default ExcursionCard;

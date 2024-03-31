@@ -5,7 +5,7 @@ import { RecivedExcursions, tpExcursion } from "../../types/types";
 import { useEffect, useState } from "react";
 import './styles.css';
 import { Filter } from "../../components/Search/FilterExcursions";
-import ExcursionCard from "../../components/Excursions/ExcursionCard";
+import ExcursionCard from "../../components/Excursions/Card";
 import axios from 'axios';
 import { useParams } from 'react-router-dom';
 

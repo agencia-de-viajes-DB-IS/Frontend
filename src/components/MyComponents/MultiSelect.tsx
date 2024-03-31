@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { MultiSelect, Option } from "react-multi-select-component";
 import Select from 'react-select';
+import './styles.css'
 
 interface SelectProps {
     options: string[];
@@ -46,7 +47,7 @@ export function MySelect({ options , setSelectedItem}: SelectProps) {
     
     return (
         <Select
-          className='w-100 mb-3 border border-secondary'
+          className='w-100 mb-3'
           defaultValue={selected}
           onChange={(e) => {
             if(e) {

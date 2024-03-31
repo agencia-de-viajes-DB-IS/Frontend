@@ -1,60 +1,69 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios';
-import { tpAgency, tpHotel, tpHotelDeals } from '../../types/types';
+import { tpAgency, tpPackage, tpExcursion } from '../../types/types';
+import { MyMultiSelect, MySelect } from '../MyComponents/MultiSelect';
 
-interface HotelDealFormUpdateProp {
-  hotelDeal: tpHotelDeals;
+interface PackageFormUpdateProp {
+  package1: tpPackage;
   onClose: () => void;
 }
 
-export function HotelDealForm({hotelDeal, onClose}: HotelDealFormUpdateProp) {
+export function PackageForm({package1 , onClose}: PackageFormUpdateProp) {
 
   // Definir el estado para cada campo del formulario
-  const [name, setName] = useState<string>('Nombre de la Oferta de Hotel');
-  const [price, setPrice] = useState<number>(hotelDeal.price);
-  const [arrivalDate, setArrivalDate] = useState<string>(hotelDeal.arrivalDate);
-  const [departureDate, setDepartureDate] = useState<string>(hotelDeal.departureDate);
-  const [description, setDescription] = useState<string>(hotelDeal.description);
+  const [name, setName] = useState<string>(package1.name);
+  const [price, setPrice] = useState<string>(package1.price.toString());
+  const [arrivalDate, setArrivalDate] = useState<string>(package1.arrivalDate);
+  const [departureDate, setDepartureDate] = useState<string>(package1.departureDate);
+  const [description, setDescription] = useState<string>(package1.description)
 
+
+  // Obtener la agencia del paquete
+  const agency = package1.extendedExcursionIds[0].agency
   // Manejar las agencias
   const [agencies, setAgencies] = useState<tpAgency[]>([]);
-  const [selectedAgencyName, setSelectedAgencyName] = useState<string>('');
-
-  // Manejar los hoteles
-  const [hotels, setHotels] = useState<tpHotel[]>([]);
-  const [selectedHotelName, setSelectedHotelName] = useState<string>('');
-
+  const [selectedAgencyName, setSelectedAgencyName] = useState<string>(agency.name);
+  
+  // Manejar las excursiones prolongadas
+  const [excursions, setExcursions] = useState<tpExcursion[]>([]);
+  const [selectedExcursionNames, setSelectedExcursionNames] = useState<string[]>();
+  
   useEffect(() => {
     // Recibir las agencias del servidor
     const fetchAgencies = async () => {
         try {
             const response = await axios.get<tpAgency[]>('http://localhost:5000/agencies');            
-            setAgencies(response.data);
+            setAgencies([{
+              id:"qw",
+              name:'Agencias',
+              address:"",
+              faxNumber:0,
+              email:"a@a"
+            }, ...response.data]);
         } catch (error) {
             console.error('Error fetching agencies:', error);
         }
     };
 
-    // Recibir los hoteles del servidor
-    const fetchHotels = async () => {
+    // Recibir las excursiones prolongadas del servidor
+    const fetchExcursions = async () => {
       try {
-          const response = await axios.get<tpHotel[]>('http://localhost:5000/hotels');
-          setHotels(response.data);
+          const response = await axios.get<tpExcursion[]>('http://localhost:5000/excursions');
+          setExcursions(response.data);
       } catch (error) {
-          console.error('Error fetching hotelDeals:', error);
+          console.error('Error fetching excursions:', error);
       }
   };
 
-    fetchAgencies();
-    fetchHotels();
+  fetchAgencies();
+  fetchExcursions();
 }, []);
 
   const handleSubmit = () => {
-    console.log('voy a editar ')
-    console.log(hotelDeal);
-
-    onClose();
+    console.log('voy a editar esta package1');
+    console.log(package1);
     
+    onClose();
   }
 
   return (
@@ -79,7 +88,7 @@ export function HotelDealForm({hotelDeal, onClose}: HotelDealFormUpdateProp) {
           placeholder="Precio"
           name="price"
           value={price}
-          onChange={(e) => setPrice(parseInt(e.target.value, 10))}
+          onChange={(e) => setPrice(e.target.value)}
         />
       </div>
       <div className="input-group form-group">
@@ -103,19 +112,13 @@ export function HotelDealForm({hotelDeal, onClose}: HotelDealFormUpdateProp) {
         />
       </div>
       <div className="input-group form-group">
-        <select
-          className="form-control mb-3 border border-secondary custom-select"
-          placeholder="Hotel"
-          name="hotel"
-          onChange={(e) => setSelectedHotelName(e.target.value)}
-        >
-          {hotels.map((hotel, index) => (
-              <option key={index} value={hotel.name}>
-                  {hotel.name}
-              </option>
-          ))}
-        </select>
+        <MySelect options={agencies.map(e => e.name)} setSelectedItem={setSelectedAgencyName}/>
       </div>
+      {selectedAgencyName && 
+        <div className="input-group form-group w-100">
+          <MyMultiSelect options={excursions.filter(e => e.agency.name === selectedAgencyName).map(e => e.name)} setSelectedData={(newSelectedExcursionNames) => setSelectedExcursionNames(newSelectedExcursionNames)}/>
+        </div>
+      }
       <div className="input-group form-group">
         <textarea
           className="form-control mb-3 border border-secondary"

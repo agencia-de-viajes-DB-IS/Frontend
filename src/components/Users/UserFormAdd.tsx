@@ -1,5 +1,8 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { url } from '../../helper/server';
+import { tpAgency } from '../../types/types';
+import axios from 'axios';
+import { MySelect } from '../MyComponents/MultiSelect';
 
 function UserForm() {
  
@@ -9,27 +12,52 @@ function UserForm() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  const rols = ['Rol', 'Agente de Marketing', 'Administrador']
+  // Manejar las agencias
+  const [agencies, setAgencies] = useState<tpAgency[]>([]);
+  const [selectedAgencyName, setSelectedAgencyName] = useState<string>('');
 
- // Función para enviar los datos al servidor
- const sendDataToServer = async () => {
-    const data = { firstName:firstName, lastName:lastName, email:email, password:password };
-    try {
-      const response = await fetch(`${url}/users`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(data),
-      });
-      if (!response.ok) {
-        throw new Error('Error al enviar los datos');
-      }
-      console.log('Datos enviados con éxito');
-    } catch (error) {
-      console.error('Error:', error);
-    }
- };
+  const rols = ['Rol', 'Agente de Marketing', 'Administrador']
+  const [selectedRol, setSelectedRol] = useState<string>('');
+
+    // Función para enviar los datos al servidor
+    const sendDataToServer = async () => {
+        const data = { firstName:firstName, lastName:lastName, email:email, password:password };
+        try {
+          const response = await fetch(`${url}/users`, {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(data),
+          });
+          if (!response.ok) {
+            throw new Error('Error al enviar los datos');
+          }
+          console.log('Datos enviados con éxito');
+        } catch (error) {
+          console.error('Error:', error);
+        }
+    };
+
+    useEffect(() => {
+      // Recibir las agencias del servidor
+      const fetchAgencies = async () => {
+          try {
+              const response = await axios.get<tpAgency[]>('http://localhost:5000/agencies');            
+              setAgencies([{
+                id:"qw",
+                name:'Agencias',
+                address:"",
+                faxNumber:0,
+                email:"a@a"
+              }, ...response.data]);
+          } catch (error) {
+              console.error('Error fetching agencies:', error);
+          }
+      };
+
+    fetchAgencies();
+    }, []);
 
  return (
     <form onSubmit={(e) => {
@@ -62,6 +90,7 @@ function UserForm() {
             className="form-control mb-3 border border-secondary custom-select"
             placeholder="Rol"
             name="rol"
+            onChange={(e) => setSelectedRol(e.target.value)}
         >
             {rols.map((rol, index) => (
                 <option key={index} value={rol}>
@@ -71,6 +100,11 @@ function UserForm() {
         </select>
         </div>
       </div>
+      {selectedRol === 'Agente de Marketing' &&
+      <div className="input-group form-group">
+        <MySelect options={agencies.map(e => e.name)} setSelectedItem={setSelectedAgencyName}/>
+      </div>
+      }
       <div className="input-group form-group">
           <input
               type="text" 

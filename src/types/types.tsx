@@ -89,5 +89,5 @@ export interface tpTourist {
     firstname: string,
     lastname: string,
     nacionality: string,
-    ci: string
+    id: string
 }

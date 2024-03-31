@@ -5,7 +5,7 @@ import { tpPackage } from "../../types/types";
 import { useEffect, useState } from "react";
 import './styles.css';
 import { Filter } from "../../components/Search/FilterPackages";
-import PackageCard from "../../components/Packages/PackageCard";
+import PackageCard from "../../components/Packages/Card";
 import axios from 'axios';
 
 

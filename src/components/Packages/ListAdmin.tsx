@@ -4,7 +4,7 @@ import { tpPackage } from '../../types/types';
 import axios from 'axios';
 import { url } from '../../helper/server';
 import { ModalAdd } from './ModalAdd';
-// import { HotelDealModalUpdate } from './HotelDealModalUpdate';
+import { ModalUpdate } from './ModalUpdate';
 
 export function Packages() {
     
@@ -58,7 +58,7 @@ export function Packages() {
                                 <small>{package1.description}</small>
                             </div>
                             <div>
-                                {/* <HotelDealModalUpdate package1={package1}/> */}
+                                <ModalUpdate package1={package1}/>
                                 <button type="button" className="btn btn-danger" onClick={() => handleDeleteHotelDeal(package1)}>Eliminar</button>
                             </div>
                         </li>

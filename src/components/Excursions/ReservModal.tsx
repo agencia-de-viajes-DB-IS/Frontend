@@ -4,7 +4,7 @@ import img from '../../images/roca.jpg'
 import './styles.css'
 import { tpExcursion } from '../../types/types';
 import { MDBModalContent } from 'mdb-react-ui-kit';
-import ExcursionReservModalContent from './ExcursionReservModalContent';
+import ExcursionReservModalContent from './ReservModalContent';
 
 interface ExcursionModalProp {
     excursion:tpExcursion,

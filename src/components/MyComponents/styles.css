@@ -1,0 +1,11 @@
+.css-13cymwt-control {
+    --bs-border-opacity: 1;
+    border-color: rgba(var(--bs-secondary-rgb), var(--bs-border-opacity)) !important;
+    border-radius: 10px;
+}
+
+.dropdown-container {
+    --bs-border-opacity: 1;
+    border-color: rgba(var(--bs-secondary-rgb), var(--bs-border-opacity)) !important;
+    border-radius: 10px;
+}

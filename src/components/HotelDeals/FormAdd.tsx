@@ -1,12 +1,15 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios';
 import { tpAgency, tpHotel, tpHotelDeals } from '../../types/types';
+import { ModalShowProps } from '../../types/typesComponents';
+import { url } from '../../helper/server';
 
-function HotelDealForm() {
+
+function HotelDealForm({ onClose }:ModalShowProps) {
 
     // Definir el estado para cada campo del formulario
     const [name, setName] = useState<string>('');
-    const [price, setPrice] = useState<string>('');
+    const [priceStr, setPriceStr] = useState<string>('');
     const [arrivalDate, setArrivalDate] = useState<string>('');
     const [departureDate, setDepartureDate] = useState<string>('');
     const [description, setDescription] = useState<string>('')
@@ -56,15 +59,41 @@ function HotelDealForm() {
         fetchHotels();
     }, []);
 
-    const handleSubmit = () => {
+    const token = localStorage.getItem('userToken');
+
+    const handleSubmit = async () => {
+      
       console.log('voy a agregar una oferta de hotel')
       console.log('nombre', name);
-      console.log('price', price);
+      console.log('priceStr', priceStr);
       console.log('fecha de salida', arrivalDate);
       console.log('fecha de llegada', departureDate);
       console.log('agencia', selectedAgencyName);
-      console.log('agencia', selectedAgencyName);
+      console.log('hotel', selectedHotelName);
+
+      const price = parseInt(priceStr,10);
+
+      const agencyId = agencies.filter(a => a.name === selectedAgencyName)[0].id;
+
+      const data = { name, price, arrivalDate, departureDate,  agencyId}; // falta el id de hotel y saber el request body
+      console.log(token);
       
+      try {
+        const response = await axios.post(`${url}/agencies`, data, {
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${token}`
+          },
+        });
+        if (response) {
+          console.log(response);
+        }
+      } catch (error) {
+        console.error('Error:', error);
+      }
+
+      // hay que mandar a updetear las ofertas de hotel
+      onClose();
     }
 
     return (
@@ -87,9 +116,9 @@ function HotelDealForm() {
             type="text"
             className="form-control mb-3 border border-secondary"
             placeholder="Precio"
-            name="price"
-            value={price}
-            onChange={(e) => setPrice(e.target.value)}
+            name="priceStr"
+            value={priceStr}
+            onChange={(e) => setPriceStr(e.target.value)}
           />
         </div>
         <div className="input-group form-group">
