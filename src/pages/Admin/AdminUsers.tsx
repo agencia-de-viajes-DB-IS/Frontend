@@ -10,25 +10,12 @@ import { jwtDecode } from "jwt-decode";
 
 export const Admin = () => {
 
-    const [users, setUsers] = useState<tpUser[]>([]);
     const [decodeToken, setDecodeToken] = useState<tpToken | null>(null);
-
 
     useEffect(() => {
 
         const token = localStorage.getItem('userToken');
         console.log(token);
-
-        const config = {
-            headers: {
-                Authorization: `Bearer ${token}`
-            }
-        };
-        
-        const fetchUsers = async () => {
-            const user = await axios.get<tpUser[]>(`${url}/users`, config);
-            setUsers(user.data)
-        }
         
         if (token) {
             setDecodeToken(jwtDecode(token));
@@ -37,16 +24,13 @@ export const Admin = () => {
             setDecodeToken(null)
         }
         
-        fetchUsers();
     }, []);
-
-    
 
     return (
         <>
-            {decodeToken && decodeToken.role === 'Super Admin' &&
+            {decodeToken && (decodeToken.role === 'Super Admin' || decodeToken.role === 'Marketing Agent') &&
                 <DashboardStyle>
-                    <Users data={users}/> 
+                    <Users/> 
                 </DashboardStyle>
             }
         </>

@@ -1,5 +1,5 @@
 import { ReactNode } from "react"
-import { tpAgency } from "./types"
+import { tpAgency, tpTourist } from "./types"
 
 
 export interface DashboardProps {
@@ -18,5 +18,27 @@ export interface ModalShowProps {
 }
 
 export interface tpToken {
-    role:string
+    role:string,
+    agencyId?: string,
+    sub: string
+}
+
+export interface ModalProps {
+    fetchentity: () => void;
+}
+
+export interface FormProps {
+    fetchentity: () => void;
+    onClose: () => void;
+}
+
+export interface FormPropsTourist {
+    fetchentity: () => void;
+    onClose: () => void;
+    tourist:tpTourist;
+}
+
+export interface tpRol {
+    id: string,
+    name: string
 }

@@ -1,16 +1,16 @@
 import { useEffect, useState } from 'react';
 import './styles.css'
-import { tpExcursion } from '../../types/types';
+import { tpExtendedExcursion } from '../../types/types';
 import axios from 'axios';
 import { url } from '../../helper/server';
 import { ModalAdd } from './ModalAdd';
 import { ModalUpdate} from './ModalUpdate';
 
-export const Excursions = () => {
+export const ExtendedExcursions = () => {
     
-    const [excursions, setExcursions] = useState<tpExcursion[]>([])
+    const [extendedExcursions, setExtendedExcursions] = useState<tpExtendedExcursion[]>([])
 
-    const handleDeleteExcursion = async (id: string) => {
+    const handleDeleteExtendedExcursion = async (id: string) => {
         try {
 
             // Obtener el token del localStorage
@@ -27,11 +27,11 @@ export const Excursions = () => {
                 }
             };
 
-            const response = await axios.delete(`${url}/excursions`, config);
+            const response = await axios.delete(`${url}/extended/excursions`, config);
 
             if (response.status === 200) {
                 // Actualiza el estado para reflejar la eliminación de la excursion
-                console.log('Excursion eliminada con éxito');
+                console.log('Excursion extendida eliminada con éxito');
 
             }else {
                 console.error('Error al eliminar la excursion');
@@ -40,35 +40,35 @@ export const Excursions = () => {
             console.error('Error al eliminar la excursion:', error);
         }
 
-        fetchExcursions();
+        fetchExtendedExcursions();
     };
 
-    const fetchExcursions = async () => {
-        const response = await axios.get<tpExcursion[]>(`${url}/excursions`);
-        setExcursions(response.data)
+    const fetchExtendedExcursions = async () => {
+        const response = await axios.get<tpExtendedExcursion[]>(`${url}/extended/excursions`);
+        setExtendedExcursions(response.data)
     }
 
     useEffect(() => {
-        fetchExcursions();
+        fetchExtendedExcursions();
     }, []);
     
     return (
         <>
             <div className="container mt-5">
                 <div className="d-flex justify-content-around align-items-center mb-3">
-                    <h1>Administrar Excursiones</h1>
+                    <h1>Administrar Excursiones Extendidas</h1>
                 </div>
-                <ModalAdd fetchExcursions={fetchExcursions}/>
+                <ModalAdd fetchExcursions={fetchExtendedExcursions}/>
                 <ul className="list-group mt-3">
-                    {excursions.map((excursion, index) => (
+                    {extendedExcursions.map((excursion, index) => (
                         <li key={index} className="list-group-item d-flex justify-content-between align-items-center">
                             <div>
                                 <h5 className="mb-1">{excursion.name}</h5>
                                 <small>{excursion.location}</small>
                             </div>
                             <div>
-                                <ModalUpdate excursion={excursion} fetchExcursions={fetchExcursions}/>
-                                <button type="button" className="btn btn-danger" onClick={() => handleDeleteExcursion(excursion.id)}>Eliminar</button>
+                                <ModalUpdate excursion={excursion} fetchExcursions={fetchExtendedExcursions}/>
+                                <button type="button" className="btn btn-danger" onClick={() => handleDeleteExtendedExcursion(excursion.id)}>Eliminar</button>
                             </div>
                         </li>
                     ))}

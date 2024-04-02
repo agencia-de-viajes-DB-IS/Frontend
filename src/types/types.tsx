@@ -24,16 +24,6 @@ export interface Register {
     password: string
 }
 
-// cositas locas del backend
-export interface RecivedExcursions {
-    $id:string,
-    $values:tpExcursion[]
-}
-export interface RecivedPackages {
-    $id:string,
-    $values:tpPackage[]
-}
-
 // ************ Entities *****************
 
 export interface tpAgency {
@@ -67,6 +57,17 @@ export interface tpExcursion {
     arrivalDate: string,
     agency:tpAgency
 }
+export interface tpExtendedExcursion {
+    id: string,
+    name: string,
+    description: string,
+    location: string,
+    price: number,
+    arrivalDate: string,
+    departureDate: string,
+    hotelDealsIDs:tpHotelDealsShow[],
+    agency:tpAgency
+}
 export interface tpHotelDeals {
     name:string,
     id: string,
@@ -76,18 +77,28 @@ export interface tpHotelDeals {
     arrivalDate: string,
     departureDate: string
 }
+export interface tpHotelDealsShow {
+    name:string,
+    id:string
+}
 export interface tpHotel {
     id:string,
     name:string,
     address: string,
     category: number
 }
+export interface tpAirlines {
+    id: string,
+    name:string
+}
 
 // ================ TURISTAS ==================
 
 export interface tpTourist {
-    firstname: string,
-    lastname: string,
-    nacionality: string,
-    id: string
+    userId: string,
+    touristID: string,
+    ci: string,
+    firstName: string,
+    lastName: string,
+    nationality: string
 }

@@ -1,16 +1,13 @@
+import Form from './FormAdd';
 import { useState } from 'react';
 import Modal from 'react-bootstrap/Modal';
-import './styles.css'
 import { Button } from 'react-bootstrap';
-import { UserForm } from './UserFormUpdate';
-import { tpUser } from '../../types/types';
 
-interface UserModalProp {
-    user:tpUser
-    fetchUsers: () => void;
+interface ExcursionModalProps {
+    fetchExcursions: () => void;
 }
 
-function UserModalUpdate({user, fetchUsers }:UserModalProp) {
+export function ModalAdd({ fetchExcursions }:ExcursionModalProps) {
 
     const [show, setShow] = useState(false);
     const handleClose = () => setShow(false);
@@ -18,22 +15,21 @@ function UserModalUpdate({user, fetchUsers }:UserModalProp) {
 
     return (
         <>
-            <Button className="btn btn-success me-3" variant="" onClick={handleShow}>
-                Editar
+        
+            <Button className="btn btn-primary" variant="" onClick={handleShow}>
+                Agregar
             </Button>
-            
+
             <Modal show={show} onHide={handleClose}>
                 <Modal.Header closeButton>
                     <Modal.Title>
-                        Editar el usuario
+                        Crear una Excursión
                     </Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
-                    <UserForm user={user} fetchUsers={fetchUsers} onClose={handleClose}/>
+                    <Form onClose={handleClose} fetchExcursions={fetchExcursions}/>
                 </Modal.Body>
             </Modal>
         </>
     );
 }
-
-export default UserModalUpdate;

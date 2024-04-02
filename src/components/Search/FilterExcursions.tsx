@@ -10,6 +10,8 @@ interface FilterProps {
 
 export function Filter({setExcursions, initialAgency}: FilterProps) {
 
+    const [allExcursions, setAllExcursions] = useState<tpExcursion[]>([])
+
     // Array con las agencias filtradas
     const [filteredExcursions, setFilteredExcursions] = useState<tpExcursion[]>([]);
 
@@ -47,23 +49,23 @@ export function Filter({setExcursions, initialAgency}: FilterProps) {
     };
 
     const handleFilter = () => {
-        let tempExcursions:tpExcursion[] = [...filteredExcursions];
+        let tempExcursions:tpExcursion[] = [...allExcursions];
         
         // Revisar si hay filtro por agencia
         if(selectedAgency != 'Todos') {
-            tempExcursions = tempExcursions.filter(excursion => excursion.agency.name == selectedAgency);
+            tempExcursions = allExcursions.filter(excursion => excursion.agency.name == selectedAgency);
         }
         // Revisar si hay filtro por localizacion
         if(selectedLocation != 'Todos') {
-            tempExcursions = tempExcursions.filter(excursion => excursion.location == selectedLocation);
+            tempExcursions = allExcursions.filter(excursion => excursion.location == selectedLocation);
         }
         // Revisar si hay filtro por fecha de llegada
         if(selectedArrivalDate != 'Todos') {
-            tempExcursions = tempExcursions.filter(excursion => excursion.arrivalDate == selectedArrivalDate);
+            tempExcursions = allExcursions.filter(excursion => excursion.arrivalDate == selectedArrivalDate);
         }
         // Revisar si hay filtro por precio
         if(selectedPrice != 'Todos') {
-            tempExcursions = tempExcursions.filter(excursion => excursion.price.toString() == selectedPrice);
+            tempExcursions = allExcursions.filter(excursion => excursion.price.toString() == selectedPrice);
         }
 
         setExcursions(tempExcursions)
@@ -71,11 +73,10 @@ export function Filter({setExcursions, initialAgency}: FilterProps) {
 
     useEffect(() => {
         const fetchPropiedades = async () => {
+
             try {
-                const response = await axios.get<tpExcursion[]>('http://localhost:5000/excursions');
-                
-                // Llenar el array de agencias filtradas
-                setFilteredExcursions(response.data);
+                const response = await axios.get<tpExcursion[]>(`http://localhost:5000/excursions`);
+                setAllExcursions(response.data)
 
                 // Array con los valores de las propiedades
                 const excursionAgencies = response.data.map(excursion => excursion.agency.name);

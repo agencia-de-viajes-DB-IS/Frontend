@@ -6,34 +6,37 @@ import axios from "axios";
 import { tpTourist } from "../../types/types";
 import { jwtDecode } from 'jwt-decode';
 import { ModalAdd } from "../../components/Tourists/ModalAdd";
+import { ModalUpdate } from "../../components/Tourists/ModalUpdate";
+import { tpToken } from "../../types/typesComponents";
+import { url } from "../../helper/server";
 
 export function TouristsList() {
 
-    const [userId, setUserId] = useState(''); // id del usuario
     const [tourists, setTourists] = useState<tpTourist[]>([]); // turistas del usuario
 
     // Función para obtener los turistas del usuario
     const fetchTourists = async () => {
         try {
         // Obtener el token del localStorage
-        const token = localStorage.getItem('token');
+        const token = localStorage.getItem('userToken');
     
+        // Decodificar el token
+        const decodedToken:tpToken = jwtDecode(token);
+
+        const userId = decodedToken.sub;
+
         // Configuración de la solicitud
         const config = {
             headers: {
             'Authorization': `Bearer ${token}` // Asegúrate de que este es el formato correcto para tu token
-            },
-            data: {
-                userId:userId
             }
         };
     
         // Realizar la solicitud GET
-        const response = await axios.get<tpTourist[]>('http://localhost:5000/users/tourists', config);
+        const response = await axios.get<tpTourist[]>(`http://localhost:5000/users/tourists?userId=${userId}`, config);
     
         // Manejar la respuesta
         setTourists(response.data);
-        console.log(tourists);
     
         // Aquí puedes hacer lo que necesites con los datos de los turistas
         } catch (error) {
@@ -41,35 +44,36 @@ export function TouristsList() {
         }
    };
 
-    // Función para decodificar el token y ontener el id del usuario
-    const decodeToken = () => {
-        try {
-            // Obtener el token del localStorage
-            const token = localStorage.getItem('userToken');
-
-            if (!token) {
-              console.error('No se encontró el token en el localStorage');
-              return;
-            }
-
-            // Decodificar el token
-            const decodedToken = jwtDecode(token);
-            console.log(decodedToken.sub);
-
-            setUserId(decodeToken.sub)
-            // Aquí puedes hacer lo que necesites con la información decodificada del token
-        } catch (error) {
-            console.error('Error al decodificar el token:', error);
-        }
-    };
-
     useEffect(() => {
-        // Llamar a la función para decodificar el token
-        decodeToken();
 
         // Llamar a la funcion para obtener los turistas
         fetchTourists();
     },[]);
+
+
+    const handleDeleteTourist = (touristId:string) => {
+
+        const token = localStorage.getItem('userToken');
+
+        axios.delete(`${url}/tourists/`, {
+            headers: {
+              'Content-Type': 'application/json',
+              'Authorization': `Bearer ${token}`
+            }, data: {
+                touristId
+            }
+         })
+         .then(response => {
+            console.log('Solicitud exitosa:', response.data);
+            // Aquí puedes hacer lo que necesites con la respuesta, por ejemplo, actualizar el estado de tu aplicación
+         })
+         .catch(error => {
+            console.error('Error al realizar la solicitud:', error);
+            // Aquí puedes manejar el error, por ejemplo, mostrando un mensaje al usuario
+        });
+
+        fetchTourists();
+    }
     
 
     return (
@@ -82,17 +86,17 @@ export function TouristsList() {
             </div>
 
             <div className="container mt-5">
-                <ModalAdd/>
+                <ModalAdd fetchentity={fetchTourists}/>
                 <ul className="list-group mt-3">
-                    {tourists && tourists.map((tourist, index) => (
+                    {tourists.map((tourist, index) => (
                         <li key={index} className="list-group-item d-flex justify-content-between align-items-center">
                             <div>
-                                <h5 className="mb-1">{tourist.firstname}</h5>
-                                <small>{tourist.lastname}</small>
+                                <h5 className="mb-1">{tourist.firstName}</h5>
+                                <small>{tourist.lastName}</small>
                             </div>
                             <div>
-                                {/* <UserModalUpdate tourist={tourist}/> */}
-                                <button type="button" className="btn btn-danger">Eliminar</button>
+                                <ModalUpdate tourist={tourist} fetchentity={fetchTourists}/>
+                                <button type="button" className="btn btn-danger" onClick={() => handleDeleteTourist(tourist.touristID)}>Eliminar</button>
                             </div>
                         </li>
                     ))}

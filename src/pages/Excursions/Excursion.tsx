@@ -1,7 +1,7 @@
 import { DarkPicture } from "../../components/DarkPicture/Dark";
 import { Header } from "../../components/Header/Header";
 import { Navbar } from "../../components/Navbar/Navbar";
-import { RecivedExcursions, tpExcursion } from "../../types/types";
+import { tpAgency, tpExcursion } from "../../types/types";
 import { useEffect, useState } from "react";
 import './styles.css';
 import { Filter } from "../../components/Search/FilterExcursions";
@@ -19,9 +19,23 @@ export function Excursions() {
         // Recibir las excursiones del servidor
         const fetchExcursions = async () => {
             try {
-                const response = await axios.get<tpExcursion[]>('http://localhost:5000/excursions');
 
+                const response = await axios.get<tpExcursion[]>(`http://localhost:5000/excursions`);
                 setExcursions(response.data)
+
+                if(agencyName) {
+                    const agencies = await axios.get<tpAgency[]>(`http://localhost:5000/agencies`);
+                    const agencyId = agencies.data.find(e => e.name == agencyName)?.id
+
+                    const response = await axios.get<tpExcursion[]>(`http://localhost:5000/excursions?agencyIdFilter=${agencyId}`);
+
+                    setExcursions(response.data)
+                }
+                else {
+                    const response = await axios.get<tpExcursion[]>(`http://localhost:5000/excursions`);
+
+                    setExcursions(response.data)
+                }
                 
             } catch (error) {
                 console.error('Error fetching excursions:', error);

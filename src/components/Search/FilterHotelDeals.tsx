@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import './styles.css'
 import { tpHotelDeals } from '../../types/types';
 import axios from 'axios';
+import { format } from 'date-fns';
 
 interface FilterProps {
     setHotelDeals: React.Dispatch<React.SetStateAction<tpHotelDeals[]>>;
@@ -9,7 +10,10 @@ interface FilterProps {
 
 export function Filter({setHotelDeals}:FilterProps) {
 
-    // Array con las agencias filtradas
+    // Array con todas las ofertas de hotel
+    const [allHotelDeals,setAllHotelDeals] = useState<tpHotelDeals[]>([])
+
+    // Array con las ofertas de hotel filtradas
     const [filteredHotelDeals,setFilteredHotelDeals] = useState<tpHotelDeals[]>([])
 
     // Todas las agencias y la agencia seleccionada
@@ -31,7 +35,7 @@ export function Filter({setHotelDeals}:FilterProps) {
     // Todas las fechas de salida y la fecha de salida seleccionada
     const [departureDates, setDepartureDates] = useState<string[]>([])
     const [selectedDepartureDate, setSelectedDepartureDate] = useState('Todos');
-   // Seleccionar una fecha de salida
+   // Seleccionar una fecha de llegada
     const handleDepartureDateChange: React.ChangeEventHandler<HTMLSelectElement> = (event) => {
         setSelectedDepartureDate(event.target.value);
     };
@@ -46,7 +50,7 @@ export function Filter({setHotelDeals}:FilterProps) {
 
 
     const handleFilter = () => {
-        let tempHotelDeals:tpHotelDeals[] = [...filteredHotelDeals];
+        let tempHotelDeals:tpHotelDeals[] = [...allHotelDeals];
         
         // Revisar si hay filtro por fecha de llegada
         if(selectedDepartureDate != 'Todos') {
@@ -70,12 +74,12 @@ export function Filter({setHotelDeals}:FilterProps) {
                 const response = await axios.get<tpHotelDeals[]>('http://localhost:5000/hotelDeals');
                 
                 // Llenar el array de agencias filtradas
-                setFilteredHotelDeals(response.data.$values);
+                setAllHotelDeals(response.data);
 
                 // Array con los valores de las propiedades
-                const hotelDealsDepartureDates = response.data.$values.map(hotelDeal => hotelDeal.departureDate);
-                const hotelDealsArrivalDates = response.data.$values.map(hotelDeal => hotelDeal.arrivalDate);
-                const hotelDealsPrices = response.data.$values.map(hotelDeal => hotelDeal.price);
+                const hotelDealsDepartureDates = response.data.map(hotelDeal => hotelDeal.departureDate);
+                const hotelDealsArrivalDates = response.data.map(hotelDeal => hotelDeal.arrivalDate);
+                const hotelDealsPrices = response.data.map(hotelDeal => hotelDeal.price);
 
                 // Array con los valores de las propiedades sin repetir
                 const departureDatesSet = [... new Set(hotelDealsDepartureDates)];
@@ -106,6 +110,7 @@ export function Filter({setHotelDeals}:FilterProps) {
         fetchPropiedades();
     },[]);
 
+
     return (
         <div className='search-container'>
             <div className="search-section">
@@ -120,8 +125,8 @@ export function Filter({setHotelDeals}:FilterProps) {
                 <div className="search-from">
                     <label htmlFor="" className='excursion-label'>Fecha De Llegada</label>
                     <select id="arrivalDate" value={selectedArrivalDate} onChange={handleArrivalDateChange}>
-                        {arrivalDates.map((arrivalDate, index) => (
-                            <option key={index} value={arrivalDate}>{arrivalDate}</option>
+                        {departureDates.map((dp, index) => (
+                            <option key={index} value={dp}>{dp}</option>
                         ))}
                     </select>
                 </div>

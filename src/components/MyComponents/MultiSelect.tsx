@@ -1,7 +1,7 @@
-import React, { useState } from 'react';
-import { MultiSelect, Option } from "react-multi-select-component";
+import React, { useEffect, useState } from 'react';
+import { MultiSelect } from "react-multi-select-component";
 import Select from 'react-select';
-import './styles.css'
+import './styles.css';
 
 interface SelectProps {
     options: string[];
@@ -10,28 +10,36 @@ interface SelectProps {
 
 interface MultiSelectProps {
   options: string[];
-  setSelectedData: (arg:string[]) => void;
-}
+  setSelectedData: (arg: string[]) => void;
+  selectedIds?: string[]; // Añadir esta propiedad para recibir los IDs seleccionados
+ }
 
-export function MyMultiSelect({ options , setSelectedData}: MultiSelectProps) {
+export function MyMultiSelect({ options, setSelectedData, selectedIds }: MultiSelectProps) {
  
-    const optionsAsOptionType: Option[] = options.map(option => ({ label: option, value: option }));
+  const optionsAsOptionType: Option[] = options.map(option => ({ label: option, value: option }));
 
- // Estado para manejar las opciones seleccionadas
- const [selectedOptions, setSelectedOptions] = useState<Option[]>([]);
+  // Estado para manejar las opciones seleccionadas
+  const [selectedOptions, setSelectedOptions] = useState<Option[]>([]);
 
- return (
+  useEffect(() => {
+    if(selectedIds) {
+      // Filtrar las opciones seleccionadas por defecto basadas en los IDs proporcionados
+      const defaultSelectedOptions = optionsAsOptionType.filter(option => selectedIds.includes(option.value));
+      setSelectedOptions(defaultSelectedOptions);
+    }
+  }, [optionsAsOptionType, selectedIds]);
+  
+  return (
     <MultiSelect
       className='w-100 mb-3'
       options={optionsAsOptionType}
       value={selectedOptions}
       onChange={(e) => {
-        if(e) {
-          const selectedValues:string[] = e.map(option => option.value);
+        if (e) {
+          const selectedValues: string[] = e.map(option => option.value);
           setSelectedOptions(e);
           setSelectedData(selectedValues);
-      }
-        
+        }
       }}
       labelledBy="Select"
     />

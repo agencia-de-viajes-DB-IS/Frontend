@@ -4,8 +4,10 @@ import { tpUser } from '../../types/types';
 
 interface UserFormProps {
   user: tpUser;
+  fetchUsers: () => void;
+  onClose: () => void;
  }
-export function UserForm({ user }: UserFormProps) {
+export function UserForm({ user, fetchUsers, onClose }: UserFormProps) {
 
   const [firstName, setFirstName] = useState(user.firstName);
   const [lastName, setLastName] = useState(user.lastName);
@@ -16,7 +18,7 @@ export function UserForm({ user }: UserFormProps) {
   
  // Función para enviar los datos al servidor
  const sendDataToServer = async () => {
-    const data = { id:id, firstName:firstName, lastName:lastName, email:email, password:password };
+    const data = { id:id, firstName:firstName, lastName:lastName, email:email };
     try {console.log(data)
       const response = await fetch(`${url}/users`, {
         method: 'PUT',
@@ -32,6 +34,9 @@ export function UserForm({ user }: UserFormProps) {
     } catch (error) {
       console.error('Error:', error);
     }
+
+    fetchUsers();
+    onClose();
  };
 
  return (
@@ -70,7 +75,7 @@ export function UserForm({ user }: UserFormProps) {
           /> 
       </div>
       <div className="form-group d-flex flex-column align-items-center">
-          <input type="submit" value="Registrar" className="btn btn-dark login_btn"/>
+          <input type="submit" value="Editar" className="btn btn-dark login_btn"/>
       </div>
     </form>
  );

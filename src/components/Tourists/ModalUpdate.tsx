@@ -1,16 +1,16 @@
-import Modal from 'react-bootstrap/Modal';
-import './styles.css'
-import { tpAgency } from '../../types/types';
-import { Button } from 'react-bootstrap';
-import AgencyFormUpdate from './FormUpdate';
+import { Form } from './FormUpdate';
 import { useState } from 'react';
+import Modal from 'react-bootstrap/Modal';
+import { Button } from 'react-bootstrap';
+import { ModalProps } from '../../types/typesComponents';
+import { tpTourist } from '../../types/types';
 
-interface AgencyModalProp {
-    agency:tpAgency;
-    fetchAgencies: () => void;
+interface ModalUpdateProps {
+    fetchentity: () => void;
+    tourist: tpTourist;
 }
 
-function AgencyModalUpdate({agency , fetchAgencies}:AgencyModalProp) {
+export function ModalUpdate({ fetchentity, tourist }:ModalUpdateProps) {
 
     const [show, setShow] = useState(false);
     const handleClose = () => setShow(false);
@@ -18,6 +18,7 @@ function AgencyModalUpdate({agency , fetchAgencies}:AgencyModalProp) {
 
     return (
         <>
+        
             <Button className="btn btn-success me-3" variant="" onClick={handleShow}>
                 Editar
             </Button>
@@ -25,15 +26,13 @@ function AgencyModalUpdate({agency , fetchAgencies}:AgencyModalProp) {
             <Modal show={show} onHide={handleClose}>
                 <Modal.Header closeButton>
                     <Modal.Title>
-                        Editar Agencia
+                        Editar un Turista
                     </Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
-                    <AgencyFormUpdate agency={agency} fetchAgencies={fetchAgencies} onClose={handleClose}/>
+                    <Form onClose={handleClose} fetchentity={fetchentity} tourist={tourist}/>
                 </Modal.Body>
             </Modal>
         </>
     );
 }
-
-export default AgencyModalUpdate;

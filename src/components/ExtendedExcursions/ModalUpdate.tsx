@@ -1,16 +1,15 @@
-import Modal from 'react-bootstrap/Modal';
-import './styles.css'
-import { tpAgency } from '../../types/types';
-import { Button } from 'react-bootstrap';
-import AgencyFormUpdate from './FormUpdate';
+import { Form} from './FormUpdate';
 import { useState } from 'react';
+import Modal from 'react-bootstrap/Modal';
+import { Button } from 'react-bootstrap';
+import { tpExcursion } from '../../types/types';
 
-interface AgencyModalProp {
-    agency:tpAgency;
-    fetchAgencies: () => void;
+interface ModalUpdateProp {
+    excursion: tpExcursion;
+    fetchExcursions: () => void;
 }
 
-function AgencyModalUpdate({agency , fetchAgencies}:AgencyModalProp) {
+export function ModalUpdate({excursion, fetchExcursions}:ModalUpdateProp) {
 
     const [show, setShow] = useState(false);
     const handleClose = () => setShow(false);
@@ -18,6 +17,7 @@ function AgencyModalUpdate({agency , fetchAgencies}:AgencyModalProp) {
 
     return (
         <>
+        
             <Button className="btn btn-success me-3" variant="" onClick={handleShow}>
                 Editar
             </Button>
@@ -25,15 +25,13 @@ function AgencyModalUpdate({agency , fetchAgencies}:AgencyModalProp) {
             <Modal show={show} onHide={handleClose}>
                 <Modal.Header closeButton>
                     <Modal.Title>
-                        Editar Agencia
+                        Editar una Excursión
                     </Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
-                    <AgencyFormUpdate agency={agency} fetchAgencies={fetchAgencies} onClose={handleClose}/>
+                    <Form excursion={excursion} onClose={handleClose} fetchExcursions={fetchExcursions}/>
                 </Modal.Body>
             </Modal>
         </>
     );
 }
-
-export default AgencyModalUpdate;

@@ -10,16 +10,27 @@ export const Agencies = () => {
     
     const [agencies, setAgencies] = useState<tpAgency[]>([])
 
-    const deleteAgency = async (id: string) => {
+    const handleDeleteAgency = async (id: string) => {
         try {
-            const response = await axios.delete(`${url}/agencies`, {
-                data:{
+
+            // Obtener el token del localStorage
+            const token = localStorage.getItem('userToken');
+
+            // Configuración de la solicitud
+            const config = {
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${token}` // Incluir el token en el header de Authorization
+                },
+                data: {
                     id: id
                 }
-            });
+            };
+
+            const response = await axios.delete(`${url}/agencies`, config);
+            
             if (response.status === 200) {
                 // Actualiza el estado para reflejar la eliminación de la agencia
-                setAgencies(agencies.filter(agency => agency.id !== id));
                 console.log('Agencia eliminada con éxito');
             }else {
                 console.error('Error al eliminar la agencia');
@@ -27,13 +38,9 @@ export const Agencies = () => {
         } catch (error) {
             console.error('Error al eliminar la agencia:', error);
         }
-    };
 
-    const handleDeleteAgency = (agency:tpAgency) => {
-        console.log('voy a borrar la agencia: ')
-        console.log(agency)
-        deleteAgency(agency.id);
-    }
+        fetchAgencies();
+    };
 
     const fetchAgencies = async () => {
         const agencies = await axios.get<tpAgency[]>(`${url}/agencies`);
@@ -60,8 +67,8 @@ export const Agencies = () => {
                                 <small>{ag.address}</small>
                             </div>
                             <div>
-                                <AgencyModalUpdate agency={ag}/>
-                                <button type="button" className="btn btn-danger" onClick={() => handleDeleteAgency(ag)}>Eliminar</button>
+                                <AgencyModalUpdate agency={ag} fetchAgencies={fetchAgencies}/>
+                                <button type="button" className="btn btn-danger" onClick={() => handleDeleteAgency(ag.id)}>Eliminar</button>
                             </div>
                         </li>
                     ))}

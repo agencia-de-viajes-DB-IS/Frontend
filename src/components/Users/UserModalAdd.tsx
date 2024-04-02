@@ -4,13 +4,15 @@ import './styles.css'
 import { Button } from 'react-bootstrap';
 import UserForm from './UserFormAdd';
 
+interface UserModalAddProps {
+    fetchUsers: () => void;
+}
 
-function UserModalAdd() {
+function UserModalAdd({ fetchUsers }:UserModalAddProps) {
+
     const [show, setShow] = useState(false);
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
-
-    
 
     return (
         <>
@@ -25,7 +27,7 @@ function UserModalAdd() {
                     </Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
-                    <UserForm/>
+                    <UserForm onClose={handleClose} fetchUsers={fetchUsers}/>
                 </Modal.Body>
             </Modal>
         </>

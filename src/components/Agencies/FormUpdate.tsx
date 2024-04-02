@@ -4,9 +4,11 @@ import { tpAgency } from '../../types/types';
 
 interface AgencyFormProps {
   agency: tpAgency;
+  fetchAgencies: () => void;
+  onClose: () => void;
 }
 
-const AgencyFormUpdate: React.FC<AgencyFormProps> = ({ agency }) => {
+const AgencyFormUpdate: React.FC<AgencyFormProps> = ({ agency , fetchAgencies , onClose }) => {
   const [name, setName] = useState(agency.name);
   const [address, setAddress] = useState(agency.address);
   const [faxNumberStr, setFaxNumberStr] = useState(agency.faxNumber.toString());
@@ -39,6 +41,9 @@ const AgencyFormUpdate: React.FC<AgencyFormProps> = ({ agency }) => {
     } catch (error) {
       console.error('Error:', error);
     }
+
+    fetchAgencies();
+    onClose();
  };
  
 

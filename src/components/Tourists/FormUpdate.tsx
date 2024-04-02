@@ -1,16 +1,16 @@
 import { useState } from 'react';
 import axios from 'axios';
 import { jwtDecode } from 'jwt-decode';
-import { FormProps } from '../../types/typesComponents';
+import { FormProps, FormPropsTourist } from '../../types/typesComponents';
 import { url } from '../../helper/server';
 
-export function Form({ onClose, fetchentity }:FormProps) {
+export function Form({ onClose, fetchentity, tourist }:FormPropsTourist) {
 
     // Datos del registro del turista
-    const [firstName, setFirstName] = useState("");
-    const [lastName, setLastName] = useState("");
-    const [nacionality, setNacionality] = useState("");
-    const [Ci, setCi] = useState("");
+    const [firstName, setFirstName] = useState(tourist.firstName);
+    const [lastName, setLastName] = useState(tourist.lastName);
+    const [nacionality, setNacionality] = useState(tourist.nationality);
+    const [Ci, setCi] = useState(tourist.ci);
 
     // Decodificar el token para obtener el ID del usuario
     const token = localStorage.getItem('userToken');
@@ -35,6 +35,7 @@ export function Form({ onClose, fetchentity }:FormProps) {
       };
 
       const data = {
+        touristId: tourist.touristID,
         userId: userId,
         firstName: firstName,
         lastName: lastName,
@@ -48,7 +49,7 @@ export function Form({ onClose, fetchentity }:FormProps) {
      
         // Make the POST request
         fetch(`${url}/tourists`, {
-          method: 'POST',
+          method: 'PUT',
           headers: {
             'Content-Type': 'application/json',
             'Authorization': `Bearer ${token}`
@@ -125,7 +126,7 @@ export function Form({ onClose, fetchentity }:FormProps) {
         />
       </div>
       <div className="form-group d-flex flex-column align-items-center">
-        <input type="submit" value="Guardar" className="btn btn-dark" />
+        <input type="submit" value="Editar" className="btn btn-dark" />
       </div>
     </form>
   );

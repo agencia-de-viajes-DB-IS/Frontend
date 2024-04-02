@@ -47,6 +47,11 @@ export function Navbar({ LoggedUser }:NavbarProps) {
                             <a href="/admin">Administración</a>
                         </li>
                     }
+                    {decodeToken && decodeToken.role === 'Marketing Agent' && 
+                        <li>
+                            <a href="/admin-excursions">Administración</a>
+                        </li>
+                    }
                     {decodeToken && 
                         <li>
                             <a href="/my-tourist">Mis turistas</a>

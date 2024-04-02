@@ -14,6 +14,7 @@ import { AdminExcursions } from "./pages/Admin/AdminExcursions";
 import { AdminHotelDeals } from "./pages/Admin/AdminHotelDeals";
 import { AdminPackages } from "./pages/Admin/AdminPackages";
 import { TouristsList } from "./pages/Tourists/TouristsList";
+import { AdminExtendedExcursions } from "./pages/Admin/AdminExtendedExcursions";
 
 function App() {
   return (
@@ -28,6 +29,7 @@ function App() {
       <Route path="/admin" element={<Admin/>}/>
       <Route path="/admin-agencies" element={<AdminAgencies/>}/>
       <Route path="/admin-excursions" element={<AdminExcursions/>}/>
+      <Route path="/admin-extendedexcursions" element={<AdminExtendedExcursions/>}/>
       <Route path="/admin-hotelDeals" element={<AdminHotelDeals/>}/>
       <Route path="/admin-packages" element={<AdminPackages/>}/>
       <Route path="/agente" element={<Agente/>}/>
