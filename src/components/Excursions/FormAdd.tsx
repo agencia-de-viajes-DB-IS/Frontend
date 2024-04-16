@@ -8,7 +8,7 @@ interface ExcursionFormProps {
   fetchExcursions: () => void;
 }
 
-function ExcursionForm({ onClose , fetchExcursions }:ExcursionFormProps) {
+function Form({ onClose , fetchExcursions }:ExcursionFormProps) {
 
   // Definir el estado para cada campo del formulario
   const [name, setName] = useState('');
@@ -154,4 +154,4 @@ function ExcursionForm({ onClose , fetchExcursions }:ExcursionFormProps) {
   );
 }
 
-export default ExcursionForm;
+export default Form;

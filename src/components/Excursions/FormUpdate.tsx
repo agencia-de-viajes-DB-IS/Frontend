@@ -4,9 +4,10 @@ import { tpAgency, tpExcursion } from '../../types/types';
 
 interface ExcursionFormUpdateProp {
   excursion: tpExcursion;
+  fetching: () => void;
 }
 
-export function ExcursionForm({excursion}: ExcursionFormUpdateProp) {
+export function Form({excursion, fetching}: ExcursionFormUpdateProp) {
 
   // Definir el estado para cada campo del formulario
   const [name, setName] = useState(excursion.name);
@@ -37,7 +38,7 @@ export function ExcursionForm({excursion}: ExcursionFormUpdateProp) {
     console.log('voy a editar esta excursion');
     console.log(excursion);
     
-    
+    fetching();
   }
 
   return (

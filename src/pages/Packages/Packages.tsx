@@ -1,6 +1,5 @@
 import { DarkPicture } from "../../components/DarkPicture/Dark";
 import { Header } from "../../components/Header/Header";
-import { Navbar } from "../../components/Navbar/Navbar";
 import { tpPackage } from "../../types/types";
 import { useEffect, useState } from "react";
 import './styles.css';

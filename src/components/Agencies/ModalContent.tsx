@@ -1,5 +1,3 @@
-import { useState } from 'react';
-import Modal from 'react-bootstrap/Modal';
 import img from '../../images/office.jpg'
 import { useNavigate } from "react-router-dom";
 import './styles.css'

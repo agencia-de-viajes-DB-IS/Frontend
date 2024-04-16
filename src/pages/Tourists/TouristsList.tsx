@@ -7,12 +7,12 @@ import { tpTourist } from "../../types/types";
 import { jwtDecode } from 'jwt-decode';
 import { ModalAdd } from "../../components/Tourists/ModalAdd";
 import { ModalUpdate } from "../../components/Tourists/ModalUpdate";
-import { tpToken } from "../../types/typesComponents";
 import { url } from "../../helper/server";
 
 export function TouristsList() {
 
     const [tourists, setTourists] = useState<tpTourist[]>([]); // turistas del usuario
+    const [userID, setuserID] = useState<string | undefined>(''); // turistas del usuario
 
     // Función para obtener los turistas del usuario
     const fetchTourists = async () => {
@@ -21,9 +21,9 @@ export function TouristsList() {
         const token = localStorage.getItem('userToken');
     
         // Decodificar el token
-        const decodedToken:tpToken = jwtDecode(token);
-
-        const userId = decodedToken.sub;
+        if (token) {
+            setuserID(jwtDecode(token).sub)
+        }
 
         // Configuración de la solicitud
         const config = {
@@ -33,7 +33,7 @@ export function TouristsList() {
         };
     
         // Realizar la solicitud GET
-        const response = await axios.get<tpTourist[]>(`http://localhost:5000/users/tourists?userId=${userId}`, config);
+        const response = await axios.get<tpTourist[]>(`http://localhost:5000/users/tourists`, config);
     
         // Manejar la respuesta
         setTourists(response.data);

@@ -1,12 +1,7 @@
 import { useState } from 'react';
-import Modal from 'react-bootstrap/Modal';
 import img from '../../images/anders.jpg'
 import './styles.css'
 import { tpExcursion } from '../../types/types';
-import { MDBModalContent } from 'mdb-react-ui-kit';
-import ModalContent from './ModalContentShow';
-import AgencyModalContent from './ModalContentShow';
-import ExcursionModalContent from './ModalContentShow';
 import ExcursionReservModal from './ReservModal';
 import { ExcursionModalShow } from './ModalShow';
 
@@ -22,7 +17,7 @@ function ExcursionCard(excursion:tpExcursion) {
     const handleCloseR = () => setShowR(false);
     const handleShowR = () => setShowR(true);
 
-    const usuarioLogeado = true;
+    const token = localStorage.getItem('userToken')
 
     const handleReserv = () => {
         handleShowR();
@@ -38,7 +33,7 @@ function ExcursionCard(excursion:tpExcursion) {
             
             
                 <div className='d-flex justify-content-around'>
-                    {usuarioLogeado &&
+                    {token &&
                     <div className='btn-card'>
                         <button type="button" className='btn-reserv' onClick={handleReserv}>Reservar</button>
                     </div>

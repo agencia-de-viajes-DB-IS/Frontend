@@ -67,7 +67,7 @@ export const Excursions = () => {
                                 <small>{excursion.location}</small>
                             </div>
                             <div>
-                                <ModalUpdate excursion={excursion} fetchExcursions={fetchExcursions}/>
+                                <ModalUpdate excursion={excursion} fetching={fetchExcursions}/>
                                 <button type="button" className="btn btn-danger" onClick={() => handleDeleteExcursion(excursion.id)}>Eliminar</button>
                             </div>
                         </li>

@@ -1,4 +1,4 @@
-import ExcursionForm from './FormAdd';
+import Form from './FormAdd';
 import { useState } from 'react';
 import Modal from 'react-bootstrap/Modal';
 import { Button } from 'react-bootstrap';
@@ -7,7 +7,7 @@ interface ExcursionModalProps {
     fetchExcursions: () => void;
 }
 
-export function ExcursionModal({ fetchExcursions }:ExcursionModalProps) {
+export function ModalAdd({ fetchExcursions }:ExcursionModalProps) {
 
     const [show, setShow] = useState(false);
     const handleClose = () => setShow(false);
@@ -27,7 +27,7 @@ export function ExcursionModal({ fetchExcursions }:ExcursionModalProps) {
                     </Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
-                    <ExcursionForm onClose={handleClose} fetchExcursions={fetchExcursions}/>
+                    <Form onClose={handleClose} fetchExcursions={fetchExcursions}/>
                 </Modal.Body>
             </Modal>
         </>

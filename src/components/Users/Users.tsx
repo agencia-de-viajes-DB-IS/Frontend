@@ -1,5 +1,4 @@
 import { tpUser} from '../../types/types'
-import UserForm from './UserFormAdd'
 import UserModalAdd from './UserModalAdd'
 import UserModalUpdate from './UserModalUdpate'
 import './styles.css'
@@ -25,6 +24,10 @@ export function Users() {
         setUsers(user.data)
     }
 
+    const handleDelete = (id:string) => {
+        
+    }
+
     useEffect(() => {
         fetchUsers();
     }, []);
@@ -45,7 +48,7 @@ export function Users() {
                             </div>
                             <div>
                                 <UserModalUpdate user={user} fetchUsers={fetchUsers}/>
-                                <button type="button" className="btn btn-danger">Eliminar</button>
+                                <button type="button" className="btn btn-danger" onClick={() => handleDelete(user.id)}>Eliminar</button>
                             </div>
                         </li>
                     ))}

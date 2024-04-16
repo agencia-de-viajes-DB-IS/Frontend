@@ -4,79 +4,64 @@ import { jwtDecode } from 'jwt-decode';
 import { FormProps } from '../../types/typesComponents';
 import { url } from '../../helper/server';
 
-export function Form({ onClose, fetchentity }:FormProps) {
+export function Form({ onClose, fetchentity }: FormProps) {
 
-    // Datos del registro del turista
-    const [firstName, setFirstName] = useState("");
-    const [lastName, setLastName] = useState("");
-    const [nacionality, setNacionality] = useState("");
-    const [Ci, setCi] = useState("");
+  // Datos del registro del turista
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
+  const [nacionality, setNacionality] = useState("");
+  const [Ci, setCi] = useState("");
 
-    // Decodificar el token para obtener el ID del usuario
-    const token = localStorage.getItem('userToken');
-    if (!token) {
-      console.error('No se encontró el token en el localStorage');
-      return;
-    }
+  // Decodificar el token para obtener el ID del usuario
+  const token = localStorage.getItem('userToken');
+  if (!token) {
+    console.error('No se encontró el token en el localStorage');
+    return;
+  }
 
-    const decodedToken = jwtDecode(token);
-    const userId = decodedToken.sub;
+  const decodedToken = jwtDecode(token);
+  const userId = decodedToken.sub;
 
 
-    const createTourists = async () => {
+  const createTourists = async () => {
+    // Configuración de la solicitud
+    const config = {
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`
+      },
+    };
 
-      // Configuración de la solicitud
-      const config = {
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${token}`
-        },
-        
-      };
+    const data = {
+      userId: userId,
+      firstName: firstName,
+      lastName: lastName,
+      nationality: nacionality,
+      ci: Ci,
+    };
 
-      const data = {
-        userId: userId,
-        firstName: firstName,
-        lastName: lastName,
-        nationality: nacionality,
-        ci: Ci,
-      };
+    console.log('añádiendo un turista');
+    console.log(token);
+    console.log(data);
 
-      console.log('añádiendo un turista')
-      console.log(token)
-      console.log(data)
-     
-        // Make the POST request
-        fetch(`${url}/tourists`, {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-            'Authorization': `Bearer ${token}`
-          },
-          body: JSON.stringify(data)
-         })
-         .then(response => {
-          if (!response.ok) {
-            throw new Error('Error en la solicitud: ' + response.statusText);
-          }
-          return response.json();
-         })
-         .then(data => {
-          console.log('Solicitud exitosa:', data);
-          // Aquí puedes hacer lo que necesites con la respuesta, por ejemplo, actualizar el estado de tu aplicación
-         })
-         .catch(error => {
-          console.error('Error al realizar la solicitud:', error);
-          // Aquí puedes manejar el error, por ejemplo, mostrando un mensaje al usuario
-         });
-      }
+    // Make the POST request with Axios
+    axios.post(`${url}/tourists`, data, config)
+      .then(response => {
+        console.log('Solicitud exitosa:', response.data);
+        // Aquí puedes hacer lo que necesites con la respuesta, por ejemplo, actualizar el estado de tu aplicación
+      })
+      .catch(error => {
+        console.error('Error al realizar la solicitud:', error);
+        // Aquí puedes manejar el error, por ejemplo, mostrando un mensaje al usuario
+      });
+  }
 
-    const handleSubmit = () => {
-      createTourists();
+  const handleSubmit = () => {
+    createTourists();
 
-      fetchentity();
-      onClose();
-    }
+    fetchentity();
+    onClose();
+  }
 
 
   return (

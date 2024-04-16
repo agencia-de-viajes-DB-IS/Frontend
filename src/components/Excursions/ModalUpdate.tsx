@@ -1,4 +1,4 @@
-import { ExcursionForm} from './FormUpdate';
+import { Form} from './FormUpdate';
 import { useState } from 'react';
 import Modal from 'react-bootstrap/Modal';
 import { Button } from 'react-bootstrap';
@@ -6,9 +6,10 @@ import { tpExcursion } from '../../types/types';
 
 interface ExcursionModalUpdateProp {
     excursion: tpExcursion;
+    fetching: () => void;
 }
 
-export function ExcursionModalUpdate({excursion}:ExcursionModalUpdateProp) {
+export function ModalUpdate({excursion, fetching}:ExcursionModalUpdateProp) {
 
     const [show, setShow] = useState(false);
     const handleClose = () => setShow(false);
@@ -28,7 +29,7 @@ export function ExcursionModalUpdate({excursion}:ExcursionModalUpdateProp) {
                     </Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
-                    <ExcursionForm excursion={excursion}/>
+                    <Form excursion={excursion} fetching={fetching}/>
                 </Modal.Body>
             </Modal>
         </>

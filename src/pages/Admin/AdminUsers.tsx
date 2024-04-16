@@ -1,9 +1,6 @@
 import { useEffect, useState } from "react";
-import { DashboardStyle } from "../../components/DashboardStyle/DashboardStyle"; 
-import { tpUser } from "../../types/types";
+import { DashboardStyle } from "../../components/DashboardStyle/DashboardStyle";
 import './styles.css'
-import { url } from "../../helper/server";
-import axios from "axios";
 import { Users } from "../../components/Users/Users";
 import { tpToken } from "../../types/typesComponents";
 import { jwtDecode } from "jwt-decode";
@@ -28,7 +25,7 @@ export const Admin = () => {
 
     return (
         <>
-            {decodeToken && (decodeToken.role === 'Super Admin' || decodeToken.role === 'Marketing Agent') &&
+            {decodeToken && (decodeToken.role === 'Super Admin') &&
                 <DashboardStyle>
                     <Users/> 
                 </DashboardStyle>

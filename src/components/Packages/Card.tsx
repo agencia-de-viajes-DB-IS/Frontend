@@ -1,12 +1,7 @@
 import { useState } from 'react';
-import Modal from 'react-bootstrap/Modal';
 import img from '../../images/roca.jpg'
 import './styles.css'
 import { tpPackage } from '../../types/types';
-import { MDBModalContent } from 'mdb-react-ui-kit';
-import ModalContent from './ModalContent';
-import AgencyModalContent from './ModalContent';
-import PackageModalContent from './ModalContent';
 import PackageModal from './ModalShow';
 import PackageReservModal from './ReservModal';
 
@@ -22,7 +17,7 @@ function PackageCard(package1:tpPackage) {
     const handleCloseR = () => setShowR(false);
     const handleShowR = () => setShowR(true);
 
-    const usuarioLogeado = true;
+    const token = localStorage.getItem('userToken');
 
     const handleReserv = () => {
         handleShowR();
@@ -34,11 +29,11 @@ function PackageCard(package1:tpPackage) {
                 <div className="user-picture">
                     <img src={img} alt="foto"/>
                 </div>
-                <p className="title-item">{package1.departureDate}</p>
+                <p className="title-item">{package1.name}</p>
 
                 
                 <div className='d-flex justify-content-around'>
-                    {usuarioLogeado &&
+                    {token &&
                     <div className='btn-card'>
                         <button type="button" className='btn-reserv' onClick={handleReserv}>Reservar</button>
                     </div>

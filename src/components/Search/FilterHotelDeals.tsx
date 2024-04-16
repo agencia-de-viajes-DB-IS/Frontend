@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react';
 import './styles.css'
 import { tpHotelDeals } from '../../types/types';
 import axios from 'axios';
-import { format } from 'date-fns';
 
 interface FilterProps {
     setHotelDeals: React.Dispatch<React.SetStateAction<tpHotelDeals[]>>;
@@ -16,13 +15,6 @@ export function Filter({setHotelDeals}:FilterProps) {
     // Array con las ofertas de hotel filtradas
     const [filteredHotelDeals,setFilteredHotelDeals] = useState<tpHotelDeals[]>([])
 
-    // Todas las agencias y la agencia seleccionada
-    const [agencies, setAgencies] = useState<string[]>([])
-    const [selectedAgency, setSelectedAgency] = useState<string>('Todos');
-   // Seleccionar una agencia
-    const handleAgencyChange: React.ChangeEventHandler<HTMLSelectElement> = (event) => {
-        setSelectedAgency(event.target.value);
-    };
 
     // Todas las fechas de salida y la fecha de salida seleccionada
     const [arrivalDates, setArrivalDates] = useState<string[]>([])
@@ -124,7 +116,7 @@ export function Filter({setHotelDeals}:FilterProps) {
                 </div>
                 <div className="search-from">
                     <label htmlFor="" className='excursion-label'>Fecha De Llegada</label>
-                    <select id="arrivalDate" value={selectedArrivalDate} onChange={handleArrivalDateChange}>
+                    <select id="arrivalDate" value={selectedDepartureDate} onChange={handleDepartureDateChange}>
                         {departureDates.map((dp, index) => (
                             <option key={index} value={dp}>{dp}</option>
                         ))}

@@ -5,8 +5,11 @@ import RegisterModal from '../Register/RegisterModal'
 import './styles.css'
 import Button from 'react-bootstrap/Button';
 import { Navbar } from '../Navbar/Navbar';
+import { useNavigate } from "react-router-dom";
 
 export function Header() {
+
+    const navigate = useNavigate();
 
     const [loggedUser,setLoggedUser] = useState(false);
 
@@ -20,6 +23,7 @@ export function Header() {
     const closeSesion = () => {
         localStorage.removeItem('userToken');
         setLoggedUser(false);
+        navigate('/')
     }
 
     return (
