@@ -18,7 +18,7 @@ export function UserForm({ user, fetchUsers, onClose }: UserFormProps) {
   
  // Función para enviar los datos al servidor
  const sendDataToServer = async () => {
-    const data = { id:id, firstName:firstName, lastName:lastName, email:email };
+    const data = { userId:id, firstName:firstName, lastName:lastName, email:email };
     try {console.log(data)
       const response = await fetch(`${url}/users`, {
         method: 'PUT',

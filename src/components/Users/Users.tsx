@@ -24,8 +24,19 @@ export function Users() {
         setUsers(user.data)
     }
 
-    const handleDelete = (id:string) => {
-        
+    const handleDelete = async (id: string) => {
+
+        const data = {
+            userId : id
+        }
+
+        try {
+            await axios.delete(`${url}/users`, {...config, data})
+            // Recargar la lista de usuarios después de eliminar uno
+            fetchUsers();
+        } catch (error) {
+            console.error("Error al eliminar el usuario:", error);
+        }
     }
 
     useEffect(() => {
