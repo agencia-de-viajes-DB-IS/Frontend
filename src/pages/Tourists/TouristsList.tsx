@@ -14,40 +14,24 @@ export function TouristsList() {
 
     const [tourists, setTourists] = useState<tpTourist[]>([]); // turistas del usuario
 
+    const token = localStorage.getItem('userToken')
 
-const fetchTourists = async () => {
-    try {
-        // Obtener el token del localStorage
-        const token = localStorage.getItem('userToken');
-        if (!token) {
-            console.log('no token');
-            return; // Asegúrate de manejar este caso adecuadamente
-        }
-
-
-        // Configuración de la solicitud
-        const config = {
-            method: 'get',
-            url: `${url}/users/tourists`,
+    const fetchTourists = async () => {
+        await axios.get(`${url}/users/tourists`, {
             headers: {
                 'Content-Type': 'application/json',
                 'Authorization': `Bearer ${token}`
             }
-        };
-
-        // Realizar la solicitud GET con Axios
-        const response = await axios(config);
-
-        setTourists(response.data)
-        // Aquí puedes manejar la respuesta exitosa, por ejemplo, actualizando el estado de tu aplicación
-    } catch (error) {
-        console.error('Error al obtener los datos de los turistas:', error);
-        // Aquí puedes manejar el error, por ejemplo, mostrando un mensaje al usuario
-    }
-};
+        })
+        .then(response => {
+            setTourists(response.data);
+        })
+        .catch(error => {
+            console.error('Error al obtener los datos de los turistas:', error);
+        });
+    };
 
     useEffect(() => {
-
         // Llamar a la funcion para obtener los turistas
         fetchTourists();
     },[]);
@@ -68,13 +52,12 @@ const fetchTourists = async () => {
          .then(response => {
             console.log('Solicitud exitosa:', response.data);
             // Aquí puedes hacer lo que necesites con la respuesta, por ejemplo, actualizar el estado de tu aplicación
+            fetchTourists();
          })
          .catch(error => {
             console.error('Error al realizar la solicitud:', error);
             // Aquí puedes manejar el error, por ejemplo, mostrando un mensaje al usuario
         });
-
-        fetchTourists();
     }
     
 

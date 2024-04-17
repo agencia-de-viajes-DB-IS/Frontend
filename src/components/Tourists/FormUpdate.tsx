@@ -65,6 +65,7 @@ export function Form({ onClose, fetchentity, tourist }:FormPropsTourist) {
          .then(data => {
           console.log('Solicitud exitosa:', data);
           // Aquí puedes hacer lo que necesites con la respuesta, por ejemplo, actualizar el estado de tu aplicación
+          fetchentity();
          })
          .catch(error => {
           console.error('Error al realizar la solicitud:', error);
@@ -73,9 +74,8 @@ export function Form({ onClose, fetchentity, tourist }:FormPropsTourist) {
       }
 
     const handleSubmit = () => {
-      createTourists();
 
-      fetchentity();
+      createTourists();
       onClose();
     }
 

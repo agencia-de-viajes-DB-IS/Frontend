@@ -23,7 +23,7 @@ export function Form({ onClose, fetchentity }: FormProps) {
   const userId = decodedToken.sub;
 
 
-  const createTourists = async () => {
+  const createTourists = () => {
     // Configuración de la solicitud
 
     const data = {
@@ -48,18 +48,18 @@ export function Form({ onClose, fetchentity }: FormProps) {
       .then(response => {
         console.log('Solicitud exitosa:', response.data);
         // Aquí puedes hacer lo que necesites con la respuesta, por ejemplo, actualizar el estado de tu aplicación
+        fetchentity();
       })
       .catch(error => {
         console.error('Error al realizar la solicitud:', error);
         // Aquí puedes manejar el error, por ejemplo, mostrando un mensaje al usuario
       });
+
+      onClose();
   }
 
   const handleSubmit = () => {
     createTourists();
-
-    fetchentity();
-    onClose();
   }
 
 
