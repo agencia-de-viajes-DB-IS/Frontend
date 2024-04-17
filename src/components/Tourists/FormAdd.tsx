@@ -25,12 +25,6 @@ export function Form({ onClose, fetchentity }: FormProps) {
 
   const createTourists = async () => {
     // Configuración de la solicitud
-    const config = {
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': `Bearer ${token}`
-      },
-    };
 
     const data = {
       userId: userId,
@@ -40,12 +34,17 @@ export function Form({ onClose, fetchentity }: FormProps) {
       ci: Ci,
     };
 
-    console.log('añádiendo un turista');
+    console.log('añadiendo un turista');
     console.log(token);
     console.log(data);
 
     // Make the POST request with Axios
-    axios.post(`${url}/tourists`, data, config)
+    axios.post(`http://localhost:5000/tourists`, data, {
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`
+      },
+    })
       .then(response => {
         console.log('Solicitud exitosa:', response.data);
         // Aquí puedes hacer lo que necesites con la respuesta, por ejemplo, actualizar el estado de tu aplicación

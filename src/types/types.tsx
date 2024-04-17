@@ -81,11 +81,12 @@ export interface tpHotelDealsShow {
     name:string,
     id:string
 }
-export interface tpHotel {
+export interface tpHotels {
     id:string,
     name:string,
     address: string,
-    category: number
+    category: number,
+    description: string
 }
 export interface tpAirlines {
     id: string,

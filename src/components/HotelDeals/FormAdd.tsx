@@ -1,8 +1,9 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios';
-import { tpAgency, tpHotel, tpHotelDeals } from '../../types/types';
-import { ModalShowProps } from '../../types/typesComponents';
+import { tpHotels } from '../../types/types';
+import { ModalShowProps, tpToken } from '../../types/typesComponents';
 import { url } from '../../helper/server';
+import { jwtDecode } from 'jwt-decode';
 
 
 function HotelDealForm({ onClose }:ModalShowProps) {
@@ -14,36 +15,16 @@ function HotelDealForm({ onClose }:ModalShowProps) {
     const [departureDate, setDepartureDate] = useState<string>('');
     const [description, setDescription] = useState<string>('')
 
-    // Manejar las agencias
-    const [agencies, setAgencies] = useState<tpAgency[]>([]);
-    const [selectedAgencyName, setSelectedAgencyName] = useState<string>('');
-
     // Manejar los hoteles
     const [hotels, setHotels] = useState<tpHotel[]>([]);
     const [selectedHotelName, setSelectedHotelName] = useState<string>('');
 
     useEffect(() => {
 
-        // Recibir las agencias del servidor
-        const fetchAgencies = async () => {
-            try {
-                const response = await axios.get<tpAgency[]>('http://localhost:5000/agencies');
-                setAgencies([{
-                  id:"qw",
-                  name:'Agencias',
-                  address:"",
-                  faxNumber:0,
-                  email:"a@a"
-                }, ...response.data]);
-            } catch (error) {
-                console.error('Error fetching agencies:', error);
-            }
-        };
-
         // Recibir los hoteles del servidor
         const fetchHotels = async () => {
             try {
-                const response = await axios.get<tpHotel[]>('http://localhost:5000/hotels');
+                const response = await axios.get<tpHotels[]>('http://localhost:5000/hotels');
                 setHotels([{
                   id:"qw",
                   name:'Hoteles',
@@ -55,11 +36,11 @@ function HotelDealForm({ onClose }:ModalShowProps) {
             }
         };
 
-        fetchAgencies();
         fetchHotels();
     }, []);
 
     const token = localStorage.getItem('userToken');
+
 
     const handleSubmit = async () => {
       
@@ -68,18 +49,25 @@ function HotelDealForm({ onClose }:ModalShowProps) {
       console.log('priceStr', priceStr);
       console.log('fecha de salida', arrivalDate);
       console.log('fecha de llegada', departureDate);
-      console.log('agencia', selectedAgencyName);
       console.log('hotel', selectedHotelName);
 
       const price = parseInt(priceStr,10);
 
-      const agencyId = agencies.filter(a => a.name === selectedAgencyName)[0].id;
+      if (!token) {
+        console.log('no token') 
+        return
+      }
 
-      const data = { name, price, arrivalDate, departureDate,  agencyId}; // falta el id de hotel y saber el request body
+      console.log(hotels)
+
+      const decodeToken:tpToken = jwtDecode(token)
+      const agencyId = decodeToken.agencyId
+
+      const data = { name, price, arrivalDate, departureDate, agencyId}; // falta el id de hotel y saber el request body
       console.log(token);
-      
+      console.log(data)
       try {
-        const response = await axios.post(`${url}/agencies`, data, {
+        const response = await axios.post(`${url}/hotelDeals`, data, {
           headers: {
             'Content-Type': 'application/json',
             'Authorization': `Bearer ${token}`
@@ -151,20 +139,6 @@ function HotelDealForm({ onClose }:ModalShowProps) {
             {hotels.map((hotel, index) => (
                 <option key={index} value={hotel.name}>
                     {hotel.name}
-                </option>
-            ))}
-          </select>
-        </div>
-        <div className="input-group form-group">
-          <select
-            className="form-control mb-3 border border-secondary custom-select"
-            placeholder="Agencia"
-            name="agency"
-            onChange={(e) => setSelectedAgencyName(e.target.value)}
-          >
-            {agencies.map((agency, index) => (
-                <option key={index} value={agency.name}>
-                    {agency.name}
                 </option>
             ))}
           </select>

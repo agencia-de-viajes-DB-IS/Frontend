@@ -8,41 +8,46 @@ import { jwtDecode } from 'jwt-decode';
 import { ModalAdd } from "../../components/Tourists/ModalAdd";
 import { ModalUpdate } from "../../components/Tourists/ModalUpdate";
 import { url } from "../../helper/server";
+import { tpToken } from "../../types/typesComponents";
 
 export function TouristsList() {
 
     const [tourists, setTourists] = useState<tpTourist[]>([]); // turistas del usuario
-    const [userID, setuserID] = useState<string | undefined>(''); // turistas del usuario
 
-    // Función para obtener los turistas del usuario
-    const fetchTourists = async () => {
-        try {
+
+const fetchTourists = async () => {
+    try {
         // Obtener el token del localStorage
         const token = localStorage.getItem('userToken');
-    
-        // Decodificar el token
-        if (token) {
-            setuserID(jwtDecode(token).sub)
+        if (!token) {
+            console.log('no token');
+            return; // Asegúrate de manejar este caso adecuadamente
         }
+
+        // Decodificar el token para obtener el userId
+        const decodedToken = jwtDecode(token);
+        const userId = decodedToken.sub;
 
         // Configuración de la solicitud
         const config = {
+            method: 'get',
+            url: `${url}/users/tourists`,
             headers: {
-            'Authorization': `Bearer ${token}` // Asegúrate de que este es el formato correcto para tu token
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}`
             }
         };
-    
-        // Realizar la solicitud GET
-        const response = await axios.get<tpTourist[]>(`http://localhost:5000/users/tourists`, config);
-    
-        // Manejar la respuesta
-        setTourists(response.data);
-    
-        // Aquí puedes hacer lo que necesites con los datos de los turistas
-        } catch (error) {
+
+        // Realizar la solicitud GET con Axios
+        const response = await axios(config);
+
+        console.log(response.data);
+        // Aquí puedes manejar la respuesta exitosa, por ejemplo, actualizando el estado de tu aplicación
+    } catch (error) {
         console.error('Error al obtener los datos de los turistas:', error);
-        }
-   };
+        // Aquí puedes manejar el error, por ejemplo, mostrando un mensaje al usuario
+    }
+};
 
     useEffect(() => {
 
