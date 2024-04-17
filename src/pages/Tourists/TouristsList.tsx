@@ -24,9 +24,6 @@ const fetchTourists = async () => {
             return; // Asegúrate de manejar este caso adecuadamente
         }
 
-        // Decodificar el token para obtener el userId
-        const decodedToken = jwtDecode(token);
-        const userId = decodedToken.sub;
 
         // Configuración de la solicitud
         const config = {
@@ -41,7 +38,7 @@ const fetchTourists = async () => {
         // Realizar la solicitud GET con Axios
         const response = await axios(config);
 
-        console.log(response.data);
+        setTourists(response.data)
         // Aquí puedes manejar la respuesta exitosa, por ejemplo, actualizando el estado de tu aplicación
     } catch (error) {
         console.error('Error al obtener los datos de los turistas:', error);
@@ -60,7 +57,7 @@ const fetchTourists = async () => {
 
         const token = localStorage.getItem('userToken');
 
-        axios.delete(`${url}/tourists/`, {
+        axios.delete(`${url}/tourists`, {
             headers: {
               'Content-Type': 'application/json',
               'Authorization': `Bearer ${token}`
