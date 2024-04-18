@@ -26,7 +26,7 @@ function PackageModalContent(package1:tpPackageGet) {
     const opcionesHora1: Intl.DateTimeFormatOptions = { hour: '2-digit', minute: '2-digit', second: '2-digit'};
     const fechaFormateada1 = fecha1.toLocaleDateString('es-ES', opcionesFecha1);
     const horaFormateada1 = fecha1.toLocaleTimeString('es-ES', opcionesHora1);
-    
+    console.log(package1)
 
     const agency:tpAgency = {
         id: "90",
@@ -36,12 +36,6 @@ function PackageModalContent(package1:tpPackageGet) {
         email: "string"
     };
 
-    const navigate = useNavigate();
-
-    // Funcion para mostrar las excursiones que contiene el paquete
-    const handleShowExcursions = () => {
-        navigate('/excursions');
-    }
 
     return (
         <>
@@ -77,28 +71,46 @@ function PackageModalContent(package1:tpPackageGet) {
                     <span>Descripción</span>
                     <p>{package1.description}</p>  
                 </div>
+                <hr />
                 <div className='facilities-section'>
                     <h3 className='w-100 text-center'>Facilidades</h3>
                     <div className='facilities-content'>
-                        <div className='facility-item'>
-                            <span>Facilidad 1</span>
-                            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusantium dolores maxime, reiciendis neque quaerat porro quasi quam voluptates iure possimus, corporis officiis. Esse eveniet autem quibusdam fugit, quasi blanditiis? Minima.</p>
-                        </div>
-                        <div className='facility-item'>
-                            <span>Facilidad 2</span>
-                            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusantium dolores maxime, reiciendis neque quaerat porro quasi quam voluptates iure possimus, corporis officiis. Esse eveniet autem quibusdam fugit, quasi blanditiis? Minima.</p>
-                        </div>
-                        <div className='facility-item'>
-                            <span>Facilidad 3</span>
-                            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusantium dolores maxime, reiciendis neque quaerat porro quasi quam voluptates iure possimus, corporis officiis. Esse eveniet autem quibusdam fugit, quasi blanditiis? Minima.</p>
-                        </div>
-                        <div className='facilities-content'>
                         {package1.facilities.map((facility) => (
-                            <div>
-                                
+                            <div className='facility-item'>
+                                <span>{facility.name}</span>
+                                <p>{facility.description}</p>
                             </div>
                         ))}
-                    </div> 
+                    </div>    
+                </div>  
+                <hr />
+                <div className='excursion-section'>
+                    <h3 className='w-100 text-center'>Excursiones</h3>
+                    <div className='excursions-content w-100'>
+                        {package1.extendedExcursions.map((excursion) => (
+                            <div className='excursion mb-3'>
+                                <div className='excursion-item d-flex'>
+                                    <span className='fw-bold me-2'>Nombre: </span>
+                                    <p className='mb-0'>{excursion.name}</p>
+                                </div>
+                                <div className='excursion-item d-flex'>
+                                    <span className='fw-bold me-2'>Localización: </span>
+                                    <p className='mb-0'>{excursion.location}</p>
+                                </div>
+                                <div className='excursion-item d-flex'>
+                                    <span className='fw-bold me-2'>Fecha de Salida: </span>
+                                    <p className='mb-0'>{excursion.arrivalDate}</p>
+                                </div>
+                                <div className='excursion-item d-flex'>
+                                    <span className='fw-bold me-2'>Fecha de Llegada: </span>
+                                    <p className='mb-0'>{excursion.departureDate}</p>
+                                </div>
+                                <div className='excursion-item d-flex'>
+                                    <span className='fw-bold me-2'>Precio: </span>
+                                    <p className='mb-0'>{excursion.price}</p>
+                                </div>
+                            </div>
+                        ))}
                     </div>    
                 </div>   
             </div>      
