@@ -38,15 +38,15 @@ export interface tpFacility {
     name: string,
     description: string
 }
-export interface tpPackage {
+export interface tpPackageGet {
     code:string,
     description: string
     name:string,
     price: number,
     arrivalDate: string,
     departureDate: string,
-    facilityIds: tpFacility[],
-    extendedExcursionIds: tpExtendedExcursionGet[]
+    facilities: tpFacility[],
+    extendedExcursions: tpExtendedExcursionGet[]
 }
 export interface tpExcursionGet {
     id: string,

@@ -18,7 +18,7 @@ function HotelDealReservModal({ hotelDeal, show, handleClose }:HotelDealModalPro
             <Modal show={show} onHide={handleClose}>
                 <Modal.Header closeButton>
                     <Modal.Title>
-                        Reservar Oferta de Hotel {hotelDeal.arrivalDate}
+                        Reservar {hotelDeal.name}
                     </Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
