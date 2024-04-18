@@ -8,7 +8,7 @@ interface HotelDealFormUpdateProp {
   fetchentities: () => void;
 }
 
-export function HotelDealForm({hotelDeal, onClose, fetchentities}: HotelDealFormUpdateProp) {
+export function HotelDealForm({ hotelDeal, onClose, fetchentities }: HotelDealFormUpdateProp) {
 
   // Definir el estado para cada campo del formulario
   const [name, setName] = useState<string>(hotelDeal.name);
@@ -20,39 +20,72 @@ export function HotelDealForm({hotelDeal, onClose, fetchentities}: HotelDealForm
 
   // Manejar los hoteles
   const [hotels, setHotels] = useState<tpHotels[]>([]);
-  const [selectedHotelName, setSelectedHotelName] = useState<string>();
+  const [selectedHotelName, setSelectedHotelName] = useState<string>('');
 
   useEffect(() => {
 
     // Recibir los hoteles del servidor
     const fetchHotels = async () => {
-        try {
-            const response = await axios.get<tpHotels[]>('http://localhost:5000/hotels');
-            setHotels([{
-              id:"qw",
-              name:'Hoteles',
-              address:"",
-              category:0,
-              description:''
-            }, ...response.data]);
+      try {
+        const response = await axios.get<tpHotels[]>('http://localhost:5000/hotels');
+        setHotels([{
+          id: "qw",
+          name: 'Hoteles',
+          address: "",
+          category: 0,
+          description: ''
+        }, ...response.data]);
 
-            setSelectedHotelName(response.data.find(e => e.id === hotelDeal.hotelId)?.name)
-        } catch (error) {
-            console.error('Error fetching hotelDeals:', error);
-        }
+        setSelectedHotelName(response.data.find(e => e.id === hotelDeal.hotelId)?.name)
+      } catch (error) {
+        console.error('Error fetching hotelDeals:', error);
+      }
     };
 
     fetchHotels();
-}, []);
+  }, []);
 
-  console.log(hotelDeal);
-  
+
+  // Función para obtener el ID del hotel basado en el nombre seleccionado
+  const getHotelIdByName = (hotelName: string): string | undefined => {
+    const hotel = hotels.find(h => h.name === hotelName);
+    return hotel ? hotel.id : undefined;
+  };
 
   const handleSubmit = () => {
-    
-    
+
+    const hotelId = getHotelIdByName(selectedHotelName);
+
+    const id = hotelDeal.id
+
+    const token = localStorage.getItem('userToken')
+    console.log(token)
+    axios.put(`http://localhost:5000/hotelDeals`, {
+      id,
+      name,
+      price,
+      arrivalDate,
+      departureDate,
+      description,
+      capacity,
+      hotelId
+    }, {
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`
+      }
+    })
+      .then(response => {
+        console.log('HotelDeal actualizado con éxito:', response.data);
+        // Aquí puedes manejar la respuesta del servidor, por ejemplo, actualizando el estado o mostrando un mensaje de éxito
+        fetchentities();
+      })
+      .catch(error => {
+        console.error('Error actualizando el hotelDeal:', error);
+        // Manejar el error, por ejemplo, mostrando un mensaje de error al usuario
+      });
+
     onClose();
-    
   }
 
   return (
@@ -119,9 +152,9 @@ export function HotelDealForm({hotelDeal, onClose, fetchentities}: HotelDealForm
           onChange={(e) => setSelectedHotelName(e.target.value)}
         >
           {hotels.map((hotel, index) => (
-              <option key={index} value={hotel.name}>
-                  {hotel.name}
-              </option>
+            <option key={index} value={hotel.name}>
+              {hotel.name}
+            </option>
           ))}
         </select>
       </div>

@@ -49,12 +49,6 @@ function HotelDealForm({ onClose, fetchentity }:FormProps) {
     };
 
     const handleSubmit = () => {
-      console.log('voy a agregar una oferta de hotel');
-      console.log('nombre', name);
-      console.log('price', price);
-      console.log('fecha de salida', arrivalDate);
-      console.log('fecha de llegada', departureDate);
-      console.log('hotel', selectedHotelName);
   
       const hotelId = getHotelIdByName(selectedHotelName);
   
