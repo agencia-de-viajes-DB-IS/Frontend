@@ -1,142 +1,136 @@
-import { useState } from 'react';
-import Modal from 'react-bootstrap/Modal';
+import { useEffect, useState } from 'react';
 import './styles.css'
-import { tpExcursion } from '../../types/types';
+import { tpAirlines, tpExcursion, tpTourist } from '../../types/types';
+import { url } from '../../helper/server';
+import axios from 'axios';
+import Select from 'react-select/base';
+import { jwtDecode } from 'jwt-decode';
+import { MyMultiSelect, MySelect } from '../MyComponents/MultiSelect';
+import { tpToken } from '../../types/typesComponents';
 
+interface ExcursionReservModalContentProps {
+    excursion:tpExcursion
+}
 
-
-function ExcursionReservModalContent(excursion:tpExcursion) {
+function ExcursionReservModalContent({excursion}: ExcursionReservModalContentProps) {
 
     // Aerolinea seleccionada por el usuario
-    const [airlines, setAirlines] = useState<string[]>([
-        "Cubana de Aviación",
-        "Five Stars Airlines",
-        "Vuela Lejos Airline"
-    ]);
+    const [airlines, setAirlines] = useState<tpAirlines[]>([]);
+    const [selectedAirline, setSelectedAirline] = useState<string>();
 
-    // Estado para controlar la lista de campos de entrada
-    const [tourists, setTourists] = useState([{ 
-        firstName: "",
-        lastName: "",
-        nacionality: "",
-        ci: ""
-    }]);
+    const [tourists, setTourists] = useState<tpTourist[]>([]);
+    const [selectedTourists, setSelectedTourists] = useState<string[]>([]);
 
-    // Función para manejar la adición de un nuevo turista
-    const addTourist = () => {
-        setTourists([...tourists, { 
-            firstName: "",
-            lastName: "",
-            nacionality: "",
-            ci: ""
-        }]);
-    };
 
-    // Función para manejar la eliminacion del ultimo turista
-    const removeLastTourist = () => {
-        // Crear una copia del array actual de tourists
-        const updatedTourists = [...tourists];
-        // Eliminar el último elemento del array
-        updatedTourists.pop();
-        // Actualizar el estado con el nuevo array
-        setTourists(updatedTourists);
-    };
+    const token = localStorage.getItem('userToken');
 
-    // Función para manejar el cambio en los campos de entrada
-    const handleTouristChange = (index:number, propierty:string, value:string) => {
-        const values = [...tourists];
-
-        switch (propierty) {
-            case "firstName":
-                values[index].firstName = value;
-                break;
-            case "lastName":
-                values[index].lastName = value;
-                break;
-            case "nacionality":
-                values[index].nacionality = value;
-                break;
-            case "ci":
-                values[index].ci = value;
-                break;
-            default:
-                break;
+    // Función para decodificar el token y obtener el userId
+    function decodeToken(token: string | null): string {
+        try {
+            if (token) {
+                const decodedToken:tpToken = jwtDecode(token);
+                return decodedToken.sub;
+            }
+        } catch (error) {
+            console.error('Error decoding token:', error);
+            return '';
         }
-        
-        setTourists(values);
-    };
+        return ''
+   }
 
-    const handleSubmit = () => {
-        console.log("tourists")
-    }
+    useEffect(() => {
+        axios.get<tpAirlines[]>(`${url}/airlines`, {
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}`
+            }
+        })
+        .then(response => {
+            // Asumiendo que la respuesta es un array de strings (nombres de las aerolíneas)
+            setAirlines(response.data);
+        })
+        .catch(error => {
+            console.error('Error al obtener las aerolíneas:', error);
+        });
+
+        axios.get<tpTourist[]>(`${url}/users/tourists`, {
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}`
+            }
+        })
+        .then(response => {
+            // Asumiendo que la respuesta es un array de objetos con al menos un campo 'name'
+            setTourists(response.data);
+        })
+        .catch(error => {
+            console.error('Error al obtener los turistas:', error);
+        });
+    }, []); 
+    
+    
+    const handleSubmit = async () => {
+        
+        // id de la airline seleccionada
+        const airlineId = airlines.find(e => e.name === selectedAirline)?.id
+
+        // Array de los turistas seleccionados para la reservacion
+        const touristsCIs = selectedTourists.map(e => e.slice(-11))
+
+        // Array con los id de los id de los turistas seleccionados
+        const touristsGuids = touristsCIs.map(ci => {
+            const tourist = tourists.find(t => t.ci === ci);
+            return tourist ? tourist.touristID : null;
+        });
+
+        // id del usuario
+        const userId = decodeToken(token);
+
+        // fecha actual
+        const currentDate = new Date().toISOString();
+        
+
+        const data = {
+            excursionId:excursion.id,
+            price:excursion.price,
+            reservationDate: currentDate,
+            airlineId,
+            touristsGuids,
+            userId,
+         };
+
+         console.log(data);
+         
+        
+         try {
+            const response = await axios.post(`${url}/reservation/excursion`, data, {
+              headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}`,
+              },
+            });
+        
+            console.log('Reserva realizada con éxito:', response.data);
+         } catch (error) {
+            console.error('Error realizando la reserva:', error);
+         }
+        }
 
 
     return (
         <>
-            <form onSubmit={handleSubmit}>
-
-                 <div className="input-group form-group">
-                 <select
-                    className="form-control mb-3 border border-secondary"
-                    placeholder="Aerolínea"
-                    name="airline"
-                >
-                    {airlines.map((airline, index) => (
-                        <option key={index} value={airline}>
-                            {airline}
-                        </option>
-                    ))}
-                </select>
+            <form onSubmit={(e) => {
+                e.preventDefault();
+                handleSubmit();
+            }}>
+                <div className="input-group form-group d-flex flex-column">
+                    <label htmlFor="">Agencia</label>
+                    <MySelect options={airlines.map(e => e.name)} setSelectedItem={setSelectedAirline}/>
                 </div>
-
-                {tourists.map((_, index) => (
-                    <div className="tourist-info">
-                        <label className='label-tourist'>Turista {index+1}</label>
-                        <div className="input-group form-group">
-                            <input
-                                type="text" 
-                                className="form-control mb-3 border border-secondary" 
-                                placeholder="Nombre"
-                                name="firstName"
-                                onChange={({target}) => handleTouristChange(index, "firstName", target.value)}
-                            /> 
-                        </div>
-                        <div className="input-group form-group">
-                            <input
-                                type="text" 
-                                className="form-control mb-3 border border-secondary" 
-                                placeholder="Apellidos"
-                                name="lastName"
-                                onChange={({target}) => handleTouristChange(index, "lastName", target.value)}
-                            /> 
-                        </div>
-                        <div className="input-group form-group">
-                            <input
-                                type="text" 
-                                className="form-control mb-3 border border-secondary" 
-                                placeholder="Nacionalidad"
-                                name="nacionality"
-                                onChange={({target}) => handleTouristChange(index, "nacionality", target.value)}
-                            /> 
-                        </div>
-                        <div className="input-group form-group">
-                            <input 
-                                type="ci" 
-                                className="form-control mb-3 border border-secondary" 
-                                placeholder="Carnet de Identidad"
-                                name="ci"
-                                onChange={({target}) => handleTouristChange(index, "ci", target.value)}
-                            />
-                        </div>
-                    </div>
-                ))}
-                
-                <div className='d-flex justify-content-around mb-4'>
-                    <button type="button" onClick={addTourist} className="btn btn-primary">Agregar turista</button>
-                    <button type="button" onClick={removeLastTourist} className="btn btn-danger">Eliminar último turista</button>
+                <div className="input-group form-group w-100 d-flex flex-column">
+                    <label htmlFor="">Mis turistas</label>
+                    <MyMultiSelect options={tourists.map(e => e.firstName + " " + e.lastName + " : " + e.ci)} setSelectedData={(newSelectedTouristssNames) => setSelectedTourists(newSelectedTouristssNames)}/>
                 </div>
-                
-
                 <div className="form-group d-flex flex-column align-items-center">
                     <input type="submit" value="Reservar" className="btn btn-dark login_btn"/>
                 </div>

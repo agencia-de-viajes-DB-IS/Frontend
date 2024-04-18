@@ -2,6 +2,8 @@ import { useState, useEffect } from 'react';
 import axios from 'axios';
 import { tpAgency } from '../../types/types';
 import { url } from '../../helper/server';
+import { jwtDecode } from 'jwt-decode';
+import { tpToken } from '../../types/typesComponents';
 
 interface ExcursionFormProps {
   onClose: () => void;
@@ -13,51 +15,33 @@ function Form({ onClose , fetchExcursions }:ExcursionFormProps) {
   // Definir el estado para cada campo del formulario
   const [name, setName] = useState('');
   const [location, setLocation] = useState('');
-  const [priceStr, setPriceStr] = useState('');
+  const [price, setPrice] = useState<number>();
   const [description, setDescription] = useState('');
   const [arrivalDate, setArrivalDate] = useState('');
-
-  // Manejar las agencias
-  const [agencies, setAgencies] = useState<tpAgency[]>([]);
-  const [selectedAgencyName, setSelectedAgencyName] = useState<string>('');
-
-  useEffect(() => {
-    // Recibir las agencias del servidor
-    const fetchAgencies = async () => {
-        try {
-            const response = await axios.get<tpAgency[]>('http://localhost:5000/agencies');
-            setAgencies([{
-              id:"qw",
-              name:'Agencias',
-              address:"",
-              faxNumber:0,
-              email:"a@a"
-            }, ...response.data]);
-        } catch (error) {
-            console.error('Error fetching agencies:', error);
-        }
-    };
-
-    fetchAgencies();
-  }, []);
+  const [capacity, setCapacity] = useState<number>();
 
   const handleSubmit = async () => {
 
-    const agencyId = agencies.filter(a => a.name === selectedAgencyName)[0].id;
+    const token = localStorage.getItem('userToken');
+
+    if (!token) {
+      return
+    }
+    const decodedToken:tpToken = jwtDecode(token);
+
+    const agencyId = decodedToken.agencyId
 
     console.log('estoy agregando la excursion: ')
     console.log('nombre ', name);
     console.log('localizacion ', location);
-    console.log('precio ', priceStr);
+    console.log('precio ', price);
     console.log('descripcion ', description);
     console.log('fecha de salida ', arrivalDate);
-    console.log('nombre de su agencia ', selectedAgencyName);
     console.log('id de su agencia ', agencyId);
+    console.log('capacidad ', capacity);
     
-    const token = localStorage.getItem('userToken');
-    const price = parseInt(priceStr,10);
 
-    const data = { name, description, location, price, arrivalDate, agencyId};
+    const data = { name, description, location, price, arrivalDate, agencyId, capacity};
 
     console.log(token);
     
@@ -106,12 +90,22 @@ function Form({ onClose , fetchExcursions }:ExcursionFormProps) {
       </div>
       <div className="input-group form-group">
         <input
-          type="text"
+          type="number"
           className="form-control mb-3 border border-secondary"
           placeholder="Precio"
-          name="priceStr"
-          value={priceStr}
-          onChange={(e) => setPriceStr(e.target.value)}
+          name="price"
+          value={price}
+          onChange={(e) => setPrice(parseInt(e.target.value))}
+        />
+      </div>
+      <div className="input-group form-group">
+        <input
+          type="number"
+          className="form-control mb-3 border border-secondary"
+          placeholder="Capacidad"
+          name="capacity"
+          value={capacity}
+          onChange={(e) => setCapacity(parseInt(e.target.value))}
         />
       </div>
       <div className="input-group form-group">
@@ -123,20 +117,6 @@ function Form({ onClose , fetchExcursions }:ExcursionFormProps) {
           value={arrivalDate}
           onChange={(e) => setArrivalDate(e.target.value)}
         />
-      </div>
-      <div className="input-group form-group">
-        <select
-          className="form-control mb-3 border border-secondary custom-select"
-          placeholder="Agencia"
-          name="agency"
-          onChange={(e) => setSelectedAgencyName(e.target.value)}
-        >
-          {agencies.map((agency, index) => (
-              <option key={index} value={agency.name}>
-                  {agency.name}
-              </option>
-          ))}
-        </select>
       </div>
       <div className="input-group form-group">
         <textarea

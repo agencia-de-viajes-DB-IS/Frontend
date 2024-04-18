@@ -35,12 +35,14 @@ export const HotelDeals = () => {
         deleteHotelDeals(hotelDeal.id);
     }
 
+    const fetchHotelDeals = async () => {
+        const hotelDeals = await axios.get<tpHotelDeals[]>(`${url}/hotelDeals`);
+        setHotelDeals(hotelDeals.data)
+    }
+
     useEffect(() => {
-        const api = async () => {
-            const hotelDeals = await axios.get<tpHotelDeals[]>(`${url}/hotelDeals`);
-            setHotelDeals(hotelDeals.data)
-        }
-        api();
+        
+        fetchHotelDeals();
     }, []);
     
     return (
@@ -49,7 +51,7 @@ export const HotelDeals = () => {
                 <div className="d-flex justify-content-around align-items-center mb-3">
                     <h1>Administrar Ofertas de Hotel</h1>
                 </div>
-                <HotelDealModal/>
+                <HotelDealModal fetchentity={fetchHotelDeals}/>
                 <ul className="list-group mt-3">
                     {hotelDeals.map((ofert, index) => (
                         <li key={index} className="list-group-item list-group-element">
@@ -58,7 +60,7 @@ export const HotelDeals = () => {
                                 <small>{ofert.description}</small>
                             </div>
                             <div>
-                                <HotelDealModalUpdate hotelDeal={ofert}/>
+                                <HotelDealModalUpdate hotelDeal={ofert} fetchentities={fetchHotelDeals}/>
                                 <button type="button" className="btn btn-danger" onClick={() => handleDeleteHotelDeal(ofert)}>Eliminar</button>
                             </div>
                         </li>

@@ -55,7 +55,8 @@ export interface tpExcursion {
     location: string,
     price: number,
     arrivalDate: string,
-    agency:tpAgency
+    agencyId:string,
+    capacity:number
 }
 export interface tpExtendedExcursion {
     id: string,
@@ -75,7 +76,8 @@ export interface tpHotelDeals {
     description: string,
     price: number,
     arrivalDate: string,
-    departureDate: string
+    departureDate: string,
+    capacity:number
 }
 export interface tpHotelDealsShow {
     name:string,

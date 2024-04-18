@@ -1,9 +1,6 @@
-import { useState } from 'react';
 import Modal from 'react-bootstrap/Modal';
-import img from '../../images/roca.jpg'
 import './styles.css'
 import { tpExcursion } from '../../types/types';
-import { MDBModalContent } from 'mdb-react-ui-kit';
 import ExcursionReservModalContent from './ReservModalContent';
 
 interface ExcursionModalProp {
@@ -22,7 +19,7 @@ function ExcursionReservModal({ excursion, show, handleClose }:ExcursionModalPro
                     </Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
-                    <ExcursionReservModalContent {...excursion}/>
+                    <ExcursionReservModalContent excursion={excursion}/>
                 </Modal.Body>
             </Modal>
         </>

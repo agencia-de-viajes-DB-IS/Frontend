@@ -1,22 +1,22 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios';
 import { tpHotels } from '../../types/types';
-import { ModalShowProps, tpToken } from '../../types/typesComponents';
+import { FormProps, tpToken } from '../../types/typesComponents';
 import { url } from '../../helper/server';
-import { jwtDecode } from 'jwt-decode';
 
 
-function HotelDealForm({ onClose }:ModalShowProps) {
+function HotelDealForm({ onClose, fetchentity }:FormProps) {
 
     // Definir el estado para cada campo del formulario
     const [name, setName] = useState<string>('');
-    const [priceStr, setPriceStr] = useState<string>('');
+    const [price, setPrice] = useState<number>();
     const [arrivalDate, setArrivalDate] = useState<string>('');
     const [departureDate, setDepartureDate] = useState<string>('');
     const [description, setDescription] = useState<string>('')
+    const [capacity, setCapacity] = useState<number>()
 
     // Manejar los hoteles
-    const [hotels, setHotels] = useState<tpHotel[]>([]);
+    const [hotels, setHotels] = useState<tpHotels[]>([]);
     const [selectedHotelName, setSelectedHotelName] = useState<string>('');
 
     useEffect(() => {
@@ -29,7 +29,8 @@ function HotelDealForm({ onClose }:ModalShowProps) {
                   id:"qw",
                   name:'Hoteles',
                   address:"",
-                  category:0
+                  category:0,
+                  description:''
                 }, ...response.data]);
             } catch (error) {
                 console.error('Error fetching hotelDeals:', error);
@@ -41,48 +42,54 @@ function HotelDealForm({ onClose }:ModalShowProps) {
 
     const token = localStorage.getItem('userToken');
 
+    // Función para obtener el ID del hotel basado en el nombre seleccionado
+    const getHotelIdByName = (hotelName: string): string | undefined => {
+      const hotel = hotels.find(h => h.name === hotelName);
+      return hotel ? hotel.id : undefined;
+    };
 
-    const handleSubmit = async () => {
-      
-      console.log('voy a agregar una oferta de hotel')
+    const handleSubmit = () => {
+      console.log('voy a agregar una oferta de hotel');
       console.log('nombre', name);
-      console.log('priceStr', priceStr);
+      console.log('price', price);
       console.log('fecha de salida', arrivalDate);
       console.log('fecha de llegada', departureDate);
       console.log('hotel', selectedHotelName);
+  
+      const hotelId = getHotelIdByName(selectedHotelName);
+  
+      const data = {
+          name,
+          price,
+          arrivalDate,
+          departureDate,
+          hotelId,
+          capacity,
+          description
+      };
 
-      const price = parseInt(priceStr,10);
-
-      if (!token) {
-        console.log('no token') 
-        return
-      }
-
-      console.log(hotels)
-
-      const decodeToken:tpToken = jwtDecode(token)
-      const agencyId = decodeToken.agencyId
-
-      const data = { name, price, arrivalDate, departureDate, agencyId}; // falta el id de hotel y saber el request body
-      console.log(token);
       console.log(data)
-      try {
-        const response = await axios.post(`${url}/hotelDeals`, data, {
+  
+      axios.post(`${url}/hotelDeals`, data, {
           headers: {
-            'Content-Type': 'application/json',
-            'Authorization': `Bearer ${token}`
+              'Content-Type': 'application/json',
+              'Authorization': `Bearer ${token}`
           },
-        });
-        if (response) {
+      })
+      .then(response => {
           console.log(response);
-        }
-      } catch (error) {
-        console.error('Error:', error);
-      }
-
-      // hay que mandar a updetear las ofertas de hotel
+          // Aquí puedes hacer lo que necesites con la respuesta, por ejemplo, actualizar el estado de tu aplicación
+          fetchentity();
+      })
+      .catch(error => {
+          console.error('Error:', error);
+          // Aquí puedes manejar el error, por ejemplo, mostrando un mensaje al usuario
+      });
+  
+      // No es necesario llamar a fetchentity aquí si ya lo haces dentro del .then()
+      // fetchentity();
       onClose();
-    }
+  }
 
     return (
       <form onSubmit={(e) => {
@@ -101,12 +108,22 @@ function HotelDealForm({ onClose }:ModalShowProps) {
         </div>
         <div className="input-group form-group">
           <input
-            type="text"
+            type="number"
             className="form-control mb-3 border border-secondary"
             placeholder="Precio"
-            name="priceStr"
-            value={priceStr}
-            onChange={(e) => setPriceStr(e.target.value)}
+            name="price"
+            value={price}
+            onChange={(e) => setPrice(parseInt(e.target.value,10))}
+          />
+        </div>
+        <div className="input-group form-group">
+          <input
+            type="number"
+            className="form-control mb-3 border border-secondary"
+            placeholder="Capacidad"
+            name="capacity"
+            value={capacity}
+            onChange={(e) => setCapacity(parseInt(e.target.value,10))}
           />
         </div>
         <div className="input-group form-group">

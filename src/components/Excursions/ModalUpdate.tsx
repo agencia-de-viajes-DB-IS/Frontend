@@ -29,7 +29,7 @@ export function ModalUpdate({excursion, fetching}:ExcursionModalUpdateProp) {
                     </Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
-                    <Form excursion={excursion} fetching={fetching}/>
+                    <Form excursion={excursion} fetching={fetching} onclose={handleClose}/>
                 </Modal.Body>
             </Modal>
         </>

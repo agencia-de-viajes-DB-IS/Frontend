@@ -6,9 +6,10 @@ import { tpHotelDeals } from '../../types/types';
 
 interface HotelDealModalUpdateProp {
     hotelDeal: tpHotelDeals;
+    fetchentities: () => void;
 }
 
-export function HotelDealModalUpdate({hotelDeal}:HotelDealModalUpdateProp) {
+export function HotelDealModalUpdate({hotelDeal, fetchentities}:HotelDealModalUpdateProp) {
 
     const [show, setShow] = useState(false);
     const handleClose = () => setShow(false);
@@ -28,7 +29,7 @@ export function HotelDealModalUpdate({hotelDeal}:HotelDealModalUpdateProp) {
                     </Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
-                    <HotelDealForm hotelDeal={hotelDeal} onClose={handleClose}/>
+                    <HotelDealForm hotelDeal={hotelDeal} onClose={handleClose} fetchentities={fetchentities}/>
                 </Modal.Body>
             </Modal>
         </>

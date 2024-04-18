@@ -2,9 +2,10 @@ import HotelDealForm from './FormAdd';
 import { useState } from 'react';
 import Modal from 'react-bootstrap/Modal';
 import { Button } from 'react-bootstrap';
+import { ModalProps } from '../../types/typesComponents';
 
 
-export function HotelDealModal() {
+export function HotelDealModal({ fetchentity }:ModalProps) {
 
     const [show, setShow] = useState(false);
     const handleClose = () => setShow(false);
@@ -24,7 +25,7 @@ export function HotelDealModal() {
                     </Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
-                    <HotelDealForm onClose={handleClose}/>
+                    <HotelDealForm onClose={handleClose} fetchentity={fetchentity}/>
                 </Modal.Body>
             </Modal>
         </>

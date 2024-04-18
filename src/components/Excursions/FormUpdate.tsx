@@ -1,13 +1,17 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios';
-import { tpAgency, tpExcursion } from '../../types/types';
+import { tpExcursion } from '../../types/types';
+import { url } from '../../helper/server';
+import { tpToken } from '../../types/typesComponents';
+import { jwtDecode } from 'jwt-decode';
 
 interface ExcursionFormUpdateProp {
   excursion: tpExcursion;
   fetching: () => void;
+  onclose: () => void;
 }
 
-export function Form({excursion, fetching}: ExcursionFormUpdateProp) {
+export function Form({excursion, fetching, onclose}: ExcursionFormUpdateProp) {
 
   // Definir el estado para cada campo del formulario
   const [name, setName] = useState(excursion.name);
@@ -15,30 +19,41 @@ export function Form({excursion, fetching}: ExcursionFormUpdateProp) {
   const [price, setPrice] = useState<number>(excursion.price);
   const [arrivalDate, setArrivalDate] = useState(excursion.arrivalDate);
   const [description, setDescription] = useState(excursion.description);
+  const [capacity, setCapacity] = useState<number>(excursion.capacity);
 
-  // Manejar las agencias
-  const [agencies, setAgencies] = useState<tpAgency[]>([]);
-  const [selectedAgencyName, setSelectedAgencyName] = useState<string>('');
-
-  useEffect(() => {
-    // Recibir las agencias del servidor
-    const fetchAgencies = async () => {
-        try {
-            const response = await axios.get<tpAgency[]>('http://localhost:5000/agencies');            
-            setAgencies(response.data);
-        } catch (error) {
-            console.error('Error fetching agencies:', error);
-        }
-    };
-
-    fetchAgencies();
-}, []);
-
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     console.log('voy a editar esta excursion');
     console.log(excursion);
+
+    const token = localStorage.getItem('userToken');
+    if (!token) {
+      return
+    }
+
+    const decodedToken:tpToken = jwtDecode(token)
+
+    const id = excursion.id;
+    const agencyId = decodedToken.agencyId;
+
+    const data = { id, name, description, location, price, arrivalDate, capacity};
+
+    console.log(data)
+
+    try {
+      const response = await axios.put(`${url}/excursions`, data, {
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`,
+        },
+      });
+
+      console.log('Excursión creada con éxito:', response.data);
+    } catch (error) {
+      console.error('Error creando la excursión:', error);
+    }
     
     fetching();
+    onclose();
   }
 
   return (
@@ -68,7 +83,7 @@ export function Form({excursion, fetching}: ExcursionFormUpdateProp) {
       </div>
       <div className="input-group form-group">
         <input
-          type="text"
+          type="number"
           className="form-control mb-3 border border-secondary"
           placeholder="Precio"
           name="price"
@@ -78,27 +93,23 @@ export function Form({excursion, fetching}: ExcursionFormUpdateProp) {
       </div>
       <div className="input-group form-group">
         <input
-          type="text"
+          type="number"
           className="form-control mb-3 border border-secondary"
-          placeholder="Fecha de Salida"
-          name="arrivalDate"
-          value={arrivalDate}
-          onChange={(e) => setArrivalDate(e.target.value)}
+          placeholder="Capacidad"
+          name="capacity"
+          value={capacity}
+          onChange={(e) => setCapacity(parseInt(e.target.value))}
         />
       </div>
       <div className="input-group form-group">
-        <select
-          className="form-control mb-3 border border-secondary custom-select"
-          placeholder="Agencia"
-          name="agency"
-          onChange={(e) => setSelectedAgencyName(e.target.value)}
-        >
-          {agencies.map((agency, index) => (
-              <option key={index} value={agency.name}>
-                  {agency.name}
-              </option>
-          ))}
-        </select>
+        <input
+          type="datetime-local"
+          className="form-control mb-3 border border-secondary"
+          placeholder="Fecha de Salida"
+          name="arrivalDate"
+          value={new Date(arrivalDate).toISOString().replace('Z', '')}
+          onChange={(e) => setArrivalDate(e.target.value)}
+        />
       </div>
       <div className="input-group form-group">
         <textarea

@@ -67,10 +67,6 @@ export const DashboardStyle: React.FC<DashboardProps> = ({ children }) => {
                                                 </a>
                                             </Link>
                                         </li>
-                                    </>
-                                }
-                                { decodedToken && decodedToken.role === "Marketing Agent" &&
-                                    <>
                                         <li className="nav-item">
                                             <Link to={"/admin-hotelDeals"}>
                                                 <a className="nav-link active" aria-current="page" href="#">
@@ -79,6 +75,10 @@ export const DashboardStyle: React.FC<DashboardProps> = ({ children }) => {
                                                 </a>
                                             </Link>
                                         </li>
+                                    </>
+                                }
+                                { decodedToken && decodedToken.role === "Marketing Agent" &&
+                                    <>
                                         <li className="nav-item">
                                             <Link to={"/admin-excursions"}>
                                                 <a className="nav-link active" aria-current="page" href="#">
