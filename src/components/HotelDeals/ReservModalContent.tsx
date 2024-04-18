@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import './styles.css'
-import { tpAgency, tpAirlines, tpTourist } from '../../types/types';
+import { tpAgency, tpAirlines, tpHotelDeals, tpTourist } from '../../types/types';
 import { url } from '../../helper/server';
 import axios from 'axios';
 import { jwtDecode } from 'jwt-decode';

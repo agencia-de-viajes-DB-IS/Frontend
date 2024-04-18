@@ -61,15 +61,17 @@ function UserForm({onClose, fetchUsers}:UserFormProps) {
     }
 
     // Función para enviar los datos al servidor
-    const sendDataToServer = async () => {
+    const sendDataToServer = () => {
 
-      // Uso de la función para obtener el ID de la agencia seleccionada
-      const agencyId = findAgencyIdByName(selectedAgencyName);
+      
 
       const token = localStorage.getItem('userToken');
 
       if (selectedRol === 'Agente de Marketing') {
         const rolId = findRolIdByName('Marketing Agent');
+
+        // Uso de la función para obtener el ID de la agencia seleccionada
+        const agencyId = findAgencyIdByName(selectedAgencyName);
 
         const data = { firstName:firstName, lastName:lastName, email:email, roleId:rolId, password:password, agencyId:agencyId};
         console.log(data)
@@ -82,6 +84,7 @@ function UserForm({onClose, fetchUsers}:UserFormProps) {
         .then(response => {
           console.log('Solicitud exitosa:', response.data);
           // Aquí puedes hacer lo que necesites con la respuesta
+          fetchUsers();
         })
         .catch(error => {
           console.error('Error al realizar la solicitud:', error);
@@ -89,9 +92,12 @@ function UserForm({onClose, fetchUsers}:UserFormProps) {
       }
       else if (selectedRol === 'Administrador') {
         const rolId = findRolIdByName('Super Admin');
+        
+        // Uso de la función para obtener el ID de la agencia seleccionada
+        const agencyId = agencies[0].id;
 
         const data = { firstName:firstName, lastName:lastName, email:email, roleId:rolId, password:password, agencyId:agencyId};
-        console.log(data)
+
         axios.post(`${url}/backOffice/users`, data, {
           headers: {
             'Content-Type': 'application/json',
@@ -101,13 +107,12 @@ function UserForm({onClose, fetchUsers}:UserFormProps) {
         .then(response => {
           console.log('Solicitud exitosa:', response.data);
           // Aquí puedes hacer lo que necesites con la respuesta
+          fetchUsers();
         })
         .catch(error => {
           console.error('Error al realizar la solicitud:', error);
         });
       }
-      
-      fetchUsers();
       onClose();
     }
 
@@ -131,41 +136,31 @@ function UserForm({onClose, fetchUsers}:UserFormProps) {
       e.preventDefault();
       sendDataToServer();
     }}>
-      <div className="input-group form-group">
+      <div className="input-group form-group d-flex flex-column">
+        <label htmlFor="" className='fw-bold'>Nombre</label>
           <input
               type="text" 
-              className="form-control mb-3 border border-secondary" 
-              placeholder="Nombre"
+              className="form-control mb-3 border border-secondary w-100" 
+              placeholder="Ejemplo: Miguel"
               name="firstName"
               value={firstName}
               onChange={({target}) => setFirstName(target.value)}
           /> 
       </div>
-      <div className="input-group form-group">
-          <input
-              type="text" 
-              className="form-control mb-3 border border-secondary" 
-              placeholder="Apellidos"
-              name="lastName"
-              value={lastName}
-              onChange={({target}) => setLastName(target.value)}
-          /> 
+      <div className="input-group form-group d-flex flex-column">
+        <label htmlFor="" className='fw-bold'>Apellidos</label>
+        <input
+            type="text" 
+            className="form-control mb-3 border border-secondary w-100" 
+            placeholder="Ejemplo: Pérez Rodríguez"
+            name="lastName"
+            value={lastName}
+            onChange={({target}) => setLastName(target.value)}
+        /> 
       </div>
-      <div className="input-group form-group">
-      <div className="input-group form-group">
-          <select
-            className="form-control mb-3 border border-secondary custom-select"
-            placeholder="Rol"
-            name="rol"
-            onChange={(e) => setSelectedRol(e.target.value)}
-        >
-            {rols.map((rol, index) => (
-                <option key={index} value={rol}>
-                    {rol}
-                </option>
-            ))}
-        </select>
-        </div>
+      <div className="input-group form-group d-flex flex-column">
+        <label htmlFor="" className='fw-bold'>Rol</label>
+        <MySelect options={rols} setSelectedItem={setSelectedRol}/>
       </div>
       {selectedRol === 'Agente de Marketing' &&
       <div className="input-group form-group d-flex flex-column">
@@ -173,21 +168,23 @@ function UserForm({onClose, fetchUsers}:UserFormProps) {
         <MySelect options={agencies.map(e => e.name)} setSelectedItem={setSelectedAgencyName}/>
       </div>
       }
-      <div className="input-group form-group">
-          <input
-              type="text" 
-              className="form-control mb-3 border border-secondary" 
-              placeholder="Email"
-              name="email"
-              value={email}
-              onChange={({target}) => setEmail(target.value)}
-          /> 
+      <div className="input-group form-group d-flex flex-column">
+        <label htmlFor="" className='fw-bold'>Correo Electrónico</label>
+        <input
+            type="text" 
+            className="form-control mb-3 border border-secondary w-100" 
+            placeholder="Ejemplo: fulanito@gmail.com"
+            name="email"
+            value={email}
+            onChange={({target}) => setEmail(target.value)}
+        /> 
       </div>
-      <div className="input-group form-group">
+      <div className="input-group form-group d-flex flex-column">
+        <label htmlFor="" className='fw-bold'>Contraseña</label>
           <input 
               type="text" 
-              className="form-control mb-3 border border-secondary" 
-              placeholder="Password"
+              className="form-control mb-3 border border-secondary w-100" 
+              placeholder="Ejemplo: miPassword2000!"
               name="password"
               value={password}
               onChange={({target}) => setPassword(target.value)}

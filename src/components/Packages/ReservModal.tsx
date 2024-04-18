@@ -1,13 +1,10 @@
-import { useState } from 'react';
 import Modal from 'react-bootstrap/Modal';
-import img from '../../images/roca.jpg'
 import './styles.css'
-import { tpPackage } from '../../types/types';
-import { MDBModalContent } from 'mdb-react-ui-kit';
+import { tpPackageGet } from '../../types/types';
 import PackageReservModalContent from './ReservModalContent';
 
 interface PackageModalProp {
-    package1:tpPackage,
+    package1:tpPackageGet,
     show:boolean,
     handleClose:() => void
 }
@@ -18,7 +15,7 @@ function PackageReservModal({ package1, show, handleClose }:PackageModalProp) {
             <Modal show={show} onHide={handleClose}>
                 <Modal.Header closeButton>
                     <Modal.Title>
-                        Reservar Paquete {package1.departureDate}
+                        Reservar Paquete {package1.name}
                     </Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
