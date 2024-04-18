@@ -1,18 +1,14 @@
-import { ExcursionForm} from './FormUpdate';
-import { useState } from 'react';
 import Modal from 'react-bootstrap/Modal';
-import { Button } from 'react-bootstrap';
-import { tpExcursion } from '../../types/types';
-import ExcursionModalContent from './ModalContentShow';
+import { tpExtendedExcursionGet } from '../../types/types';
+import { ExtendedExcursionModalContent } from './ModalContentShow';
 
-interface ExcursionModalShowProp {
-    excursion: tpExcursion;
+interface ExtendedExcursionModalShowProp {
+    excursion: tpExtendedExcursionGet;
     show: boolean;
     handleClose: () => void;
 }
 
-export function ExcursionModalShow({excursion, show, handleClose}:ExcursionModalShowProp) {
-
+export function ExtendedExcursionModalShow({excursion, show, handleClose}:ExtendedExcursionModalShowProp) {
 
     return (
         <>
@@ -24,9 +20,12 @@ export function ExcursionModalShow({excursion, show, handleClose}:ExcursionModal
                     </Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
-                    <ExcursionModalContent excursion={excursion}/>
+                    <ExtendedExcursionModalContent excursion={excursion}/>
                 </Modal.Body>
             </Modal>
         </>
     );
 }
+
+
+

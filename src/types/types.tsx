@@ -46,10 +46,19 @@ export interface tpPackage {
     arrivalDate: string,
     departureDate: string,
     facilityIds: tpFacility[],
-    extendedExcursionIds: tpExcursion[]
+    extendedExcursionIds: tpExtendedExcursionGet[]
 }
-export interface tpExcursion {
+export interface tpExcursionGet {
     id: string,
+    name: string,
+    description: string,
+    location: string,
+    price: number,
+    arrivalDate: string,
+    agency:tpAgency,
+    capacity:number
+}
+export interface tpExcursionPost {
     name: string,
     description: string,
     location: string,
@@ -58,16 +67,28 @@ export interface tpExcursion {
     agencyId:string,
     capacity:number
 }
-export interface tpExtendedExcursion {
-    id: string,
+export interface tpExtendedExcursionGet {
+    id:string,
     name: string,
     description: string,
     location: string,
     price: number,
     arrivalDate: string,
     departureDate: string,
-    hotelDealsIDs:tpHotelDealsShow[],
-    agency:tpAgency
+    hotelDeals:tpHotelDealsShow[],
+    agency:tpAgency,
+    capacity:number
+}
+export interface tpExtendedExcursionPost {
+    name: string,
+    description: string,
+    location: string,
+    price: number,
+    arrivalDate: string,
+    departureDate: string,
+    hotelDealsIDs:tpHotelDeals[],
+    agencyId:string,
+    capacity:number
 }
 export interface tpHotelDeals {
     name:string,
@@ -77,11 +98,12 @@ export interface tpHotelDeals {
     price: number,
     arrivalDate: string,
     departureDate: string,
+    agencyRelatedHotelDeals:tpAgency[],
     capacity:number
 }
 export interface tpHotelDealsShow {
     name:string,
-    id:string
+    id: string
 }
 export interface tpHotels {
     id:string,

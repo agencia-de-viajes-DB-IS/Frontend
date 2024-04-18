@@ -1,15 +1,14 @@
 import { useEffect, useState } from 'react';
 import './styles.css'
-import { tpAirlines, tpExcursion, tpTourist } from '../../types/types';
+import { tpAirlines, tpExcursionGet, tpTourist } from '../../types/types';
 import { url } from '../../helper/server';
 import axios from 'axios';
-import Select from 'react-select/base';
 import { jwtDecode } from 'jwt-decode';
 import { MyMultiSelect, MySelect } from '../MyComponents/MultiSelect';
 import { tpToken } from '../../types/typesComponents';
 
 interface ExcursionReservModalContentProps {
-    excursion:tpExcursion
+    excursion:tpExcursionGet,
 }
 
 function ExcursionReservModalContent({excursion}: ExcursionReservModalContentProps) {
@@ -124,7 +123,7 @@ function ExcursionReservModalContent({excursion}: ExcursionReservModalContentPro
                 handleSubmit();
             }}>
                 <div className="input-group form-group d-flex flex-column">
-                    <label htmlFor="">Agencia</label>
+                    <label htmlFor="">Aerolíneas</label>
                     <MySelect options={airlines.map(e => e.name)} setSelectedItem={setSelectedAirline}/>
                 </div>
                 <div className="input-group form-group w-100 d-flex flex-column">

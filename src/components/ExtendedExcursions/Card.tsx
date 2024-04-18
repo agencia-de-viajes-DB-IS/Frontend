@@ -1,16 +1,15 @@
 import { useState } from 'react';
-import Modal from 'react-bootstrap/Modal';
 import img from '../../images/anders.jpg'
 import './styles.css'
-import { tpExcursion } from '../../types/types';
-import { MDBModalContent } from 'mdb-react-ui-kit';
-import ModalContent from './ModalContentShow';
-import AgencyModalContent from './ModalContentShow';
-import ExcursionModalContent from './ModalContentShow';
-import ExcursionReservModal from './ReservModal';
-import { ExcursionModalShow } from './ModalShow';
+import { tpExtendedExcursionGet } from '../../types/types';
+import ExcursionReservModal from '../Excursions/ReservModal';
+import { ExtendedExcursionModalShow } from './ModalShow';
 
-function ExcursionCard(excursion:tpExcursion) {
+interface ExtendedExcursionCardProps {
+    excursion:tpExtendedExcursionGet
+}
+
+function ExtendedExcursionCard({excursion}:ExtendedExcursionCardProps) {
     
     // Para manejar el Modal de informacion
     const [show, setShow] = useState(false);
@@ -22,7 +21,7 @@ function ExcursionCard(excursion:tpExcursion) {
     const handleCloseR = () => setShowR(false);
     const handleShowR = () => setShowR(true);
 
-    const usuarioLogeado = true;
+    const token = localStorage.getItem('userToken')
 
     const handleReserv = () => {
         handleShowR();
@@ -38,7 +37,7 @@ function ExcursionCard(excursion:tpExcursion) {
             
             
                 <div className='d-flex justify-content-around'>
-                    {usuarioLogeado &&
+                    {token &&
                     <div className='btn-card'>
                         <button type="button" className='btn-reserv' onClick={handleReserv}>Reservar</button>
                     </div>
@@ -49,11 +48,12 @@ function ExcursionCard(excursion:tpExcursion) {
                 </div>
             </div>
 
+            {/* La reservacion que se utiliza es la de excursiones normales */}
             <ExcursionReservModal excursion={excursion} show={showR} handleClose={handleCloseR}/>
             
-            <ExcursionModalShow excursion={excursion} show={show} handleClose={handleClose}/>
+            <ExtendedExcursionModalShow excursion={excursion} show={show} handleClose={handleClose}/>
         </>
     );
 }
 
-export default ExcursionCard;
+export default ExtendedExcursionCard;

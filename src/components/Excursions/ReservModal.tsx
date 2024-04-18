@@ -1,10 +1,10 @@
 import Modal from 'react-bootstrap/Modal';
 import './styles.css'
-import { tpExcursion } from '../../types/types';
+import { tpExcursionGet } from '../../types/types';
 import ExcursionReservModalContent from './ReservModalContent';
 
 interface ExcursionModalProp {
-    excursion:tpExcursion,
+    excursion:tpExcursionGet,
     show:boolean,
     handleClose:() => void
 }
@@ -15,7 +15,7 @@ function ExcursionReservModal({ excursion, show, handleClose }:ExcursionModalPro
             <Modal show={show} onHide={handleClose}>
                 <Modal.Header closeButton>
                     <Modal.Title>
-                        Reservar Excursion {excursion.location}
+                        Reservar Excursion {excursion.name}
                     </Modal.Title>
                 </Modal.Header>
                 <Modal.Body>

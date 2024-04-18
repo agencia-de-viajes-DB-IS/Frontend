@@ -1,11 +1,15 @@
 import { useState } from 'react';
 import img from '../../images/anders.jpg'
 import './styles.css'
-import { tpExcursion } from '../../types/types';
+import { tpExcursionGet } from '../../types/types';
 import ExcursionReservModal from './ReservModal';
 import { ExcursionModalShow } from './ModalShow';
 
-function ExcursionCard(excursion:tpExcursion) {
+interface ExcursionCardProps {
+    excursion:tpExcursionGet
+}
+
+function ExcursionCard({ excursion }:ExcursionCardProps) {
     
     // Para manejar el Modal de informacion
     const [show, setShow] = useState(false);

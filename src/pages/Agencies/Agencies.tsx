@@ -1,7 +1,6 @@
 import './styles.css'
 import { DarkPicture } from "../../components/DarkPicture/Dark";
 import { Header } from "../../components/Header/Header";
-import { Navbar } from "../../components/Navbar/Navbar";
 import AgencyCard from "../../components/Agencies/Card";
 import { Filter } from '../../components/Search/FilterAgencies';
 import axios from 'axios';

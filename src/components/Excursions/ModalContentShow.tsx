@@ -1,21 +1,27 @@
 import { useState } from 'react';
-import Modal from 'react-bootstrap/Modal';
 import img from '../../images/anders.jpg'
 import './styles.css'
-import { tpExcursion } from '../../types/types';
+import { tpExcursionGet } from '../../types/types';
 import AgencyModal from '../Agencies/ModalShow';
 
 interface ExcursionModalContentProp {
-    excursion:tpExcursion
+    excursion:tpExcursionGet
 }
 
 function ExcursionModalContent({ excursion }: ExcursionModalContentProp) {
 
     const [show, setShow] = useState(false);
-
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
 
+    // Arreglar la fecha
+    const fechaString = excursion.arrivalDate;
+    const fecha = new Date(fechaString);
+    const opcionesFecha: Intl.DateTimeFormatOptions = { year: 'numeric', month: 'long', day: 'numeric' };
+    const opcionesHora: Intl.DateTimeFormatOptions = { hour: '2-digit', minute: '2-digit', second: '2-digit', fractionalSecondDigits: 3 };
+    const fechaFormateada = fecha.toLocaleDateString('es-ES', opcionesFecha);
+    const horaFormateada = fecha.toLocaleTimeString('es-ES', opcionesHora);
+    
     return (
         <>
             <div className='excursion-info-containier'>
@@ -29,7 +35,10 @@ function ExcursionModalContent({ excursion }: ExcursionModalContentProp) {
                     </div>
                     <div className='excursion-arrivalDate'>
                         <span>Fecha de Salida</span>
-                        <p>{excursion.arrivalDate}</p> 
+                        <p>
+                            <p className='mb-0'>{fechaFormateada}</p>
+                            <p>{horaFormateada.substring(0,8)}</p>
+                        </p> 
                     </div>
                     <div className='excursion-location'>
                         <span>Localización</span>
@@ -37,7 +46,7 @@ function ExcursionModalContent({ excursion }: ExcursionModalContentProp) {
                     </div>
                     <div className='excursion-price'>
                         <span>Precio</span>
-                        <p>{excursion.price}</p>   
+                        <p>${excursion.price}</p>   
                     </div>
                 </div>   
             </div>      

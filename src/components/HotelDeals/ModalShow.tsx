@@ -1,9 +1,6 @@
-import { useState } from 'react';
 import Modal from 'react-bootstrap/Modal';
-import img from '../../images/anders.jpg'
 import './styles.css'
 import { tpHotelDeals } from '../../types/types';
-import { MDBModalContent } from 'mdb-react-ui-kit';
 import HotelDealModalContent from './ModalContentShow';
 
 interface HotelDealModalProp {
@@ -18,7 +15,7 @@ function HotelDealModal({ hotelDeal, show, handleClose }:HotelDealModalProp) {
             <Modal show={show} onHide={handleClose}>
                 <Modal.Header closeButton>
                     <Modal.Title>
-                        {hotelDeal.arrivalDate}
+                        {hotelDeal.name}
                     </Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
