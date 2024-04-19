@@ -16,6 +16,7 @@ import { AdminHotels } from "./pages/Admin/AdminHotels";
 import { AdminPackages } from "./pages/Admin/AdminPackages";
 import { TouristsList } from "./pages/Tourists/TouristsList";
 import { AdminExtendedExcursions } from "./pages/Admin/AdminExtendedExcursions";
+import { AdminFacilities } from "./pages/Admin/AdminFacilities";
 
 function App() {
   return (
@@ -37,6 +38,7 @@ function App() {
       <Route path="/agente" element={<Agente/>}/>
       <Route path="/agente-excursion" element={<AgenteExcursion/>}/>
       <Route path="/agente-paquete" element={<AgentePackage/>}/>
+      <Route path="/admin-facilities" element={<AdminFacilities/>}/>
     </Routes>
   )
 }

@@ -75,6 +75,14 @@ export const DashboardStyle: React.FC<DashboardProps> = ({ children }) => {
                                                 </a>
                                             </Link>
                                         </li>
+                                        <li className="nav-item">
+                                            <Link to={"/admin-facilities"}>
+                                                <a className="nav-link active" aria-current="page" href="#">
+                                                    <span data-feather="home"></span>
+                                                    Facilidades
+                                                </a>
+                                            </Link>
+                                        </li>
                                     </>
                                 }
                                 { decodedToken && decodedToken.role === "Marketing Agent" &&
