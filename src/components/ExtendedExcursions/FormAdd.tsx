@@ -18,13 +18,9 @@ function Form({ onClose , fetchExcursions }:FormProps) {
   const [description, setDescription] = useState('');
   const [arrivalDate1, setArrivalDate] = useState('');
   const [departureDate1, setDepartureDate] = useState('');
+  const [capacity, setCapacity] = useState<number>();
 
-  // Manejar las agencias
-  const [agencies, setAgencies] = useState<tpAgency[]>([]);
-  const [selectedAgencyName, setSelectedAgencyName] = useState<string>('');
-
-  const [hotelDeals, setHotelDeals] = useState<tpHotelDeals[]>([]);
-  const [selectedHotelDeals, setSelectedHotelDeals] = useState<tpHotelDealsShow[]>([]);
+  
 
   useEffect(() => {
     // Recibir las agencias del servidor

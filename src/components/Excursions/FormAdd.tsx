@@ -1,6 +1,5 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import axios from 'axios';
-import { tpAgency } from '../../types/types';
 import { url } from '../../helper/server';
 import { jwtDecode } from 'jwt-decode';
 import { tpToken } from '../../types/typesComponents';
@@ -29,17 +28,7 @@ function Form({ onClose , fetchExcursions }:ExcursionFormProps) {
     }
     const decodedToken:tpToken = jwtDecode(token);
 
-    const agencyId = decodedToken.agencyId
-
-    console.log('estoy agregando la excursion: ')
-    console.log('nombre ', name);
-    console.log('localizacion ', location);
-    console.log('precio ', price);
-    console.log('descripcion ', description);
-    console.log('fecha de salida ', arrivalDate);
-    console.log('id de su agencia ', agencyId);
-    console.log('capacidad ', capacity);
-    
+    const agencyId = decodedToken.agencyId    
 
     const data = { name, description, location, price, arrivalDate, agencyId, capacity};
 
