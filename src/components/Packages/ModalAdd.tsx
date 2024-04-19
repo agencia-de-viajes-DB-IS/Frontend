@@ -1,10 +1,11 @@
-import { Form } from './FormAdd';
+import { FormAdd } from './FormAdd';
 import { useState } from 'react';
 import Modal from 'react-bootstrap/Modal';
 import { Button } from 'react-bootstrap';
+import { ModalProps } from '../../types/typesComponents';
 
 
-export function ModalAdd() {
+export function ModalAdd({ fetchentity }:ModalProps) {
 
     const [show, setShow] = useState(false);
     const handleClose = () => setShow(false);
@@ -24,7 +25,7 @@ export function ModalAdd() {
                     </Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
-                    <Form onClose={handleClose}/>
+                    <FormAdd onClose={handleClose} fetchentity={fetchentity}/>
                 </Modal.Body>
             </Modal>
         </>

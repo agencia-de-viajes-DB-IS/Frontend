@@ -48,6 +48,27 @@ export interface tpPackageGet {
     facilities: tpFacility[],
     extendedExcursions: tpExtendedExcursionGet[]
 }
+export interface tpPackagePost {
+    description: string
+    name:string,
+    price: number,
+    arrivalDate: string,
+    departureDate: string,
+    capacity:number,
+    facilityIds: number[],
+    extendedExcursionIds: string[]
+}
+export interface tpPackagePut {
+    code:string,
+    description: string
+    name:string,
+    price: number,
+    arrivalDate: string,
+    departureDate: string,
+    capacity:number,
+    facilityIds: number[],
+    extendedExcursionIds: string[]
+}
 export interface tpExcursionGet {
     id: string,
     name: string,

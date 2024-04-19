@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import './styles.css'
-import { tpExtendedExcursion } from '../../types/types';
+import { tpExtendedExcursionPost } from '../../types/types';
 import axios from 'axios';
 import { url } from '../../helper/server';
 import { ModalAdd } from './ModalAdd';
@@ -8,7 +8,7 @@ import { ModalUpdate} from './ModalUpdate';
 
 export const ExtendedExcursions = () => {
     
-    const [extendedExcursions, setExtendedExcursions] = useState<tpExtendedExcursion[]>([])
+    const [extendedExcursions, setExtendedExcursions] = useState<tpExtendedExcursionPost[]>([])
 
     const handleDeleteExtendedExcursion = async (id: string) => {
         try {
@@ -32,7 +32,7 @@ export const ExtendedExcursions = () => {
             if (response.status === 200) {
                 // Actualiza el estado para reflejar la eliminación de la excursion
                 console.log('Excursion extendida eliminada con éxito');
-
+                fetchExtendedExcursions();
             }else {
                 console.error('Error al eliminar la excursion');
             }
@@ -40,11 +40,11 @@ export const ExtendedExcursions = () => {
             console.error('Error al eliminar la excursion:', error);
         }
 
-        fetchExtendedExcursions();
+        
     };
 
     const fetchExtendedExcursions = async () => {
-        const response = await axios.get<tpExtendedExcursion[]>(`${url}/extended/excursions`);
+        const response = await axios.get<tpExtendedExcursionPost[]>(`${url}/extended/excursions`);
         setExtendedExcursions(response.data)
     }
 

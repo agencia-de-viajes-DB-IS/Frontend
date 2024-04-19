@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import './styles.css'
-import { tpPackage } from '../../types/types';
+import { tpPackagePost } from '../../types/types';
 import axios from 'axios';
 import { url } from '../../helper/server';
 import { ModalAdd } from './ModalAdd';
@@ -8,7 +8,7 @@ import { ModalUpdate } from './ModalUpdate';
 
 export function Packages() {
     
-    const [packages, setPackage] = useState<tpPackage[]>([])
+    const [packages, setPackage] = useState<tpPackagePost[]>([])
 
     const deletePackage = async (code: string) => {
         try {
@@ -29,18 +29,14 @@ export function Packages() {
         }
     };
 
-    const handleDeleteHotelDeal = (package1:tpPackage) => {
-        console.log('voy a borrar la oferta de hotel: ')
-        console.log(package1)
-        deletePackage(package1.code);
+
+    const fetchPackages = async () => {
+        const packages = await axios.get<tpPackagePost[]>(`${url}/packages`);
+        setPackage(packages.data)
     }
 
     useEffect(() => {
-        const api = async () => {
-            const packages = await axios.get<tpPackage[]>(`${url}/packages`);
-            setPackage(packages.data)
-        }
-        api();
+        fetchPackages();
     }, []);
     
     return (
@@ -49,7 +45,7 @@ export function Packages() {
                 <div className="d-flex justify-content-around align-items-center mb-3">
                     <h1>Administrar Paquetes</h1>
                 </div>
-                <ModalAdd/>
+                <ModalAdd fetchentity={fetchPackages}/>
                 <ul className="list-group mt-3">
                     {packages.map((package1, index) => (
                         <li key={index} className="list-group-item list-group-element">
@@ -59,7 +55,7 @@ export function Packages() {
                             </div>
                             <div>
                                 <ModalUpdate package1={package1}/>
-                                <button type="button" className="btn btn-danger" onClick={() => handleDeleteHotelDeal(package1)}>Eliminar</button>
+                                <button type="button" className="btn btn-danger" onClick={() => deletePackage(package1.code)}>Eliminar</button>
                             </div>
                         </li>
                     ))}

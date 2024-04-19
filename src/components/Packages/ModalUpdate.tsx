@@ -1,14 +1,15 @@
-import { PackageForm} from './FormUpdate';
+import { FormUpdate } from './FormUpdate';
 import { useState } from 'react';
 import Modal from 'react-bootstrap/Modal';
 import { Button } from 'react-bootstrap';
-import { tpPackage } from '../../types/types';
+import { tpPackagePost } from '../../types/types';
 
 interface ModalUpdateProp {
-    package1: tpPackage;
+    package1: tpPackagePost;
+    fetchentity: () => void;
 }
 
-export function ModalUpdate({package1}:ModalUpdateProp) {
+export function ModalUpdate({package1, fetchentity}:ModalUpdateProp) {
 
     const [show, setShow] = useState(false);
     const handleClose = () => setShow(false);
@@ -28,7 +29,7 @@ export function ModalUpdate({package1}:ModalUpdateProp) {
                     </Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
-                    <PackageForm package1={package1} onClose={handleClose}/>
+                    <FormUpdate package1={package1} onClose={handleClose} fetchentity={fetchentity}/>
                 </Modal.Body>
             </Modal>
         </>

@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios';
-import { tpAgency, tpHotelDeals, tpHotelDealsShow } from '../../types/types';
+import { tpFacility } from '../../types/types';
 import { url } from '../../helper/server';
 import { MyMultiSelect , MySelect} from '../MyComponents/MultiSelect';
 
@@ -20,52 +20,28 @@ function Form({ onClose , fetchExcursions }:FormProps) {
   const [departureDate1, setDepartureDate] = useState('');
   const [capacity, setCapacity] = useState<number>();
 
-  
+  const [facilities, setFacilities] = useState<tpFacility[]>();
+  const [selectedFacilities, setSelectedFacilities] = useState<string[]>([]);
+
 
   useEffect(() => {
-    // Recibir las agencias del servidor
-    const fetchAgencies = async () => {
-        try {
-            const response = await axios.get<tpAgency[]>('http://localhost:5000/agencies');
-            setAgencies(response.data);
-        } catch (error) {
-            console.error('Error fetching agencies:', error);
-        }
-    };
-
-    const fetchHotelDeals = async () => {
-      try {
-        const response = await axios.get<tpHotelDeals[]>('http://localhost:5000/hotelDeals');
-        setHotelDeals(response.data);
-      } catch (error) {
-        console.error('Error fetching agencies:', error);
-    }
-    };
-
-    fetchAgencies();
-    fetchHotelDeals();
+    
   }, []);
+
+
 
   const handleSubmit = async () => {
 
-    // Seleccionar el id de la agencia
-    const agencyId = agencies.filter(a => a.name === selectedAgencyName)[0].id
-
-    // Seleccionar los id de las ofertas de hotel seleccionadas
-    const hotelDealsIDs = selectedHotelDeals
-      .map(hotelDeal => hotelDeal.id);
-  
-    // Tomar el token del usuario
     const token = localStorage.getItem('userToken');
 
-    // Modificar el precio a numero
-    const price = parseInt(priceStr,10);
+    if (!token) {
+      return
+    }
+    const decodedToken: tpToken = jwtDecode(token);
 
-    // Cambiar el formato de la fecha
-    const arrivalDate = `${arrivalDate1}:00.00000`
-    const departureDate = `${departureDate1}:00.00000`
+    const agencyId = decodedToken.agencyId
 
-    const data = { name, description, location, price, arrivalDate, departureDate, hotelDealsIDs, agencyId};
+    const data = { name, description, location, price, arrivalDate, departureDate, agencyId, capacity };
 
     console.log(token);
     

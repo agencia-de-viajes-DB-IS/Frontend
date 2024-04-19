@@ -1,15 +1,16 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import axios from 'axios';
 import { url } from '../../helper/server';
 import { jwtDecode } from 'jwt-decode';
 import { tpToken } from '../../types/typesComponents';
+import { tpFacility } from '../../types/types';
 
 interface ExcursionFormProps {
   onClose: () => void;
   fetchExcursions: () => void;
 }
 
-function Form({ onClose , fetchExcursions }:ExcursionFormProps) {
+function Form({ onClose, fetchExcursions }: ExcursionFormProps) {
 
   // Definir el estado para cada campo del formulario
   const [name, setName] = useState('');
@@ -19,6 +20,7 @@ function Form({ onClose , fetchExcursions }:ExcursionFormProps) {
   const [arrivalDate, setArrivalDate] = useState('');
   const [capacity, setCapacity] = useState<number>();
 
+
   const handleSubmit = async () => {
 
     const token = localStorage.getItem('userToken');
@@ -26,14 +28,14 @@ function Form({ onClose , fetchExcursions }:ExcursionFormProps) {
     if (!token) {
       return
     }
-    const decodedToken:tpToken = jwtDecode(token);
+    const decodedToken: tpToken = jwtDecode(token);
 
-    const agencyId = decodedToken.agencyId    
+    const agencyId = decodedToken.agencyId
 
-    const data = { name, description, location, price, arrivalDate, agencyId, capacity};
+    const data = { name, description, location, price, arrivalDate, agencyId, capacity };
 
     console.log(token);
-    
+
     try {
       const response = await axios.post(`${url}/excursions`, data, {
         headers: {
