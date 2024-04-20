@@ -7,9 +7,8 @@ import { HotelDealModal } from './ModalAdd';
 import { HotelDealModalUpdate } from './ModalUpdate';
 import { tpToken } from '../../types/typesComponents';
 import { jwtDecode } from 'jwt-decode';
-import AgencyCard from '../Agencies/Card';
 
-export const HotelDeals = () => {
+export function HotelDeals() {
 
     const [hotelDeals, setHotelDeals] = useState<tpHotelDeals[]>([])
 

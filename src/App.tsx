@@ -21,6 +21,7 @@ import { MostTravelersTourists } from "./pages/Statistics/MostTravelersTourists"
 import { Extended } from "./pages/Statistics/Extended";
 import { HotelsInPackages } from "./pages/Statistics/HotelsInPackages";
 import { ReservationStats } from "./pages/Statistics/ReservationStats";
+import { ReservationsExcursions } from "./pages/Reservations/Excursions";
 
 function App() {
   return (
@@ -47,6 +48,7 @@ function App() {
       <Route path="/statistics-extended" element={<Extended/>}/>
       <Route path="/statistics-hotelinpackage" element={<HotelsInPackages/>}/>
       <Route path="/statistics-reservations" element={<ReservationStats/>}/>
+      <Route path="/reservations-excursions" element={<ReservationsExcursions/>}/>
     </Routes>
   )
 }

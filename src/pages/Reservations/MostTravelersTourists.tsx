@@ -58,8 +58,8 @@ export const MostTravelersTourists = () => {
                             {stats?.mostTravelersTourists.map((tourist, index) => (
                                 <li key={index} className="list-group-item d-flex  align-items-center">
                                     <div>
-                                        <h5 className="mb-1">{tourist.firstName + ' ' + tourist.lastName}</h5>
-                                        <small>{tourist.ci}</small>
+                                        <h5 className="mb-1">{tourist.firstName + tourist.lastName}</h5>
+                                        <small>{tourist.touristID}</small>
                                     </div>
                                 </li>
                             ))}

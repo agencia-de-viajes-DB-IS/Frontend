@@ -3,7 +3,6 @@ import axios from 'axios';
 import { url } from '../../helper/server';
 import { jwtDecode } from 'jwt-decode';
 import { tpToken } from '../../types/typesComponents';
-import { tpFacility } from '../../types/types';
 
 interface ExcursionFormProps {
   onClose: () => void;

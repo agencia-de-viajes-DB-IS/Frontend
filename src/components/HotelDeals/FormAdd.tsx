@@ -142,7 +142,7 @@ function HotelDealForm({ onClose, fetchentity }: FormProps) {
       </div>
       <div className="input-group form-group d-flex flex-column">
         <label htmlFor="">Hotel</label>
-        <MySelect options={hotels.map(e => e.name)} setSelectedItem={setSelectedHotelName} />
+        <MySelect options={hotels.map(e => e.name)} setSelectedItem={setSelectedHotelName} defaultValue={selectedHotelName}/>
       </div>
       <div className="input-group form-group d-flex flex-column">
         <label htmlFor="">Descripción</label>

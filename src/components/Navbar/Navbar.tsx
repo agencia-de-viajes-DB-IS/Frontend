@@ -58,9 +58,14 @@ export function Navbar({ LoggedUser }:NavbarProps) {
                         </li>
                     }
                     {decodeToken && 
-                        <li>
-                            <a href="/my-tourist">Mis turistas</a>
-                        </li>
+                        <>
+                            <li>
+                                <a href="/my-tourist">Mis turistas</a>
+                            </li>
+                            <li>
+                                <a href="/reservations-excursions">Mis reservas</a>
+                            </li>
+                        </>
                     }
                 </ul>
             </div>

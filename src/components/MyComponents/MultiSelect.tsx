@@ -56,6 +56,10 @@ export function MyMultiSelect({ options, setSelectedData, selectedIds }: MultiSe
 export const MySelect = ({ options, setSelectedItem, defaultValue }: SelectProps) => {
   // Transforma las opciones a la estructura requerida por react-select
   const optionsAsOptionType = options.map(option => ({ label: option, value: option }));
+  
+  // Asegúrate de que defaultValue siempre sea un objeto que coincida con la estructura de las opciones
+  const defaultValueAsOptionType = defaultValue ? { label: defaultValue, value: defaultValue } : null;
+ 
  
   // Función para manejar el cambio de selección
   const handleChange = (selectedOption: Option | null) => {
@@ -68,17 +72,12 @@ export const MySelect = ({ options, setSelectedItem, defaultValue }: SelectProps
      }
   };
  
-  // Asegúrate de que defaultValue siempre sea un objeto que coincida con la estructura de las opciones
-  const defaultValueAsOptionType = defaultValue ? { label: defaultValue, value: defaultValue } : null;
- 
-  console.log(defaultValueAsOptionType);
-  
   return (
      <Select
        className='w-100 mb-3'
        options={optionsAsOptionType}
        value={defaultValueAsOptionType}
-       onChange={handleChange}
+       onChange={(e) => handleChange(e)}
      />
   );
  };

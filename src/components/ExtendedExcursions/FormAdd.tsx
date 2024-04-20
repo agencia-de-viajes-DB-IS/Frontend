@@ -2,30 +2,49 @@ import { useState, useEffect } from 'react';
 import axios from 'axios';
 import { tpFacility } from '../../types/types';
 import { url } from '../../helper/server';
-import { MyMultiSelect , MySelect} from '../MyComponents/MultiSelect';
+import { MyMultiSelect, MySelect } from '../MyComponents/MultiSelect';
 
 interface FormProps {
   onClose: () => void;
   fetchExcursions: () => void;
 }
 
-function Form({ onClose , fetchExcursions }:FormProps) {
+function Form({ onClose, fetchExcursions }: FormProps) {
 
   // Definir el estado para cada campo del formulario
   const [name, setName] = useState('');
   const [location, setLocation] = useState('');
-  const [priceStr, setPriceStr] = useState('');
+  const [price, setPrice] = useState<number>();
   const [description, setDescription] = useState('');
-  const [arrivalDate1, setArrivalDate] = useState('');
-  const [departureDate1, setDepartureDate] = useState('');
+  const [arrivalDate, setArrivalDate] = useState('');
+  const [departureDate, setDepartureDate] = useState('');
   const [capacity, setCapacity] = useState<number>();
 
-  const [facilities, setFacilities] = useState<tpFacility[]>();
-  const [selectedFacilities, setSelectedFacilities] = useState<string[]>([]);
+  const [hotelDeals, setHotelDeals] = useState<tpHotelDeals[]>([])
+  const [selectedHotelDeals, setSelectedHotelDeals] = useState<string[]>([])
 
+  const [decodedToken, setDecodedToken] = useState<tpToken | null>({
+    role: "",
+    agencyId: "",
+    sub: ""
+  })
+
+  const ofertBelongAgent = (ofert: tpHotelDeals) => {
+
+    if (ofert.agencies.filter(e => e.id === decodedToken?.agencyId).length > 0) {
+      return true;
+    }
+
+    return false;
+  }
+
+  const fetchHotelDeals = async () => {
+    const hotelDeals = await axios.get<tpHotelDeals[]>(`${url}/hotelDeals`);
+    setHotelDeals(hotelDeals.data.filter(e => ofertBelongAgent(e)))
+  }
 
   useEffect(() => {
-    
+    fetchHotelDeals();
   }, []);
 
 
@@ -37,14 +56,18 @@ function Form({ onClose , fetchExcursions }:FormProps) {
     if (!token) {
       return
     }
-    const decodedToken: tpToken = jwtDecode(token);
 
     const agencyId = decodedToken.agencyId
 
-    const data = { name, description, location, price, arrivalDate, departureDate, agencyId, capacity };
+    const hotelDealsIDs = hotelDeals
+      .filter(e => selectedHotelDeals.includes(e.name))
+      .map(e => e.id)
+
+    const data = { name, description, location, price, capacity, arrivalDate, departureDate, hotelDeals, agencyId };
 
     console.log(token);
-    
+    console.log(data);
+
     try {
       const response = await axios.post(`${url}/extended/excursions`, data, {
         headers: {
@@ -95,18 +118,18 @@ function Form({ onClose , fetchExcursions }:FormProps) {
           className="form-control mb-3 border border-secondary"
           placeholder="Precio"
           name="priceStr"
-          value={priceStr}
-          onChange={(e) => setPriceStr(e.target.value)}
+          value={price}
+          onChange={(e) => setPrice(parseInt(e.target.value,10))}
         />
       </div>
       <div className="input-group form-group d-flex flex-column">
-      <label htmlFor="">Fecha de Salida</label>
+        <label htmlFor="">Fecha de Salida</label>
         <input
           type="datetime-local"
           className="form-control mb-3 border border-secondary w-100"
           placeholder="Fecha de Salida"
-          name="arrivalDate1"
-          value={arrivalDate1}
+          name="arrivalDate"
+          value={arrivalDate}
           onChange={(e) => setArrivalDate(e.target.value)}
         />
       </div>
@@ -116,18 +139,14 @@ function Form({ onClose , fetchExcursions }:FormProps) {
           type="datetime-local"
           className="form-control mb-3 border border-secondary w-100"
           placeholder="Fecha de Llegada"
-          name="departureDate1"
-          value={departureDate1}
+          name="departureDate"
+          value={departureDate}
           onChange={(e) => setDepartureDate(e.target.value)}
         />
       </div>
-      <div className="input-group form-group d-flex flex-column">
-        <label htmlFor="">Agencia</label>
-        <MySelect options={agencies.map(e => e.name)} setSelectedItem={setSelectedAgencyName}/>
-      </div>
       <div className="input-group form-group w-100 d-flex flex-column">
         <label htmlFor="">Ofertas de Hotel</label>
-        <MyMultiSelect options={hotelDeals.map(e => e.name)} setSelectedData={(newSelectedHotelDealsNames) => setSelectedHotelDealName(newSelectedHotelDealsNames)}/>
+        <MyMultiSelect options={hotelDeals.map(e => e.name)} setSelectedData={(newSelectedHotelDealsNames) => setSelectedHotelDealName(newSelectedHotelDealsNames)} />
       </div>
       <div className="input-group form-group">
         <textarea

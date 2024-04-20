@@ -178,3 +178,6 @@ export interface tpReservationStats {
     excReserv: number,
     totalAmount: number
 }
+
+// ======================= Reservations ========================
+
