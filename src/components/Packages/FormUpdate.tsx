@@ -1,12 +1,13 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios';
-import { tpExtendedExcursionGet, tpPackagePut, tpFacility } from '../../types/types';
+import { tpExtendedExcursionGet, tpFacility, tpPackageGet } from '../../types/types';
 import { MyMultiSelect } from '../MyComponents/MultiSelect';
-import { FormProps, tpToken } from '../../types/typesComponents';
+import { tpToken } from '../../types/typesComponents';
 import { url } from '../../helper/server';
+import { jwtDecode } from 'jwt-decode';
 
 interface PackageFormUpdateProp {
-  package1: tpPackagePut;
+  package1: tpPackageGet;
   onClose: () => void;
   fetchentity: () => void;
 }
@@ -16,17 +17,15 @@ export function FormUpdate({ package1, onClose, fetchentity }: PackageFormUpdate
   // Definir el estado para cada campo del formulario
   const [name, setName] = useState<string>(package1.name);
   const [price, setPrice] = useState<number>(package1.price);
-  const [arrivalDate, setArrivalDate] = useState<string>(package1.arrivalDate);
-  const [departureDate, setDepartureDate] = useState<string>(package1.departureDate);
   const [description, setDescription] = useState<string>(package1.description)
   const [capacity, setCapacity] = useState<number>(package1.capacity)
 
   // Manejar las excursiones prolongadas
   const [excursions, setExcursions] = useState<tpExtendedExcursionGet[]>([]);
-  const [selectedExcursionNames, setSelectedExcursionNames] = useState<string[]>([]);
+  const [selectedExcursionNames, setSelectedExcursionNames] = useState<string[]>(package1.extendedExcursions.map(e => e.name));
 
   const [facilities, setFacilities] = useState<tpFacility[]>([]);
-  const [selectedFacilities, setSelectedFacilities] = useState<string[]>([]);
+  const [selectedFacilities, setSelectedFacilities] = useState<string[]>(package1.facilities.map(e => e.name));
 
 
   useEffect(() => {
@@ -49,9 +48,17 @@ export function FormUpdate({ package1, onClose, fetchentity }: PackageFormUpdate
 
     // Recibir las excursiones prolongadas del servidor
     const fetchExcursions = async () => {
+      if (!token) {
+        return
+      }
+      const decodedToken:tpToken = jwtDecode(token)
+      const agencyId = decodedToken.agencyId
+
       try {
         const response = await axios.get<tpExtendedExcursionGet[]>('http://localhost:5000/extended/excursions');
-        setExcursions(response.data);
+        const excursionAgency = response.data.filter(e => e.agency.id === agencyId)
+        console.log(response.data)
+        setExcursions(excursionAgency);
       } catch (error) {
         console.error('Error fetching excursions:', error);
       }
@@ -75,8 +82,8 @@ export function FormUpdate({ package1, onClose, fetchentity }: PackageFormUpdate
       .map(excursion => excursion.id);
 
     const code = package1.code;
-    const data = { code, name, description, price, arrivalDate, departureDate, capacity, facilityIds, extendedExcursionIds };
-
+    const data = { code, name, description, price, capacity, facilityIds, extendedExcursionIds };
+    console.log(data)
     console.log(token);
 
     try {
@@ -114,28 +121,6 @@ export function FormUpdate({ package1, onClose, fetchentity }: PackageFormUpdate
         />
       </div>
       <div className="input-group form-group d-flex flex-column">
-        <label htmlFor="" className='fw-bold'>Fecha de Salida</label>
-        <input
-          type="datetime-local"
-          className="form-control mb-3 border border-secondary w-100"
-          placeholder=""
-          name="arrivalDate"
-          value={arrivalDate}
-          onChange={({ target }) => setArrivalDate(target.value)}
-        />
-      </div>
-      <div className="input-group form-group d-flex flex-column">
-        <label htmlFor="" className='fw-bold'>Fecha de Llegada</label>
-        <input
-          type="datetime-local"
-          className="form-control mb-3 border border-secondary w-100"
-          placeholder=""
-          name="departureDate"
-          value={departureDate}
-          onChange={({ target }) => setDepartureDate(target.value)}
-        />
-      </div>
-      <div className="input-group form-group d-flex flex-column">
         <label htmlFor="" className='fw-bold'>Precio</label>
         <input
           type="number"
@@ -159,11 +144,11 @@ export function FormUpdate({ package1, onClose, fetchentity }: PackageFormUpdate
       </div>
       <div className="input-group form-group d-flex flex-column">
         <label htmlFor="" className='fw-bold'>Facilidades</label>
-        <MyMultiSelect options={facilities.map(e => e.name)} setSelectedData={(newSelectedFacilities) => setSelectedFacilities(newSelectedFacilities)} />
+        <MyMultiSelect options={facilities.map(e => e.name)} setSelectedData={(newSelectedFacilities) => setSelectedFacilities(newSelectedFacilities)} selectedIds={selectedFacilities} />
       </div>
       <div className="input-group form-group d-flex flex-column">
         <label htmlFor="" className='fw-bold'>Excursiones</label>
-        <MyMultiSelect options={excursions.map(e => e.name)} setSelectedData={(newSelectedExcursions) => setSelectedExcursionNames(newSelectedExcursions)} />
+        <MyMultiSelect options={excursions.map(e => e.name)} setSelectedData={(newSelectedExcursions) => setSelectedExcursionNames(newSelectedExcursions)} selectedIds={selectedExcursionNames}/>
       </div>
       <div className="input-group form-group d-flex flex-column">
         <label htmlFor="" className='fw-bold'>Descripción</label>

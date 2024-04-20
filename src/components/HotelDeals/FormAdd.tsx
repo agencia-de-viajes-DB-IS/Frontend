@@ -9,11 +9,11 @@ function HotelDealForm({ onClose, fetchentity }:FormProps) {
 
     // Definir el estado para cada campo del formulario
     const [name, setName] = useState<string>('');
-    const [price, setPrice] = useState<number>();
+    const [price, setPrice] = useState<number>(0);
     const [arrivalDate, setArrivalDate] = useState<string>('');
     const [departureDate, setDepartureDate] = useState<string>('');
     const [description, setDescription] = useState<string>('')
-    const [capacity, setCapacity] = useState<number>()
+    const [capacity, setCapacity] = useState<number>(0)
 
     // Manejar los hoteles
     const [hotels, setHotels] = useState<tpHotels[]>([]);
@@ -25,13 +25,7 @@ function HotelDealForm({ onClose, fetchentity }:FormProps) {
         const fetchHotels = async () => {
             try {
                 const response = await axios.get<tpHotels[]>('http://localhost:5000/hotels');
-                setHotels([{
-                  id:"qw",
-                  name:'Hoteles',
-                  address:"",
-                  category:0,
-                  description:''
-                }, ...response.data]);
+                setHotels(response.data);
             } catch (error) {
                 console.error('Error fetching hotelDeals:', error);
             }

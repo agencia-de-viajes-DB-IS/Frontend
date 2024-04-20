@@ -47,6 +47,7 @@ export interface tpPackageGet {
     departureDate: string,
     facilities: tpFacility[],
     extendedExcursions: tpExtendedExcursionGet[]
+    capacity:number
 }
 export interface tpPackagePost {
     description: string

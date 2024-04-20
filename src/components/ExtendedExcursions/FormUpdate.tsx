@@ -10,7 +10,7 @@ interface FormUpdateProp {
   onClose: () => void;
 }
 
-export function Form({excursion , fetchExtendedExcursions , onClose}: FormUpdateProp) {
+export function Form({ excursion, fetchExtendedExcursions, onClose }: FormUpdateProp) {
 
   // Definir el estado para cada campo del formulario
   const id = excursion.id;
@@ -34,12 +34,12 @@ export function Form({excursion , fetchExtendedExcursions , onClose}: FormUpdate
   useEffect(() => {
     // Recibir las agencias del servidor
     const fetchAgencies = async () => {
-        try {
-            const response = await axios.get<tpAgency[]>('http://localhost:5000/agencies');            
-            setAgencies(response.data);
-        } catch (error) {
-            console.error('Error fetching agencies:', error);
-        }
+      try {
+        const response = await axios.get<tpAgency[]>('http://localhost:5000/agencies');
+        setAgencies(response.data);
+      } catch (error) {
+        console.error('Error fetching agencies:', error);
+      }
     };
 
     const fetchHotelDeals = async () => {
@@ -49,18 +49,18 @@ export function Form({excursion , fetchExtendedExcursions , onClose}: FormUpdate
 
         // Llenar selectedHotelDealName con los nombres de las ofertas de hotel cuyos ID coincidan con los de excursion.hotelDealsIDs
         const matchingHotelDealNames = response.data
-        .filter(hotelDeal => excursion.hotelDealsIDs.includes(hotelDeal.id))
-        .map(hotelDeal => hotelDeal.name);
+          .filter(hotelDeal => excursion.hotelDealsIDs.includes(hotelDeal.id))
+          .map(hotelDeal => hotelDeal.name);
 
         setSelectedHotelDealName(matchingHotelDealNames);
       } catch (error) {
         console.error('Error fetching agencies:', error);
-    }
+      }
     };
 
     fetchAgencies();
     fetchHotelDeals();
-}, []);
+  }, []);
 
   const handleSubmit = async () => {
 
@@ -78,10 +78,10 @@ export function Form({excursion , fetchExtendedExcursions , onClose}: FormUpdate
     const arrivalDate = `${arrivalDate1}:00.00000`
     const departureDate = `${departureDate1}:00.00000`
 
-    const data = { id, name, description, location, price, arrivalDate, departureDate, hotelDealsIDs, agencyId};
+    const data = { id, name, description, location, price, arrivalDate, departureDate, hotelDealsIDs, agencyId };
 
     console.log(token);
-    
+
     try {
       const response = await axios.put(`${url}/extended/excursions`, data, {
         headers: {
@@ -96,7 +96,7 @@ export function Form({excursion , fetchExtendedExcursions , onClose}: FormUpdate
       console.error('Error:', error);
     }
 
-    
+
     fetchExtendedExcursions();
     onClose();
   }
@@ -137,7 +137,7 @@ export function Form({excursion , fetchExtendedExcursions , onClose}: FormUpdate
         />
       </div>
       <div className="input-group form-group d-flex flex-column">
-      <label htmlFor="">Fecha de Salida</label>
+        <label htmlFor="">Fecha de Salida</label>
         <input
           type="datetime-local"
           className="form-control mb-3 border border-secondary w-100"
@@ -160,11 +160,11 @@ export function Form({excursion , fetchExtendedExcursions , onClose}: FormUpdate
       </div>
       <div className="input-group form-group d-flex flex-column">
         <label htmlFor="">Agencia</label>
-        <MySelect options={agencies.map(e => e.name)} setSelectedItem={setSelectedAgencyName}/>
+        <MySelect options={agencies.map(e => e.name)} setSelectedItem={setSelectedAgencyName} />
       </div>
       <div className="input-group form-group w-100 d-flex flex-column">
         <label htmlFor="">Ofertas de Hotel</label>
-        <MyMultiSelect options={hotelDeals.map(e => e.name)} setSelectedData={(newSelectedHotelDealsNames) => setSelectedHotelDealName(newSelectedHotelDealsNames)} selectedIds={selectedHotelDealName}/>
+        <MyMultiSelect options={hotelDeals.map(e => e.name)} setSelectedData={(newSelectedHotelDealsNames) => setSelectedHotelDealName(newSelectedHotelDealsNames)} selectedIds={selectedHotelDealName} />
       </div>
       <div className="input-group form-group">
         <textarea

@@ -1,9 +1,10 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios';
-import { tpExtendedExcursionGet, tpPackagePost, tpFacility } from '../../types/types';
+import { tpExtendedExcursionGet, tpFacility } from '../../types/types';
 import { MyMultiSelect } from '../MyComponents/MultiSelect';
 import { FormProps, tpToken } from '../../types/typesComponents';
 import { url } from '../../helper/server';
+import { jwtDecode } from 'jwt-decode';
 
 
 export function FormAdd({ onClose, fetchentity }: FormProps) {
@@ -37,7 +38,6 @@ export function FormAdd({ onClose, fetchentity }: FormProps) {
           }
         })
         setFacilities(response.data);
-        console.log(response.data)
       } catch (error) {
         console.error('Error fetching facilities:', error);
       }
@@ -45,9 +45,17 @@ export function FormAdd({ onClose, fetchentity }: FormProps) {
 
     // Recibir las excursiones prolongadas del servidor
     const fetchExcursions = async () => {
+      if (!token) {
+        return
+      }
+      const decodedToken:tpToken = jwtDecode(token)
+      const agencyId = decodedToken.agencyId
+
       try {
         const response = await axios.get<tpExtendedExcursionGet[]>('http://localhost:5000/extended/excursions');
-        setExcursions(response.data);
+        const excursionAgency = response.data.filter(e => e.agency.id === agencyId)
+        console.log(response.data)
+        setExcursions(excursionAgency);
       } catch (error) {
         console.error('Error fetching excursions:', error);
       }
