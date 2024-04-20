@@ -17,6 +17,10 @@ import { AdminPackages } from "./pages/Admin/AdminPackages";
 import { TouristsList } from "./pages/Tourists/TouristsList";
 import { AdminExtendedExcursions } from "./pages/Admin/AdminExtendedExcursions";
 import { AdminFacilities } from "./pages/Admin/AdminFacilities";
+import { MostTravelersTourists } from "./pages/Statistics/MostTravelersTourists";
+import { Extended } from "./pages/Statistics/Extended";
+import { HotelsInPackages } from "./pages/Statistics/HotelsInPackages";
+import { ReservationStats } from "./pages/Statistics/ReservationStats";
 
 function App() {
   return (
@@ -39,6 +43,10 @@ function App() {
       <Route path="/agente-excursion" element={<AgenteExcursion/>}/>
       <Route path="/agente-paquete" element={<AgentePackage/>}/>
       <Route path="/admin-facilities" element={<AdminFacilities/>}/>
+      <Route path="/statistics" element={<MostTravelersTourists/>}/>
+      <Route path="/statistics-extended" element={<Extended/>}/>
+      <Route path="/statistics-hotelinpackage" element={<HotelsInPackages/>}/>
+      <Route path="/statistics-reservations" element={<ReservationStats/>}/>
     </Routes>
   )
 }

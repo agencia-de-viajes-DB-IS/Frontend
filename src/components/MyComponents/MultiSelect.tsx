@@ -6,6 +6,7 @@ import './styles.css';
 interface SelectProps {
   options: string[];
   setSelectedItem: (arg: string) => void;
+  defaultValue?: string; // Añadir esta propiedad para recibir el ID seleccionado
 }
 
 interface Option {
@@ -51,24 +52,33 @@ export function MyMultiSelect({ options, setSelectedData, selectedIds }: MultiSe
   );
 }
 
-export function MySelect({ options, setSelectedItem }: SelectProps) {
-
-  // Transform the array of strings into an array of objects with label and value properties
-  const data = options.map(option => ({ label: option, value: option }));
-
-  const [selected, setSelected] = useState<string>("");
-
+// Asegúrate de que tu componente acepte una prop `defaultValue`
+export const MySelect = ({ options, setSelectedItem, defaultValue }: SelectProps) => {
+  // Transforma las opciones a la estructura requerida por react-select
+  const optionsAsOptionType = options.map(option => ({ label: option, value: option }));
+ 
+  // Función para manejar el cambio de selección
+  const handleChange = (selectedOption: Option | null) => {
+     if (selectedOption) {
+       setSelectedItem(selectedOption.value);
+     } else {
+       // Maneja el caso cuando no hay selección
+       // Puedes establecer un valor predeterminado o simplemente no hacer nada
+       setSelectedItem(''); // O cualquier valor predeterminado que desees
+     }
+  };
+ 
+  // Asegúrate de que defaultValue siempre sea un objeto que coincida con la estructura de las opciones
+  const defaultValueAsOptionType = defaultValue ? { label: defaultValue, value: defaultValue } : null;
+ 
+  console.log(defaultValueAsOptionType);
+  
   return (
-    <Select
-      className='w-100 mb-3'
-      defaultValue={selected}
-      onChange={(e) => {
-        if (e) {
-          setSelectedItem(e.value);
-          setSelected(e.value);
-        }
-      }}
-      options={data}
-    />
+     <Select
+       className='w-100 mb-3'
+       options={optionsAsOptionType}
+       value={defaultValueAsOptionType}
+       onChange={handleChange}
+     />
   );
-}
+ };
