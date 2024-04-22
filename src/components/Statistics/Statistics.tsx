@@ -54,7 +54,7 @@ export const Statistics: React.FC<DashboardProps> = ({ children }) => {
                                             <Link to={"/statistics-extended"}>
                                                 <a className="nav-link active" aria-current="page" href="#">
                                                     <span data-feather="home"></span>
-                                                    Extended
+                                                    Excursiones de fin de semana
                                                 </a>
                                             </Link>
                                         </li>
@@ -70,7 +70,15 @@ export const Statistics: React.FC<DashboardProps> = ({ children }) => {
                                             <Link to={"/statistics-reservations"}>
                                                 <a className="nav-link active" aria-current="page" href="#">
                                                     <span data-feather="home"></span>
-                                                    Reservaciones por agencia
+                                                    Datos de reservaciones por agencia
+                                                </a>
+                                            </Link>
+                                        </li>
+                                        <li className="nav-item">
+                                            <Link to={"/statistics-overpricepackages"}>
+                                                <a className="nav-link active" aria-current="page" href="#">
+                                                    <span data-feather="home"></span>
+                                                    Paquetes más caros
                                                 </a>
                                             </Link>
                                         </li>

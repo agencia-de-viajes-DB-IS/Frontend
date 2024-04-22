@@ -22,6 +22,7 @@ import { Extended } from "./pages/Statistics/Extended";
 import { HotelsInPackages } from "./pages/Statistics/HotelsInPackages";
 import { ReservationStats } from "./pages/Statistics/ReservationStats";
 import { ReservationsExcursions } from "./pages/Reservations/Excursions";
+import { OverPricePackages } from "./pages/Statistics/OverPricePackages";
 
 function App() {
   return (
@@ -47,6 +48,7 @@ function App() {
       <Route path="/statistics" element={<MostTravelersTourists/>}/>
       <Route path="/statistics-extended" element={<Extended/>}/>
       <Route path="/statistics-hotelinpackage" element={<HotelsInPackages/>}/>
+      <Route path="/statistics-overpricepackages" element={<OverPricePackages/>}/>
       <Route path="/statistics-reservations" element={<ReservationStats/>}/>
       <Route path="/reservations-excursions" element={<ReservationsExcursions/>}/>
     </Routes>

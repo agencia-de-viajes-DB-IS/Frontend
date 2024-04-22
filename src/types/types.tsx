@@ -90,7 +90,7 @@ export interface tpExcursionPost {
     capacity: number
 }
 export interface tpExcursionShow {
-    id:string,
+    id: string,
     name: string,
     description: string
 }
@@ -159,10 +159,11 @@ export interface tpTourist {
 
 // ================= Estadisticas ====================
 
-export interface tpMostTravelersTourists {
-    totalReservationFound: number,
-    mostTravelersTourists: tpTourist[],
-    overPricePackagesCount: number
+export interface tpMostTravelerTourist {
+    ci: string,
+    firstName: string,
+    lastName: string,
+    count: number
 }
 
 export interface tpExtendedStats {
@@ -172,9 +173,9 @@ export interface tpExtendedStats {
 }
 
 export interface tpHotelsInPackages {
-    name:string,
-    category:number,
-    address:string
+    name: string,
+    category: number,
+    address: string
 }
 
 export interface tpReservationStats {
@@ -189,14 +190,34 @@ export interface tpReservationStats {
 export interface tpReservationExcursions {
     id: string,
     user: {
-        id:string,
-        email:string,
-        firstName:string,
-        lastName:string
+        id: string,
+        email: string,
+        firstName: string,
+        lastName: string
     },
     airline: tpAirlines,
     reservationDate: string,
     excursion: tpExcursionShow,
+    price: number,
+    tourists: tpTourist[]
+}
+
+export interface tpReservationPackages {
+    id: string,
+    user: {
+        id: string,
+        email: string,
+        firstName: string,
+        lastName: string
+    },
+    airline: tpAirlines,
+    reservationDate: string,
+    package: {
+        code: string,
+        description: string
+        name: string,
+        price: number
+    },
     price: number,
     tourists: tpTourist[]
 }
