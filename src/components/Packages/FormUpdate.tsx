@@ -72,13 +72,18 @@ export function FormUpdate({ package1, onClose, fetchentity }: PackageFormUpdate
   const handleSubmit = async () => {
 
     const token = localStorage.getItem('userToken');
+    if (!token) {
+      return
+    }
+    const decodedToken:tpToken = jwtDecode(token)
+    const agencyId = decodedToken.agencyId
 
     const facilityIds = facilities
       .filter(facility => selectedFacilities.includes(facility.name))
       .map(facility => facility.id);
 
     const extendedExcursionIds = excursions
-      .filter(excursion => selectedExcursionNames.includes(excursion.name))
+      .filter(excursion => selectedExcursionNames.includes(excursion.name) && excursion.agency.id === agencyId)
       .map(excursion => excursion.id);
 
     const code = package1.code;

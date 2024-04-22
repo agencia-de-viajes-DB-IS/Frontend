@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import './styles.css'
-import { tpPackagePost } from '../../types/types';
+import { tpPackageGet } from '../../types/types';
 import axios from 'axios';
 import { url } from '../../helper/server';
 import { ModalAdd } from './ModalAdd';
@@ -8,7 +8,7 @@ import { ModalUpdate } from './ModalUpdate';
 
 export function Packages() {
     
-    const [packages, setPackage] = useState<tpPackagePost[]>([])
+    const [packages, setPackage] = useState<tpPackageGet[]>([])
 
     const deletePackage = async (code: string) => {
         try {
@@ -31,7 +31,7 @@ export function Packages() {
 
 
     const fetchPackages = async () => {
-        const packages = await axios.get<tpPackagePost[]>(`${url}/packages`);
+        const packages = await axios.get<tpPackageGet[]>(`${url}/packages`);
         setPackage(packages.data)
     }
 
@@ -54,7 +54,7 @@ export function Packages() {
                                 <small>{package1.description}</small>
                             </div>
                             <div>
-                                <ModalUpdate package1={package1}/>
+                                <ModalUpdate package1={package1} fetchentity={fetchPackages}/>
                                 <button type="button" className="btn btn-danger" onClick={() => deletePackage(package1.code)}>Eliminar</button>
                             </div>
                         </li>

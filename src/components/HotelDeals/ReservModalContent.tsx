@@ -15,10 +15,11 @@ function HotelDealReservModalContent(hotelDeal:tpHotelDeals) {
     const [airlines, setAirlines] = useState<tpAirlines[]>([]);
     const [selectedAirline, setSelectedAirline] = useState<string>();
 
+    // Turistas seleccionados
     const [tourists, setTourists] = useState<tpTourist[]>([]);
     const [selectedTourists, setSelectedTourists] = useState<string[]>([]);
 
-    const [agencies,setAgencies] = useState<tpAgency[]>([]);
+    // Agencia seleccionada de la oferta de hotel
     const [selectedAgency, setSelectedAgency] = useState<string>('');
 
 
@@ -53,22 +54,6 @@ function HotelDealReservModalContent(hotelDeal:tpHotelDeals) {
             console.error('Error al obtener las aerolíneas:', error);
         });
 
-        axios.get<tpAgency[]>(`${url}/agencies`, {
-            headers: {
-                'Content-Type': 'application/json',
-                'Authorization': `Bearer ${token}`
-            }
-        })
-        .then(response => {
-            // Asumiendo que la respuesta es un array de strings (nombres de las aerolíneas)
-            setAgencies(response.data);
-
-            console.log(hotelDeal.agencyRelatedHotelDeals)
-        })
-        .catch(error => {
-            console.error('Error al obtener las agencias:', error);
-        });
-
         axios.get<tpTourist[]>(`${url}/users/tourists`, {
             headers: {
                 'Content-Type': 'application/json',
@@ -89,7 +74,9 @@ function HotelDealReservModalContent(hotelDeal:tpHotelDeals) {
         
         // id de la airline seleccionada
         const airlineId = airlines.find(e => e.name === selectedAirline)?.id
-        const agencyRelatedHotelDealId = agencies.find(e => e.name === selectedAgency)?.id
+
+        // id de la agencia
+        const agencyRelatedHotelDealId = hotelDeal.agencies.find(e => e.name === selectedAgency)?.id
 
         // Array de los turistas seleccionados para la reservacion
         const touristsCIs = selectedTourists.map(e => e.slice(-11))
@@ -118,6 +105,7 @@ function HotelDealReservModalContent(hotelDeal:tpHotelDeals) {
          };
 
          console.log(data);
+         console.log(token);
          
         
          try {
@@ -142,15 +130,15 @@ function HotelDealReservModalContent(hotelDeal:tpHotelDeals) {
                 handleSubmit();
             }}>
                 <div className="input-group form-group d-flex flex-column">
-                    <label htmlFor="">Aerolíneas</label>
-                    <MySelect options={airlines.map(e => e.name)} setSelectedItem={setSelectedAirline}/>
+                    <label htmlFor="" className='fw-bold'>Aerolíneas</label>
+                    <MySelect options={airlines.map(e => e.name)} setSelectedItem={setSelectedAirline} defaultValue={selectedAirline}/>
                 </div>
                 <div className="input-group form-group d-flex flex-column">
-                    <label htmlFor="">Agencias de esta Oferta de Hotel</label>
-                    <MySelect options={hotelDeal.agencyRelatedHotelDeals.map(e => e.name)} setSelectedItem={setSelectedAgency}/>
+                    <label htmlFor="" className='fw-bold'>Agencias de esta Oferta de Hotel</label>
+                    <MySelect options={hotelDeal.agencies.map(e => e.name)} setSelectedItem={setSelectedAgency} defaultValue={selectedAgency}/>
                 </div>
                 <div className="input-group form-group w-100 d-flex flex-column">
-                    <label htmlFor="">Mis turistas</label>
+                    <label htmlFor="" className='fw-bold'>Mis turistas</label>
                     <MyMultiSelect options={tourists.map(e => e.firstName + " " + e.lastName + " : " + e.ci)} setSelectedData={(newSelectedTouristssNames) => setSelectedTourists(newSelectedTouristssNames)}/>
                 </div>
                 <div className="form-group d-flex flex-column align-items-center">

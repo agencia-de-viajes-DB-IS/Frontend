@@ -2,10 +2,10 @@ import { FormUpdate } from './FormUpdate';
 import { useState } from 'react';
 import Modal from 'react-bootstrap/Modal';
 import { Button } from 'react-bootstrap';
-import { tpPackagePost } from '../../types/types';
+import { tpPackageGet } from '../../types/types';
 
 interface ModalUpdateProp {
-    package1: tpPackagePost;
+    package1: tpPackageGet;
     fetchentity: () => void;
 }
 

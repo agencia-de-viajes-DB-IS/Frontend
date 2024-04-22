@@ -160,12 +160,12 @@ function UserForm({onClose, fetchUsers}:UserFormProps) {
       </div>
       <div className="input-group form-group d-flex flex-column">
         <label htmlFor="" className='fw-bold'>Rol</label>
-        <MySelect options={rols} setSelectedItem={setSelectedRol}/>
+        <MySelect options={rols} setSelectedItem={setSelectedRol} defaultValue={selectedRol}/>
       </div>
       {selectedRol === 'Agente de Marketing' &&
       <div className="input-group form-group d-flex flex-column">
         <label htmlFor="">Agencia</label>
-        <MySelect options={agencies.map(e => e.name)} setSelectedItem={setSelectedAgencyName}/>
+        <MySelect options={agencies.map(e => e.name)} setSelectedItem={setSelectedAgencyName} defaultValue={selectedAgencyName}/>
       </div>
       }
       <div className="input-group form-group d-flex flex-column">

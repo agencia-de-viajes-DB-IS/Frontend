@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import './styles.css'
-import { tpExcursion } from '../../types/types';
+import { tpExcursionGet } from '../../types/types';
 import axios from 'axios';
 import { url } from '../../helper/server';
 import { ModalAdd } from './ModalAdd';
@@ -8,7 +8,7 @@ import { ModalUpdate} from './ModalUpdate';
 
 export const Excursions = () => {
     
-    const [excursions, setExcursions] = useState<tpExcursion[]>([])
+    const [excursions, setExcursions] = useState<tpExcursionGet[]>([])
 
     const handleDeleteExcursion = async (id: string) => {
         try {
@@ -44,7 +44,7 @@ export const Excursions = () => {
     };
 
     const fetchExcursions = async () => {
-        const response = await axios.get<tpExcursion[]>(`${url}/excursions`);
+        const response = await axios.get<tpExcursionGet[]>(`${url}/excursions`);
         setExcursions(response.data)
     }
 

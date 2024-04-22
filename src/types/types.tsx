@@ -89,6 +89,11 @@ export interface tpExcursionPost {
     agencyId: string,
     capacity: number
 }
+export interface tpExcursionShow {
+    id:string,
+    name: string,
+    description: string
+}
 export interface tpExtendedExcursionGet {
     id: string,
     name: string,
@@ -181,3 +186,17 @@ export interface tpReservationStats {
 
 // ======================= Reservations ========================
 
+export interface tpReservationExcursions {
+    id: string,
+    user: {
+        id:string,
+        email:string,
+        firstName:string,
+        lastName:string
+    },
+    airline: tpAirlines,
+    reservationDate: string,
+    excursion: tpExcursionShow,
+    price: number,
+    tourists: tpTourist[]
+}

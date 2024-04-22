@@ -9,9 +9,10 @@ import { tpToken } from '../../types/typesComponents';
 
 interface ExcursionReservModalContentProps {
     excursion: tpExcursionGet,
+    onClose: () => void;
 }
 
-function ExcursionReservModalContent({ excursion }: ExcursionReservModalContentProps) {
+function ExcursionReservModalContent({ excursion, onClose }: ExcursionReservModalContentProps) {
 
     // Aerolinea seleccionada por el usuario
     const [airlines, setAirlines] = useState<tpAirlines[]>([]);
@@ -122,6 +123,9 @@ function ExcursionReservModalContent({ excursion }: ExcursionReservModalContentP
         } catch (error) {
             console.error('Error realizando la reserva:', error);
         }
+
+        alert('Reserva exitosa, para más detalles ir a la sección Mis Reservas')
+        onClose();
     }
 
 
@@ -133,7 +137,7 @@ function ExcursionReservModalContent({ excursion }: ExcursionReservModalContentP
             }}>
                 <div className="input-group form-group d-flex flex-column">
                     <label htmlFor="">Aerolíneas</label>
-                    <MySelect options={airlines.map(e => e.name)} setSelectedItem={setSelectedAirline} />
+                    <MySelect options={airlines.map(e => e.name)} setSelectedItem={setSelectedAirline} defaultValue={selectedAirline}/>
                 </div>
                 <div className="input-group form-group w-100 d-flex flex-column">
                     <label htmlFor="">Mis turistas</label>

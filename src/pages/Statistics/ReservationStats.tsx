@@ -6,7 +6,7 @@ import { tpReservationStats } from "../../types/types";
 import axios from "axios";
 import { url } from "../../helper/server";
 import { Statistics } from "../../components/Statistics/Statistics";
-// import { VictoryBar, VictoryChart } from 'victory';
+import { VictoryAxis, VictoryBar, VictoryChart } from 'victory';
 
 export const ReservationStats = () => {
 
@@ -20,11 +20,11 @@ export const ReservationStats = () => {
         }
     };
 
-    const fetchstats = async () => {
-        const response = await axios.get<tpReservationStats[]>(`${url}/statistics/ReservationStats`, config);
-        setStats(response.data)
-        console.log(response.data)
-    }
+    // const fetchstats = async () => {
+    //     const response = await axios.get<tpReservationStats[]>(`${url}/statistics/ReservationStats`, config);
+    //     setStats(response.data)
+    //     console.log(response.data)
+    // }
 
     useEffect(() => {
 
@@ -38,7 +38,7 @@ export const ReservationStats = () => {
             setDecodeToken(null)
         }
 
-        fetchstats();
+        // fetchstats();
     }, []);
 
     const reservacionesPack = [
@@ -49,7 +49,9 @@ export const ReservationStats = () => {
         { name: "Paseo del Prado4", count: 9 },
     ]
 
-    const data = reservacionesPack.map(e => { x: e.name; y: e.count; })
+    
+
+    const data = reservacionesPack.map(e => ({ x: e.name, y: e.count }))
 
     return (
         <>
@@ -59,9 +61,7 @@ export const ReservationStats = () => {
                         <div className="d-flex justify-content-around align-items-center mb-3">
                             <h1>Reservaciones</h1>
                         </div>
-                        {/* <VictoryChart>
-                            <VictoryBar data={data} />
-                        </VictoryChart> */}
+                        
                     </div>
                 </Statistics>
             }

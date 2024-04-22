@@ -25,7 +25,8 @@
     "react-responsive-carousel": "^3.2.23",
     "react-router-dom": "^6.21.3",
     "react-select": "^5.8.0",
-    "sweetalert2": "^11.10.4"
+    "sweetalert2": "^11.10.4",
+    "victory": "^37.0.2"
   },
   "devDependencies": {
     "@types/react": "^18.2.37",

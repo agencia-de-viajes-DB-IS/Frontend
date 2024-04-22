@@ -19,7 +19,7 @@ function ExcursionReservModal({ excursion, show, handleClose }:ExcursionModalPro
                     </Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
-                    <ExcursionReservModalContent excursion={excursion}/>
+                    <ExcursionReservModalContent excursion={excursion} onClose={handleClose}/>
                 </Modal.Body>
             </Modal>
         </>
