@@ -66,6 +66,8 @@ function PackageReservModalContent(package1: tpPackageGet) {
             });
     }, []);
 
+    
+
     const handleSubmit = async () => {
 
         // id de la airline seleccionada
@@ -106,10 +108,9 @@ function PackageReservModalContent(package1: tpPackageGet) {
                     'Authorization': `Bearer ${token}`,
                 },
             });
-
-            alert('Reservación exitosa. Para más información consultar Mis Reservas')
-
+            
             console.log('Reserva realizada con éxito:', response.data);
+            alert('Reservación exitosa. Para más detalles consultar "Mis Reservas"')
         } catch (error) {
             console.error('Error realizando la reserva:', error);
         }

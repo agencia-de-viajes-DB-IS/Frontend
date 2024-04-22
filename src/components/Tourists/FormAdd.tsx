@@ -26,6 +26,11 @@ export function Form({ onClose, fetchentity }: FormProps) {
   const createTourists = () => {
     // Configuración de la solicitud
 
+    if(Ci.length != 11) {
+      alert('El CI debe tener exactamente 11 dígitos')
+      return
+    }
+
     const data = {
       userId: userId,
       firstName: firstName,

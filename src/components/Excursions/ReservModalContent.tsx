@@ -21,7 +21,7 @@ function ExcursionReservModalContent({ excursion, onClose }: ExcursionReservModa
     const [tourists, setTourists] = useState<tpTourist[]>([]);
     const [selectedTourists, setSelectedTourists] = useState<string[]>([]);
 
-    
+
 
     // Función para decodificar el token y obtener el userId
     function decodeToken(token: string | null): string {
@@ -35,7 +35,6 @@ function ExcursionReservModalContent({ excursion, onClose }: ExcursionReservModa
             console.error('Error decoding token:', error);
             return '';
         }
-        console.log('aqui')
         return ''
     }
     const token = localStorage.getItem('userToken');
@@ -94,7 +93,7 @@ function ExcursionReservModalContent({ excursion, onClose }: ExcursionReservModa
         const decodedToken: tpToken = jwtDecode(token);
         console.log(decodeToken)
         const userId = decodedToken.sub; // id del usuario
- 
+
         // fecha actual
         const currentDate = new Date().toISOString();
 
@@ -118,13 +117,13 @@ function ExcursionReservModalContent({ excursion, onClose }: ExcursionReservModa
                     'Authorization': `Bearer ${token}`,
                 },
             });
-
+            
+            alert('Reserva exitosa, para más detalles ir a la sección Mis Reservas')
             console.log('Reserva realizada con éxito:', response.data);
         } catch (error) {
             console.error('Error realizando la reserva:', error);
         }
 
-        alert('Reserva exitosa, para más detalles ir a la sección Mis Reservas')
         onClose();
     }
 
@@ -137,7 +136,7 @@ function ExcursionReservModalContent({ excursion, onClose }: ExcursionReservModa
             }}>
                 <div className="input-group form-group d-flex flex-column">
                     <label htmlFor="">Aerolíneas</label>
-                    <MySelect options={airlines.map(e => e.name)} setSelectedItem={setSelectedAirline} defaultValue={selectedAirline}/>
+                    <MySelect options={airlines.map(e => e.name)} setSelectedItem={setSelectedAirline} defaultValue={selectedAirline} />
                 </div>
                 <div className="input-group form-group w-100 d-flex flex-column">
                     <label htmlFor="">Mis turistas</label>
