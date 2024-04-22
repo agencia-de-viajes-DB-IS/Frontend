@@ -59,7 +59,7 @@ export function Excursions() {
                 <DarkPicture />
                 <Header />
                 <h1 id="excursion-title">Excursiones</h1>
-                {agencyName ? <Filter setExcursions={setExcursions} initialAgency={agencyName} /> : <Filter setExcursions={setExcursions} />}
+                {agencyName ? <Filter setExcursions={setExcursions} setExtendedExcursions={setExtendedExcursions} initialAgency={agencyName} /> : <Filter setExcursions={setExcursions} setExtendedExcursions={setExtendedExcursions}  />}
             </div>
 
             <div className="excursion-section">

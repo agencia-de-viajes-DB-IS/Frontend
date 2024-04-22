@@ -1,19 +1,19 @@
 import React, { useEffect, useState } from 'react';
 import './styles.css'
-import { tpAgency, tpExcursion } from '../../types/types';
+import { tpExcursionGet, tpExtendedExcursionGet } from '../../types/types';
 import axios from 'axios';
 
 interface FilterProps {
-    setExcursions: React.Dispatch<React.SetStateAction<tpExcursion[]>>;
+    setExcursions: React.Dispatch<React.SetStateAction<tpExcursionGet[]>>;
+    setExtendedExcursions: React.Dispatch<React.SetStateAction<tpExtendedExcursionGet[]>>;
     initialAgency?:string;
 }
 
-export function Filter({setExcursions, initialAgency}: FilterProps) {
+export function Filter({setExcursions, setExtendedExcursions, initialAgency}: FilterProps) {
 
-    const [allExcursions, setAllExcursions] = useState<tpExcursion[]>([])
+    const [allExcursions, setAllExcursions] = useState<tpExcursionGet[]>([])
+    const [allExtendedExcursions, setAllExtendedExcursions] = useState<tpExtendedExcursionGet[]>([])
 
-    // Array con las agencias filtradas
-    const [filteredExcursions, setFilteredExcursions] = useState<tpExcursion[]>([]);
 
     // Todas las agencias y la agencia seleccionada
     const [agencies, setAgencies] = useState<string[]>([]);
@@ -49,41 +49,58 @@ export function Filter({setExcursions, initialAgency}: FilterProps) {
     };
 
     const handleFilter = () => {
-        let tempExcursions:tpExcursion[] = [...allExcursions];
+        let tempExcursions:tpExcursionGet[] = [...allExcursions];
+        let tempExtendedExcursions:tpExtendedExcursionGet[] = [...allExtendedExcursions];
         
         // Revisar si hay filtro por agencia
         if(selectedAgency != 'Todos') {
             tempExcursions = allExcursions.filter(excursion => excursion.agency.name == selectedAgency);
+            tempExtendedExcursions = allExtendedExcursions.filter(excursion => excursion.agency.name == selectedAgency);
         }
         // Revisar si hay filtro por localizacion
         if(selectedLocation != 'Todos') {
             tempExcursions = allExcursions.filter(excursion => excursion.location == selectedLocation);
+            tempExtendedExcursions = allExtendedExcursions.filter(excursion => excursion.location == selectedLocation);
         }
         // Revisar si hay filtro por fecha de llegada
         if(selectedArrivalDate != 'Todos') {
             tempExcursions = allExcursions.filter(excursion => excursion.arrivalDate == selectedArrivalDate);
+            tempExtendedExcursions = allExtendedExcursions.filter(excursion => excursion.arrivalDate == selectedArrivalDate);
         }
         // Revisar si hay filtro por precio
         if(selectedPrice != 'Todos') {
             tempExcursions = allExcursions.filter(excursion => excursion.price.toString() == selectedPrice);
+            tempExtendedExcursions = allExtendedExcursions.filter(excursion => excursion.price.toString() == selectedPrice);
         }
 
         setExcursions(tempExcursions)
+        setExtendedExcursions(tempExtendedExcursions)
+        
     }
 
     useEffect(() => {
         const fetchPropiedades = async () => {
 
             try {
-                const response = await axios.get<tpExcursion[]>(`http://localhost:5000/excursions`);
+                const response = await axios.get<tpExcursionGet[]>(`http://localhost:5000/excursions`);
                 setAllExcursions(response.data)
 
+                const response2 = await axios.get<tpExtendedExcursionGet[]>(`http://localhost:5000/extended/excursions`);
+                setAllExtendedExcursions(response2.data)
                 // Array con los valores de las propiedades
-                const excursionAgencies = response.data.map(excursion => excursion.agency.name);
-                const excursionLocations = response.data.map(excursion => excursion.location);
-                const excursionArrivalDates = response.data.map(excursion => excursion.arrivalDate);
-                const excursionPrices = response.data.map(excursion => excursion.price);
+                let excursionAgencies = response.data.map(excursion => excursion.agency.name);
+                let excursionLocations = response.data.map(excursion => excursion.location);
+                let excursionArrivalDates = response.data.map(excursion => excursion.arrivalDate);
+                let excursionPrices = response.data.map(excursion => excursion.price);
                 
+                response2.data.forEach(e => {
+                    console.log(e)
+                    excursionAgencies.push(e.agency.name)
+                    excursionLocations.push(e.location)
+                    excursionArrivalDates.push(e.arrivalDate)
+                    excursionPrices.push(e.price)
+                })
+
                 // Array con los valores de las propiedades sin repetir
                 const agenciesSet = [... new Set(excursionAgencies)];
                 const locationsSet = [... new Set(excursionLocations)];
