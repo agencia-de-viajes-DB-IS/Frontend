@@ -40,11 +40,11 @@ function AgencyModalContent(agency:tpAgency) {
                     </div>
                 </div>   
             </div>      
-            <div className='agency-seemore'>
+            {/* <div className='agency-seemore'>
                 <button className='btn-excursions btn btn-primary' onClick={handleShowExcursions}>Ver excursiones</button>
                 <button className='btn-hotelDeals btn btn-danger' onClick={handleShowHotelDeals}>Ver Ofertas de Hotel</button>
                 <button className='btn-packages btn btn-success' onClick={handleShowPackages}>Ver Paquetes</button>
-            </div>
+            </div> */}
         </>
     );
 }

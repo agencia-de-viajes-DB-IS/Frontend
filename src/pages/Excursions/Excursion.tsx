@@ -13,14 +13,14 @@ import ExtendedExcursionCard from "../../components/ExtendedExcursions/Card";
 export function Excursions() {
 
     const { agencyName } = useParams<{ agencyName: string }>();
-    const [excursions,setExcursions] = useState<tpExcursionGet[]>([]);
-    const [extendedExcursions,setExtendedExcursions] = useState<tpExtendedExcursionGet[]>([]);
+    const [excursions, setExcursions] = useState<tpExcursionGet[]>([]);
+    const [extendedExcursions, setExtendedExcursions] = useState<tpExtendedExcursionGet[]>([]);
 
     useEffect(() => {
         // Recibir las excursiones del servidor
         const fetchExcursions = async () => {
             try {
-                if(agencyName) {
+                if (agencyName) {
 
                     const response0 = await axios.get<tpAgency[]>(`http://localhost:5000/agencies`);
                     const agencyId = response0.data.find(e => e.name == agencyName)?.id
@@ -28,7 +28,7 @@ export function Excursions() {
                     // Traer excursiones normales
                     const response = await axios.get<tpExcursionGet[]>(`http://localhost:5000/excursions?agencyIdFilter=${agencyId}`);
                     setExcursions(response.data)
-                    
+
                     // Traer excursiones extendidas
                     const response1 = await axios.get<tpExtendedExcursionGet[]>(`http://localhost:5000/extended/excursions?agencyIdFilter=${agencyId}`);
                     setExtendedExcursions(response1.data)
@@ -43,7 +43,7 @@ export function Excursions() {
                     const response1 = await axios.get<tpExtendedExcursionGet[]>(`http://localhost:5000/extended/excursions`);
                     setExtendedExcursions(response1.data)
                 }
-                
+
             } catch (error) {
                 console.error('Error fetching excursions:', error);
             }
@@ -56,32 +56,36 @@ export function Excursions() {
     return (
         <>
             <div className="excursions-main">
-                <DarkPicture/>
-                <Header/>
+                <DarkPicture />
+                <Header />
                 <h1 id="excursion-title">Excursiones</h1>
-                {agencyName ? <Filter setExcursions={setExcursions}  initialAgency={agencyName}/> : <Filter setExcursions={setExcursions} />}
+                {agencyName ? <Filter setExcursions={setExcursions} initialAgency={agencyName} /> : <Filter setExcursions={setExcursions} />}
             </div>
 
             <div className="excursion-section">
-                
+
                 {/* Excursiones normales */}
+                <h2 className="mt-5">Excursiones</h2>
                 <div className="excursion-container">
+                    
                     {excursions.map((excursion, index) => (
                         <div key={index} className="item">
-                            <ExcursionCard excursion={excursion}/>
+                            <ExcursionCard excursion={excursion} />
                         </div>
                     ))}
                 </div>
 
                 {/* Excursiones extendidas */}
+                <h2 className="mt-5">Excursiones extendidas</h2>
                 <div className="excursion-container">
+                    
                     {extendedExcursions.map((excursion, index) => (
                         <div key={index} className="item">
-                            <ExtendedExcursionCard excursion={excursion}/>
+                            <ExtendedExcursionCard excursion={excursion} />
                         </div>
                     ))}
                 </div>
-                
+
             </div>
         </>
     )
