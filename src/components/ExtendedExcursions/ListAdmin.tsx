@@ -1,21 +1,24 @@
 import { useEffect, useState } from 'react';
 import './styles.css'
-import { tpExtendedExcursionPost } from '../../types/types';
+import { tpExtendedExcursionGet } from '../../types/types';
 import axios from 'axios';
 import { url } from '../../helper/server';
 import { ModalAdd } from './ModalAdd';
 import { ModalUpdate} from './ModalUpdate';
+import { tpToken } from '../../types/typesComponents';
+import { jwtDecode } from 'jwt-decode';
 
 export const ExtendedExcursions = () => {
     
-    const [extendedExcursions, setExtendedExcursions] = useState<tpExtendedExcursionPost[]>([])
+    const [extendedExcursions, setExtendedExcursions] = useState<tpExtendedExcursionGet[]>([])
+
+    const token = localStorage.getItem('userToken');
 
     const handleDeleteExtendedExcursion = async (id: string) => {
         try {
 
             // Obtener el token del localStorage
-            const token = localStorage.getItem('userToken');
-
+            
             // Configuración de la solicitud
             const config = {
                 headers: {
@@ -43,9 +46,19 @@ export const ExtendedExcursions = () => {
         
     };
 
+    if (!token) {
+        return
+    }
+
+    const decodedToken:tpToken = jwtDecode(token)
+    
+
     const fetchExtendedExcursions = async () => {
-        const response = await axios.get<tpExtendedExcursionPost[]>(`${url}/extended/excursions`);
-        setExtendedExcursions(response.data)
+        const response = await axios.get<tpExtendedExcursionGet[]>(`${url}/extended/excursions`);
+        const excursionsagency = response.data.filter(e => e.agency.id === decodedToken.agencyId)
+        setExtendedExcursions(excursionsagency)
+        console.log(response.data)
+        console.log(decodedToken)
     }
 
     useEffect(() => {

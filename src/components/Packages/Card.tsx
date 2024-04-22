@@ -1,11 +1,11 @@
 import { useState } from 'react';
 import img from '../../images/roca.jpg'
 import './styles.css'
-import { tpPackage } from '../../types/types';
+import { tpPackageGet } from '../../types/types';
 import PackageModal from './ModalShow';
 import PackageReservModal from './ReservModal';
 
-function PackageCard(package1:tpPackage) {
+function PackageCard(package1:tpPackageGet) {
 
     // Para manejar el Modal de informacion
     const [show, setShow] = useState(false);

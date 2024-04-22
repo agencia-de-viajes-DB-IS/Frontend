@@ -107,6 +107,8 @@ function PackageReservModalContent(package1: tpPackageGet) {
                 },
             });
 
+            alert('Reservación exitosa. Para más información consultar Mis Reservas')
+
             console.log('Reserva realizada con éxito:', response.data);
         } catch (error) {
             console.error('Error realizando la reserva:', error);
@@ -122,11 +124,11 @@ function PackageReservModalContent(package1: tpPackageGet) {
             }}>
                 <div className="input-group form-group d-flex flex-column">
                     <label htmlFor="">Aerolíneas</label>
-                    <MySelect options={airlines.map(e => e.name)} setSelectedItem={setSelectedAirline} />
+                    <MySelect options={airlines.map(e => e.name)} setSelectedItem={setSelectedAirline} defaultValue={selectedAirline}/>
                 </div>
                 <div className="input-group form-group w-100 d-flex flex-column">
                     <label htmlFor="">Mis turistas</label>
-                    <MyMultiSelect options={tourists.map(e => e.firstName + " " + e.lastName + " : " + e.ci)} setSelectedData={(newSelectedTouristssNames) => setSelectedTourists(newSelectedTouristssNames)} />
+                    <MyMultiSelect options={tourists.map(e => e.firstName + " " + e.lastName + " : " + e.ci)} setSelectedData={(newSelectedTouristssNames) => setSelectedTourists(newSelectedTouristssNames)}/>
                 </div>
                 <div className="form-group d-flex flex-column align-items-center">
                     <input type="submit" value="Reservar" className="btn btn-dark login_btn" />

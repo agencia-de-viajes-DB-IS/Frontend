@@ -1,8 +1,10 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios';
-import { tpFacility } from '../../types/types';
+import { tpFacility, tpHotelDeals } from '../../types/types';
 import { url } from '../../helper/server';
 import { MyMultiSelect, MySelect } from '../MyComponents/MultiSelect';
+import { tpToken } from '../../types/typesComponents';
+import { jwtDecode } from 'jwt-decode';
 
 interface FormProps {
   onClose: () => void;
@@ -23,15 +25,16 @@ function Form({ onClose, fetchExcursions }: FormProps) {
   const [hotelDeals, setHotelDeals] = useState<tpHotelDeals[]>([])
   const [selectedHotelDeals, setSelectedHotelDeals] = useState<string[]>([])
 
-  const [decodedToken, setDecodedToken] = useState<tpToken | null>({
-    role: "",
-    agencyId: "",
-    sub: ""
-  })
+  const token = localStorage.getItem('userToken');
+  if (!token) {
+    return
+  }
+
+  const decodedToken:tpToken = jwtDecode(token)
 
   const ofertBelongAgent = (ofert: tpHotelDeals) => {
 
-    if (ofert.agencies.filter(e => e.id === decodedToken?.agencyId).length > 0) {
+    if (ofert.agencies.map(e => e.id).includes(decodedToken.agencyId)) {
       return true;
     }
 
@@ -40,6 +43,11 @@ function Form({ onClose, fetchExcursions }: FormProps) {
 
   const fetchHotelDeals = async () => {
     const hotelDeals = await axios.get<tpHotelDeals[]>(`${url}/hotelDeals`);
+    console.log(hotelDeals.data)
+    console.log(hotelDeals.data.filter(e => ofertBelongAgent(e)))
+    console.log(decodedToken.agencyId)
+    console.log('holaaaa');
+    
     setHotelDeals(hotelDeals.data.filter(e => ofertBelongAgent(e)))
   }
 
@@ -51,19 +59,13 @@ function Form({ onClose, fetchExcursions }: FormProps) {
 
   const handleSubmit = async () => {
 
-    const token = localStorage.getItem('userToken');
-
-    if (!token) {
-      return
-    }
-
     const agencyId = decodedToken.agencyId
 
     const hotelDealsIDs = hotelDeals
       .filter(e => selectedHotelDeals.includes(e.name))
       .map(e => e.id)
 
-    const data = { name, description, location, price, capacity, arrivalDate, departureDate, hotelDeals, agencyId };
+    const data = { name, description, location, price, capacity, arrivalDate, departureDate, hotelDealsIDs, agencyId };
 
     console.log(token);
     console.log(data);

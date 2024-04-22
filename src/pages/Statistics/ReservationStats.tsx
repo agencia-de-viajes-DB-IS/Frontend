@@ -107,7 +107,7 @@ export const ReservationStats = () => {
                                 cy={200}
                                 outerRadius={80}
                                 fill="#8884d8"
-                                label={({ agency }) => agency}
+                                label={({ agency, number }) => `${agency}: ${number}`}
                             >
                                 {stats1.map((entry, index) => (
                                     <Cell key={`cell-${index}`} fill={`#${index * 3333}`} />
@@ -117,7 +117,7 @@ export const ReservationStats = () => {
                         </div>
                         <div className="d-flex flex-column justify-content-center">
                             <h3>Reservaciones de excursiones por agencia</h3>
-                            <PieChart width={400} height={400}>
+                            <PieChart width={900} height={400}>
                                 <Pie
                                     data={stats2.filter(e => e.number > 0)}
                                     dataKey="number"
@@ -126,7 +126,7 @@ export const ReservationStats = () => {
                                     cy={200}
                                     outerRadius={80}
                                     fill="#8884d8"
-                                    label={({ agency }) => agency}
+                                    label={({ agency, number }) => `${agency}: ${number}`}
                                 >
                                     {stats2.map((entry, index) => (
                                         <Cell key={`cell-${index}`} fill={`#${index * 3333}`} />

@@ -28,14 +28,6 @@ function PackageModalContent(package1:tpPackageGet) {
     const horaFormateada1 = fecha1.toLocaleTimeString('es-ES', opcionesHora1);
     console.log(package1)
 
-    const agency:tpAgency = {
-        id: "90",
-        name: "Cuba Verde",
-        address: "string",
-        faxNumber: 4000,
-        email: "string"
-    };
-
 
     return (
         <>
@@ -46,7 +38,7 @@ function PackageModalContent(package1:tpPackageGet) {
                 <div className='package-info'>
                     <div className='package-item'>
                         <span>Agencia</span>
-                        <p>Nombre de la Agencia</p>  
+                        <p>{package1.agency.name}</p>  
                     </div>
                     <div className='package-item'>
                         <span>Precio</span>
@@ -113,12 +105,7 @@ function PackageModalContent(package1:tpPackageGet) {
                         ))}
                     </div>    
                 </div>   
-            </div>      
-            <div className='package-seemore'>
-                <button className='btn-packages btn btn-danger' onClick={handleShow}>Ver Agencia</button>
             </div>
-
-            <AgencyModal agency={agency} show={show} handleClose={handleClose}/>
         </>
     );
 }

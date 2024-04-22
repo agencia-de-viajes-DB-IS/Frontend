@@ -23,6 +23,7 @@ import { HotelsInPackages } from "./pages/Statistics/HotelsInPackages";
 import { ReservationStats } from "./pages/Statistics/ReservationStats";
 import { ReservationsExcursions } from "./pages/Reservations/Excursions";
 import { OverPricePackages } from "./pages/Statistics/OverPricePackages";
+import { ReservationsPackages } from "./pages/Reservations/Packages";
 
 function App() {
   return (
@@ -51,6 +52,7 @@ function App() {
       <Route path="/statistics-overpricepackages" element={<OverPricePackages/>}/>
       <Route path="/statistics-reservations" element={<ReservationStats/>}/>
       <Route path="/reservations-excursions" element={<ReservationsExcursions/>}/>
+      <Route path="/reservations-packages" element={<ReservationsPackages/>}/>
     </Routes>
   )
 }

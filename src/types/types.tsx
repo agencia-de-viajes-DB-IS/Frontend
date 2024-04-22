@@ -42,6 +42,10 @@ export interface tpPackageGet {
     code: string,
     description: string
     name: string,
+    agency:{
+        id:string,
+        name:string
+    },
     price: number,
     arrivalDate: string,
     departureDate: string,

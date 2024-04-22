@@ -5,16 +5,22 @@ import axios from 'axios';
 import { url } from '../../helper/server';
 import { ModalAdd } from './ModalAdd';
 import { ModalUpdate} from './ModalUpdate';
+import { tpToken } from '../../types/typesComponents';
+import { jwtDecode } from 'jwt-decode';
 
 export const Excursions = () => {
     
     const [excursions, setExcursions] = useState<tpExcursionGet[]>([])
 
+    const token = localStorage.getItem('userToken');
+    if (!token) {
+        return
+    }
+
+    const decodedToken:tpToken = jwtDecode(token)
+
     const handleDeleteExcursion = async (id: string) => {
         try {
-
-            // Obtener el token del localStorage
-            const token = localStorage.getItem('userToken');
 
             // Configuración de la solicitud
             const config = {
@@ -45,7 +51,8 @@ export const Excursions = () => {
 
     const fetchExcursions = async () => {
         const response = await axios.get<tpExcursionGet[]>(`${url}/excursions`);
-        setExcursions(response.data)
+        const excursionsagency = response.data.filter(e => e.agency.id === decodedToken.agencyId)
+        setExcursions(excursionsagency)
     }
 
     useEffect(() => {

@@ -1,14 +1,11 @@
 import { useState } from 'react';
 import Modal from 'react-bootstrap/Modal';
-import img from '../../images/roca.jpg'
 import './styles.css'
-import { tpPackage } from '../../types/types';
-import { MDBModalContent } from 'mdb-react-ui-kit';
-import AgencyModalContent from './ModalContent';
+import { tpPackageGet } from '../../types/types';
 import PackageModalContent from './ModalContent';
 
 interface PackageModalProp {
-    package1:tpPackage,
+    package1:tpPackageGet,
     show:boolean,
     handleClose:() => void
 }

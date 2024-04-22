@@ -7,7 +7,7 @@ import axios from "axios";
 import { url } from "../../helper/server";
 import { Reservations } from "../../components/Reservations/Reservations";
 
-export function ReservationsPackages() {
+export function ReservationsHotelDeals() {
 
     const [reservations, setReservations] = useState<tpReservationPackages[]>([]);
     
@@ -26,7 +26,7 @@ export function ReservationsPackages() {
     };
 
     const fetchReservation = async () => {
-        const response = await axios.get<tpReservationPackages[]>(`${url}/reservation/package?userIdFilter=${decodedToken?.sub}`, config);
+        const response = await axios.get<tpReservationPackages[]>(`${url}/reservation/HotelDeal?userIdFilter=${decodedToken?.sub}`, config);
         console.log(response.data)
         setReservations(response.data)
     }
@@ -57,7 +57,7 @@ export function ReservationsPackages() {
                 <Reservations>
                     <div className="container mt-5">
                         <div className="d-flex justify-content-around align-items-center mb-3">
-                            <h1>Paquetes reservados</h1>
+                            <h1>Ofertas de Hotel reservados</h1>
                         </div>
                         <ul className="list-group mt-3 ms-5 me-5">
                             {reservations.map((item, index) => (
